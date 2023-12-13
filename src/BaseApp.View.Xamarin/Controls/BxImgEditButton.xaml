@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView
+    x:Class="BaseApp.View.Xamarin.Controls.BxImgEditButton"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    x:Name="BxImgEditButtonBase">
+    <ContentView.Content>
+        <Grid
+            Margin="4"
+            BindingContext="{x:Reference BxImgEditButtonBase}"
+            HeightRequest="50">
+            <Grid.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding Command}" />
+            </Grid.GestureRecognizers>
+
+            <BoxView
+                CornerRadius="8"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding IsEnabled}"
+                VerticalOptions="FillAndExpand"
+                Color="{AppThemeBinding Dark={StaticResource ColorAccent2},
+                                        Light={StaticResource ColorAccent2Light}}" />
+            <BoxView
+                CornerRadius="8"
+                HorizontalOptions="FillAndExpand"
+                IsVisible="{Binding IsEnabled, Converter={bcm:Sty ConverterBoolInverted}}"
+                VerticalOptions="FillAndExpand"
+                Color="{StaticResource ColorGray400}" />
+
+            <Label
+                FontFamily="{StaticResource StreamLineIcons}"
+                FontSize="18"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsEnabled}"
+                Text="{Binding Glyph}"
+                TextColor="{StaticResource ColorBackgroundFocusTransparent}"
+                VerticalOptions="Center" />
+            <Label
+                FontFamily="{StaticResource StreamLineIcons}"
+                FontSize="18"
+                HorizontalOptions="Center"
+                IsVisible="{Binding IsEnabled, Converter={bcm:Sty ConverterBoolInverted}}"
+                Text="{Binding Glyph}"
+                TextColor="{StaticResource ColorTextOnColor}"
+                VerticalOptions="Center" />
+        </Grid>
+    </ContentView.Content>
+</ContentView>

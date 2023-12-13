@@ -1,0 +1,562 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewAddIdea"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bc="clr-namespace:BaseApp.View.Xamarin.Controls;assembly=BaseApp.View.Xamarin"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:customControls="clr-namespace:Biss.Apps.Map.XF.CustomControls;assembly=Biss.Apps.Map.XF"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Idea;assembly=BaseApp"
+    x:Name="MyViewAddIdea"
+    d:DataContext="{x:Static viewmodels:VmAddIdea.DesignInstance}"
+    x:TypeArguments="viewmodels:VmAddIdea"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <StackLayout>
+            <Grid
+                ColumnDefinitions="*"
+                IsVisible="{Binding View.IsBusy}"
+                RowDefinitions="*">
+                <Label
+                    FontFamily="{StaticResource VerdanaBold}"
+                    FontSize="{StaticResource FontSizeMedium}"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{bcm:Translate ResViewAddIdea.LblLoadIdea}"
+                    VerticalOptions="CenterAndExpand" />
+            </Grid>
+            <ScrollView
+                Margin="8,4,8,0"
+                CascadeInputTransparent="False"
+                InputTransparent="{Binding PlatformMobile}"
+                IsVisible="{Binding View.IsBusy, Converter={bcm:Sty ConverterBoolInverted}}">
+
+                <!--#region Stammdaten-->
+
+                <StackLayout>
+
+                    <!--#region Titel-->
+
+                    <Label Style="{StaticResource LabelStyDescription}" Text="{Binding EntryTitle.Title}" />
+                    <bcc:BxEntry
+                        EntryData="{Binding EntryTitle}"
+                        HasFrame="False"
+                        IsVisible="{Binding Data.CanEdit}" />
+
+                    <!--#endregion-->
+
+                    <!--#region Beschreibung-->
+
+                    <Label Style="{StaticResource LabelStyDescription}"
+                           Text="{bcm:Translate ResViewAddIdea.LblDescription}" />
+                    <bcc:BxEntry
+                        EntryData="{Binding EntryDescription}"
+                        HasFrame="False"
+                        IsVisible="{Binding Data.CanEdit}"
+                        Mulitiline="True" />
+
+                    <!--#endregion-->
+
+                    <!--#region Bild-->
+
+                    <Label Style="{StaticResource LabelStyDescription}" Text="{bcm:Translate ResViewAddIdea.LblImage}" />
+                    <Grid ColumnDefinitions="150,8,*" RowDefinitions="Auto">
+                        <bcc:BxImage
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Margin="4"
+                            HeightRequest="213"
+                            HorizontalOptions="Center"
+                            ImageSource="{Binding Data.IdeaImage, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.Idea_png}}"
+                            IsCircleMode="False"
+                            VerticalOptions="Center"
+                            WidthRequest="142" />
+                        <Grid
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            ColumnDefinitions="*,8,Auto,8"
+                            RowDefinitions="*,Auto,8,Auto">
+
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                Text="{bcm:Translate ResViewAddIdea.LblImageInfo}"
+                                TextColor="{StaticResource ColorAccent}" />
+
+                            <Label
+                                Grid.Row="1"
+                                Grid.Column="0"
+                                HorizontalOptions="End"
+                                Text="{bcm:Translate ResViewAddIdea.CmdEditImage}"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CmdModifyImage}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <bcc:BxGlyphButton
+                                Grid.Row="1"
+                                Grid.Column="2"
+                                Command="{Binding CmdModifyImage}"
+                                Glyph="{Binding CmdModifyImage.Glyph}" />
+
+                            <Label
+                                Grid.Row="3"
+                                Grid.Column="0"
+                                HorizontalOptions="End"
+                                Text="{bcm:Translate ResViewAddIdea.CmdDeleteImage}"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CmdDeleteImage}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <bcc:BxGlyphButton
+                                Grid.Row="3"
+                                Grid.Column="2"
+                                Command="{Binding CmdDeleteImage}"
+                                Glyph="{Binding CmdDeleteImage.Glyph}" />
+                        </Grid>
+                    </Grid>
+
+                    <!--#endregion-->
+
+                    <BoxView Style="{bcm:Sty BoxViewStyLargeSeperator}" />
+
+                    <!--#region Zeitraum-->
+
+                    <Grid
+                        Margin="0,4,4,0"
+                        ColumnDefinitions="*,8,Auto"
+                        RowDefinitions="Auto">
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource LabelStyDescription}"
+                            Text="{bcm:Translate ResViewAddIdea.LblTimeSpanEdit}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CmdToggleTimeSpan}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Switch
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            IsToggled="{Binding Data.HasTimespan}"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <StackLayout Margin="8,0,0,0">
+                        <bc:BxTimeControl
+                            CanEdit="{Binding Data.CanEdit}"
+                            IdeaState="{Binding DcListDataPoint.State}"
+                            IsVisible="{Binding Data.HasTimespan}"
+                            ShowLabels="True"
+                            From="{Binding Data.From, Mode=TwoWay}"
+                            To="{Binding Data.To, Mode=TwoWay}" />
+                    </StackLayout>
+
+                    <!--#endregion-->
+
+                    <BoxView Style="{bcm:Sty BoxViewStyLargeSeperator}" />
+
+                    <!--#region Standort-->
+
+                    <Grid
+                        Margin="0,4,4,0"
+                        ColumnDefinitions="*,8,Auto"
+                        RowDefinitions="Auto">
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Style="{StaticResource LabelStyDescription}"
+                            Text="{bcm:Translate ResViewAddIdea.LblPositionEdit}"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CmdTogglePosition}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+                        <Switch
+                            Grid.Row="0"
+                            Grid.Column="2"
+                            IsToggled="{Binding Data.HasPosition}"
+                            VerticalOptions="Center" />
+                    </Grid>
+
+                    <StackLayout Margin="4,0,0,0" IsVisible="{Binding Data.HasPosition}">
+                        <Label
+                            LineBreakMode="WordWrap"
+                            Text="{bcm:Translate ResViewAddIdea.LblPositionInfo}"
+                            TextColor="{StaticResource ColorAccent}" />
+
+                        <StackLayout Orientation="Horizontal" VerticalOptions="Start">
+                            <Switch IsToggled="{Binding EditPosition}" VerticalOptions="Center" />
+                            <Label Text="{bcm:Translate ResViewAddIdea.LblPositionPinMode}" VerticalOptions="Center" />
+                        </StackLayout>
+
+                        <Grid
+                            ColumnDefinitions="*,8,Auto"
+                            IsVisible="{Binding EditPosition, Converter={bcm:Sty ConverterBoolInverted}}"
+                            RowDefinitions="Auto">
+                            <bcc:BxEntry
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                EntryData="{Binding EntryAddress}"
+                                HasFrame="False"
+                                Mulitiline="True" />
+
+                            <bcc:BxGlyphButton
+                                Grid.Row="0"
+                                Grid.Column="2"
+                                Command="{Binding CmdGetPositionFromAddress}"
+                                Glyph="{Binding CmdGetPositionFromAddress.Glyph}"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center" />
+                        </Grid>
+
+                        <customControls:BissMapXf HeightRequest="300" />
+
+                        <Label IsVisible="{Binding EditPosition}" Text="{Binding Data.LocationAddress}" />
+
+                    </StackLayout>
+
+                    <!--#endregion-->
+
+                    <BoxView Margin="0,8,0,0" Style="{bcm:Sty BoxViewStyLargeSeperator}" />
+
+                    <!--#region Orte-->
+                    <Label
+                        Margin="0,8,0,0"
+                        Style="{StaticResource LabelStyDescription}"
+                        Text="{bcm:Translate ResViewAddIdea.LblRegionListHeader}" />
+
+                    <StackLayout BindableLayout.ItemsSource="{Binding SelectedRegions}">
+                        <StackLayout.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0" />
+                                <On Platform="Android" Value="0" />
+                                <On Platform="WPF" Value="0,0,28,0" />
+                            </OnPlatform>
+                        </StackLayout.Margin>
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid d:DataContext="{x:Static viewmodels:VmAddIdea.DesignInstancePermission}">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Label
+                                        Grid.Column="0"
+                                        Margin="10"
+                                        HorizontalOptions="FillAndExpand"
+                                        Text="{Binding NamePlzString}" />
+                                    <bcc:BxGlyphButton
+                                        Grid.Column="1"
+                                        Command="{Binding ViewModel.CmdRemoveRegion, Source={x:Reference MyViewAddIdea}}"
+                                        CommandParameter="{Binding}"
+                                        Glyph="{Binding ViewModel.CmdRemoveRegion.Glyph, Source={x:Reference MyViewAddIdea}}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <Label
+                        Margin="0,4,0,0"
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding Data.CanEdit}"
+                        Text="{bcm:Translate ResViewAddIdea.LblRegionListHeaderNew}" />
+                    <StackLayout Orientation="Horizontal">
+                        <bcc:BxPicker
+                            HorizontalOptions="FillAndExpand"
+                            IsVisible="{Binding Data.CanEdit}"
+                            ObservableCollectionSelectable="{Binding PickerOrganizations}" />
+                        <bcc:BxGlyphButton
+                            BackgroundColor="Transparent"
+                            Command="{Binding CmdAddRegion}"
+                            CommandParameter="{Binding .}"
+                            Glyph="{Binding CmdAddRegion.Glyph}"
+                            HorizontalOptions="End"
+                            IsVisible="{Binding Data.CanEdit}" />
+                    </StackLayout>
+
+                    <!--#endregion-->
+
+                    <!--#region Resourcen-->
+
+                    <Label Style="{StaticResource LabelStyDescription}"
+                           Text="{bcm:Translate ResViewAddIdea.LblNeedTitle}" />
+                    <StackLayout Margin="4,0,0,8">
+                        <Label
+                            LineBreakMode="WordWrap"
+                            Text="{bcm:Translate ResViewAddIdea.LblNeedSubTitle}"
+                            TextColor="{StaticResource ColorAccent}" />
+                        <Label IsVisible="{Binding UiNeeds, Converter={bcm:Sty ConverterListNotAny}}"
+                               Text="{bcm:Translate ResViewAddIdea.LblNoNeeds}" />
+                        <StackLayout BindableLayout.ItemsSource="{Binding UiNeeds}"
+                                     IsVisible="{Binding UiNeeds, Converter={bcm:Sty ConverterListAny}}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+
+                                    <Grid BindingContext="{Binding}">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="50" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.Column="0"
+                                            HorizontalOptions="FillAndExpand"
+                                            Text="{Binding Data.UiText}"
+                                            VerticalOptions="Center" />
+
+                                        <StackLayout
+                                            Grid.Row="0"
+                                            Grid.Column="1"
+                                            HorizontalOptions="End"
+                                            IsVisible="{Binding Data.HasInfo}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="44">
+                                            <bcc:BxGlyphButton
+                                                Command="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdShowNeedInfo}"
+                                                CommandParameter="{Binding}"
+                                                Glyph="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdShowNeedInfo.Glyph}" />
+                                        </StackLayout>
+
+                                        <StackLayout
+                                            Grid.Row="0"
+                                            Grid.Column="2"
+                                            HorizontalOptions="End"
+                                            IsVisible="{Binding Data.CanEdit}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="44">
+                                            <bcc:BxGlyphButton
+                                                Command="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdEditNeed}"
+                                                CommandParameter="{Binding}"
+                                                Glyph="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdEditNeed.Glyph}" />
+                                        </StackLayout>
+
+                                        <StackLayout
+                                            Grid.Row="0"
+                                            Grid.Column="3"
+                                            HorizontalOptions="End"
+                                            IsVisible="{Binding Data.CanEdit}"
+                                            VerticalOptions="Center"
+                                            WidthRequest="44">
+                                            <bcc:BxGlyphButton
+                                                Command="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdDeleteNeed}"
+                                                CommandParameter="{Binding}"
+                                                Glyph="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdDeleteNeed.Glyph}" />
+                                        </StackLayout>
+
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding Data.CanEdit}">
+                            <bcc:BxButton BissCommand="{Binding CmdAddNeed}" />
+                        </StackLayout>
+                    </StackLayout>
+
+                    <!--#endregion-->
+
+                    <bcc:BxCollapseView
+                        DetailGridEnabled="True"
+                        HeaderGlyph="{x:Static resources:Glyphs.Job_seach_team_man}"
+                        HeaderSubTitle="{bcm:Translate ResViewAddIdea.LblHelperSubTitle}"
+                        HeaderTitle="{bcm:Translate ResViewAddIdea.LblHelperTitle}"
+                        IsVisible="False">
+
+                        <Grid RowSpacing="8">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <StackLayout Grid.Row="0">
+                                <Label IsVisible="{Binding UiHelpers, Converter={bcm:Sty ConverterListNotAny}}"
+                                       Text="{bcm:Translate ResViewAddIdea.LblNoHelpers}" />
+                                <StackLayout BindableLayout.ItemsSource="{Binding UiHelpers}"
+                                             IsVisible="{Binding UiHelpers, Converter={bcm:Sty ConverterListAny}}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid BindingContext="{Binding}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="30" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="50" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <bcc:BxImage
+                                                    Grid.Row="0"
+                                                    Grid.Column="0"
+                                                    Margin="2"
+                                                    HeightRequest="26"
+                                                    HorizontalOptions="Center"
+                                                    ImageSource="{Binding Data.UserImage, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                                                    IsCircleMode="true"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="26" />
+
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="StartAndExpand"
+                                                    Text="{Binding Data.UserName}"
+                                                    VerticalOptions="Center" />
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.Column="2"
+                                                    HorizontalOptions="End"
+                                                    IsVisible="{Binding Data.HasInfo}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="44">
+                                                    <bcc:BxGlyphButton
+                                                        Command="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdShowHelperInfo}"
+                                                        CommandParameter="{Binding}"
+                                                        Glyph="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdShowHelperInfo.Glyph}" />
+                                                </StackLayout>
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.Column="3"
+                                                    HorizontalOptions="End"
+                                                    IsVisible="{Binding Data.IsMine, Converter={bcm:Sty ConverterBoolInverted}}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="44">
+                                                    <Grid
+                                                        IsVisible="{Binding ViewModel.DcListDataPoint.Data.IsMine, Source={x:Reference MyViewAddIdea}}">
+                                                        <bcc:BxGlyphButton
+                                                            Command="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdChatHelper}"
+                                                            CommandParameter="{Binding}"
+                                                            Glyph="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdChatHelper.Glyph}" />
+                                                    </Grid>
+                                                </StackLayout>
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.Column="4"
+                                                    HorizontalOptions="End"
+                                                    IsVisible="{Binding Data.CanEdit}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="44">
+                                                    <bcc:BxGlyphButton
+                                                        Command="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdEditHelper}"
+                                                        CommandParameter="{Binding}"
+                                                        Glyph="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdEditHelper.Glyph}" />
+                                                </StackLayout>
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.Column="5"
+                                                    HorizontalOptions="End"
+                                                    IsVisible="{Binding Data.CanDelete}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="44">
+                                                    <bcc:BxGlyphButton
+                                                        Command="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdDeleteHelper}"
+                                                        CommandParameter="{Binding}"
+                                                        Glyph="{Binding Source={x:Reference MyViewAddIdea}, Path=ViewModel.CmdDeleteHelper.Glyph}" />
+                                                </StackLayout>
+
+                                                <bcc:BxCollapseView
+                                                    Grid.Row="1"
+                                                    Grid.Column="0"
+                                                    Grid.ColumnSpan="6"
+                                                    Margin="8,0"
+                                                    HeaderGlyph="{x:Static resources:Glyphs.Task_checklist_check}"
+                                                    HeaderSubTitle="{bcm:Translate ResViewAddIdea.LblSupportsSubTitle}"
+                                                    HeaderTitle="{bcm:Translate ResViewAddIdea.LblSupportsTitle}">
+                                                    <StackLayout>
+                                                        <Label
+                                                            IsVisible="{Binding Data.SuppliesUi, Converter={bcm:Sty ConverterListNotAny}}"
+                                                            Text="{bcm:Translate ResViewAddIdea.LblNoSupports}" />
+                                                        <StackLayout
+                                                            BindableLayout.ItemsSource="{Binding Data.SuppliesUi}"
+                                                            IsVisible="{Binding Data.SuppliesUi, Converter={bcm:Sty ConverterListAny}}">
+                                                            <BindableLayout.ItemTemplate>
+                                                                <DataTemplate>
+                                                                    <Grid BindingContext="{Binding}">
+                                                                        <Grid.ColumnDefinitions>
+                                                                            <ColumnDefinition Width="*" />
+                                                                            <ColumnDefinition Width="Auto" />
+                                                                        </Grid.ColumnDefinitions>
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="Auto" />
+                                                                            <RowDefinition Height="Auto" />
+                                                                        </Grid.RowDefinitions>
+
+                                                                        <Label
+                                                                            Grid.Row="0"
+                                                                            Grid.Column="0"
+                                                                            Text="{Binding NeedName}" />
+                                                                        <Label
+                                                                            Grid.Row="0"
+                                                                            Grid.Column="1"
+                                                                            Text="{Binding Amount}" />
+
+                                                                        <BoxView
+                                                                            Grid.Row="1"
+                                                                            Grid.Column="0"
+                                                                            Grid.ColumnSpan="2"
+                                                                            Style="{bcm:Sty BoxViewStySeperator}" />
+                                                                    </Grid>
+                                                                </DataTemplate>
+                                                            </BindableLayout.ItemTemplate>
+                                                        </StackLayout>
+                                                    </StackLayout>
+                                                </bcc:BxCollapseView>
+
+                                                <BoxView
+                                                    Grid.Row="2"
+                                                    Grid.Column="0"
+                                                    Grid.ColumnSpan="6"
+                                                    Style="{bcm:Sty BoxViewStySeperator}" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </StackLayout>
+
+                            <StackLayout Grid.Row="1"
+                                         IsVisible="{Binding DcListDataPoint.State, Converter={StaticResource ConverterDcListItemNotNew}}">
+                                <bcc:BxButton BissCommand="{Binding CmdAddHelper}" />
+                            </StackLayout>
+                        </Grid>
+                    </bcc:BxCollapseView>
+                </StackLayout>
+
+                <!--#endregion-->
+
+            </ScrollView>
+        </StackLayout>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

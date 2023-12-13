@@ -1,0 +1,24 @@
+﻿@page "/login"
+
+@layout HomeLayout
+
+@inject IAuthenticationService AuthService
+@inject IJSRuntime JsRuntime
+@inject NavigationManager NavigationManager
+
+<RadzenRow Style="margin-top: 100px">
+    <div class="form-control login">
+        <h3>Login</h3>
+        <div class="mb-3">
+            <label>Benutzername</label>
+            <input @bind-value="_username" type="email" id="input_email" class="form-control">
+        </div>
+        <div class="mb-3">
+            <label>Passwort</label>
+            <input @bind-value="_password" type="password" id="input_password" class="form-control">
+        </div>
+        <div class="mb-3">
+            <button @onclick="Login" class="btn btn-success">Anmelden<i class="ml-2"></i></button>
+        </div>
+    </div>
+</RadzenRow>

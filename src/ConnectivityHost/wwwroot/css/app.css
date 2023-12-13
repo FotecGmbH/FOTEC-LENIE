@@ -1,0 +1,145 @@
+﻿@import url('open-iconic/font/css/open-iconic-bootstrap.min.css');
+
+html, body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+a, .btn-link {
+    color: #0366d6;
+}
+
+.btn-primary {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+.content {
+    padding-top: 1.1rem;
+}
+
+body {
+    background: white !important;
+}
+
+.mb-20 {
+    margin-bottom: 20px;
+}
+
+.tx-header {
+    background: #36517E;
+    color: white;
+}
+
+.cl-turkis {
+    color: #39CCCC;
+}
+
+.tx-link {
+    background-color: #fafafa;
+    color: darkgray;
+}
+
+.bg-white {
+    background: white;
+}
+
+.h-150 {
+    height: 150px;
+}
+
+.footer-fotec {
+    background: #36517E;
+    color: white;
+}
+
+.disp-block {
+    display: block;
+}
+
+.login {
+    margin: 0 auto;
+    max-width: 600px;
+}
+
+.console {
+    background: black;
+}
+
+.prompt {
+    display: inline-block;
+    width: 100px;
+}
+
+.prompt-t {
+    color: #d4c8c8;
+}
+
+.prompt-i {
+    color: green;
+}
+
+.prompt-w {
+    color: orange;
+}
+
+.date {
+    color: azure;
+}
+
+.prompt-e {
+    color: red;
+}
+
+.cmd {
+    color: white;
+    word-break: break-all;
+    white-space: pre-wrap;
+    display: inline;
+}
+
+.m-40 {
+    margin: 40px;
+}
+
+.m-20 {
+    margin: 25px;
+}
+
+.m-25 {
+    margin: 20px;
+}
+
+.pb-50 {
+    padding-bottom: 50px;
+}
+
+w-200 {
+    width: 200px;
+}
+
+mw-100 {
+    max-width: 100%;
+}
+
+.splash {
+    text-align: center;
+    color: white;
+    background-color: #163072;
+}
+
+.pt-50 {
+    padding-top: 50px;
+}
+
+.mh-600 {
+    max-height: 600px;
+}
+
+.h-600 {
+    height: 600px;
+}
+
+.h-400 {
+    height: 400px;
+}

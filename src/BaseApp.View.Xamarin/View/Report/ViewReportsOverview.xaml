@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewReportsOverview"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="clr-namespace:Biss.Apps.XF.Controls;assembly=Biss.Apps.XF"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Reports;assembly=BaseApp"
+    x:Name="MyViewReportsOverview"
+    d:DataContext="{x:Static viewmodels:VmReportsOverview.DesignInstance}"
+    x:TypeArguments="viewmodels:VmReportsOverview"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <ScrollView>
+            <StackLayout Margin="8,0">
+                <Label
+                    HorizontalOptions="Center"
+                    IsVisible="{Binding ShowList, Converter={bcm:Sty ConverterBoolInverted}}"
+                    Text="{bcm:Translate ResViewReportsOverview.LblNoReports}"
+                    VerticalOptions="Center" />
+                <StackLayout BindableLayout.ItemsSource="{Binding UiReports}" IsVisible="{Binding ShowList}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate>
+                            <Grid
+                                d:DataContext="{x:Static viewmodels:VmShowReports.DesignInstanceReport}"
+                                ColumnDefinitions="Auto,*,*,2*,Auto"
+                                RowDefinitions="Auto,Auto,Auto,Auto">
+
+                                <bcc:BxGlyphButton
+                                    Grid.Row="0"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="0"
+                                    Command="{Binding Source={x:Reference MyViewReportsOverview}, Path=ViewModel.CmdShowIdea}"
+                                    CommandParameter="{Binding}"
+                                    Glyph="{Binding Source={x:Reference MyViewReportsOverview}, Path=ViewModel.CmdShowIdea.Glyph}"
+                                    VerticalOptions="Center" />
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.RowSpan="{Binding RowSpanUserLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Grid.Column="1"
+                                    Grid.ColumnSpan="{Binding ColSpanUserLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Margin="4"
+                                    LineBreakMode="CharacterWrap"
+                                    Text="{Binding Data.IdeaTitle}"
+                                    VerticalTextAlignment="Center" />
+
+                                <Label
+                                    Grid.Row="{Binding RowIdeaLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Grid.RowSpan="{Binding RowSpanIdeaLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Grid.Column="{Binding ColIdeaLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Grid.ColumnSpan="{Binding ColSpanIdeaLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Margin="4"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Data.UserName}"
+                                    TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                Light={StaticResource ColorAccentLight}}"
+                                    VerticalTextAlignment="Center" />
+
+                                <Label
+                                    Grid.Row="{Binding RowReasonLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Grid.RowSpan="{Binding RowSpanReasonLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Grid.Column="{Binding ColReasonLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Grid.ColumnSpan="{Binding ColSpanReasonLabel, Source={x:Reference MyViewReportsOverview}}"
+                                    Margin="4"
+                                    LineBreakMode="WordWrap"
+                                    Text="{Binding Data.Reason}"
+                                    VerticalTextAlignment="Center" />
+
+                                <bcc:BxGlyphButton
+                                    Grid.Row="0"
+                                    Grid.RowSpan="3"
+                                    Grid.Column="4"
+                                    Command="{Binding Source={x:Reference MyViewReportsOverview}, Path=ViewModel.Dc.DcExReports.CmdRemoveItem}"
+                                    CommandParameter="{Binding}"
+                                    Glyph="{Binding Source={x:Reference MyViewReportsOverview}, Path=ViewModel.Dc.DcExReports.CmdRemoveItem.Glyph}"
+                                    VerticalOptions="Center" />
+
+                                <BoxView
+                                    Grid.Row="3"
+                                    Grid.Column="0"
+                                    Grid.ColumnSpan="5"
+                                    HeightRequest="1"
+                                    Style="{bcm:Sty BoxViewStySeperator}" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

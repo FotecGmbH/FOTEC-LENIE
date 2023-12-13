@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewChatOverviewQ"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Chat;assembly=BaseApp"
+    x:Name="MyChatOverviewQ"
+    d:DataContext="{x:Static viewmodels:VmChatOverview.DesignInstance}"
+    x:TypeArguments="viewmodels:VmChatOverview"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <Grid Margin="4,16,4,0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="8" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="8" />
+            </Grid.RowDefinitions>
+
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="16" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="8" />
+            </Grid.ColumnDefinitions>
+
+            <!--#region Spalte Gemeindefilter-->
+
+            <Frame Grid.Row="1" Grid.Column="1">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <ScrollView Grid.Row="1">
+                        <StackLayout>
+                            <StackLayout BindableLayout.ItemsSource="{Binding PickerOrganizations}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid BindingContext="{x:Static viewmodels:VmChatOverview.DesignInstanceOrg}">
+                                            <Frame
+                                                Margin="4"
+                                                Padding="0"
+                                                CornerRadius="12">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="4" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="4" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="4" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <BoxView
+                                                        Grid.Row="0"
+                                                        Grid.RowSpan="3"
+                                                        Grid.Column="0"
+                                                        Grid.ColumnSpan="3"
+                                                        BackgroundColor="{AppThemeBinding Dark={StaticResource ColorAccent2},
+                                                                                          Light={StaticResource ColorAccent2Light}}"
+                                                        CornerRadius="12"
+                                                        IsVisible="{Binding IsSelected}" />
+
+                                                    <Grid
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        Margin="8"
+                                                        HeightRequest="44">
+
+                                                        <Label
+                                                            Text="{Binding Description}"
+                                                            VerticalOptions="Center"
+                                                            VerticalTextAlignment="Center" />
+
+                                                        <Grid.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding ViewModel.CmdSelectOrganization, Source={x:Reference MyChatOverviewQ}}"
+                                                                CommandParameter="{Binding}" />
+                                                        </Grid.GestureRecognizers>
+                                                    </Grid>
+                                                </Grid>
+                                            </Frame>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+
+                    <Label
+                        Grid.Row="0"
+                        Margin="0,0,0,8"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        Text="{bcm:Translate ResViewChatOverview.LblTowns}"
+                        TextColor="{AppThemeBinding Dark={StaticResource ColorTextDetail},
+                                                    Light={StaticResource ColorTextDetailLight}}" />
+                </Grid>
+            </Frame>
+
+            <!--#endregion-->
+
+            <!--#region Spalte Ideenfilter-->
+
+            <Frame Grid.Row="1" Grid.Column="3">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <ScrollView Grid.Row="1">
+                        <StackLayout>
+                            <StackLayout BindableLayout.ItemsSource="{Binding PickerIdeas}">
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid BindingContext="{x:Static viewmodels:VmChatOverview.DesignInstanceIdea}">
+                                            <Frame
+                                                Margin="4"
+                                                Padding="0"
+                                                CornerRadius="12">
+                                                <Grid>
+                                                    <Grid.RowDefinitions>
+                                                        <RowDefinition Height="4" />
+                                                        <RowDefinition Height="*" />
+                                                        <RowDefinition Height="4" />
+                                                    </Grid.RowDefinitions>
+
+                                                    <Grid.ColumnDefinitions>
+                                                        <ColumnDefinition Width="4" />
+                                                        <ColumnDefinition Width="*" />
+                                                        <ColumnDefinition Width="4" />
+                                                    </Grid.ColumnDefinitions>
+
+                                                    <BoxView
+                                                        Grid.Row="0"
+                                                        Grid.RowSpan="3"
+                                                        Grid.Column="0"
+                                                        Grid.ColumnSpan="3"
+                                                        BackgroundColor="{AppThemeBinding Dark={StaticResource ColorAccent2},
+                                                                                          Light={StaticResource ColorAccent2Light}}"
+                                                        CornerRadius="12"
+                                                        IsVisible="{Binding IsSelected}" />
+
+                                                    <Grid
+                                                        Grid.Row="1"
+                                                        Grid.Column="1"
+                                                        Margin="8"
+                                                        HeightRequest="44">
+                                                        <Label
+                                                            Text="{Binding Description}"
+                                                            VerticalOptions="Center"
+                                                            VerticalTextAlignment="Center" />
+
+                                                        <Grid.GestureRecognizers>
+                                                            <TapGestureRecognizer
+                                                                Command="{Binding ViewModel.CmdSelectIdea, Source={x:Reference MyChatOverviewQ}}"
+                                                                CommandParameter="{Binding}" />
+                                                        </Grid.GestureRecognizers>
+                                                    </Grid>
+                                                </Grid>
+                                            </Frame>
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </StackLayout>
+                    </ScrollView>
+
+                    <Label
+                        Grid.Row="0"
+                        Margin="0,0,0,8"
+                        FontSize="{StaticResource FontSizeSmall}"
+                        Text="{bcm:Translate ResViewChatOverview.LblIdeas}"
+                        TextColor="{AppThemeBinding Dark={StaticResource ColorTextDetail},
+                                                    Light={StaticResource ColorTextDetailLight}}" />
+                </Grid>
+            </Frame>
+
+            <!--#endregion-->
+
+            <!--#region Spalte Chatübersicht-->
+
+            <Frame Grid.Row="1" Grid.Column="5">
+                <Grid Margin="0" Padding="0">
+                    <Grid IsVisible="{Binding ChatsAvailable}">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <ScrollView Grid.Row="1">
+                            <StackLayout>
+                                <StackLayout BindableLayout.ItemsSource="{Binding ChatList}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid
+                                                BindingContext="{x:Static viewmodels:VmChatOverview.DesignInstanceChat}">
+                                                <Frame
+                                                    Margin="4"
+                                                    Padding="0"
+                                                    CornerRadius="12">
+                                                    <Grid BindingContext="{Binding}">
+                                                        <Grid.RowDefinitions>
+                                                            <RowDefinition Height="4" />
+                                                            <RowDefinition Height="*" />
+                                                            <RowDefinition Height="4" />
+                                                        </Grid.RowDefinitions>
+
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="4" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="4" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <Grid
+                                                            Grid.Row="1"
+                                                            Grid.Column="1"
+                                                            Margin="8"
+                                                            HeightRequest="44">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="30" />
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+
+                                                            <BoxView
+                                                                Grid.Column="0"
+                                                                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorEntryErrorText},
+                                                                                                  Light={StaticResource ColorEntryErrorTextLight}}"
+                                                                CornerRadius="10"
+                                                                HeightRequest="20"
+                                                                HorizontalOptions="Center"
+                                                                IsVisible="{Binding UnreadMessages, Converter={StaticResource ConverterCountMoreThanZero}}"
+                                                                VerticalOptions="Center"
+                                                                WidthRequest="20" />
+                                                            <Label
+                                                                Grid.Column="0"
+                                                                FontSize="{StaticResource FontSizeSmall}"
+                                                                HeightRequest="20"
+                                                                HorizontalOptions="Center"
+                                                                HorizontalTextAlignment="Center"
+                                                                IsVisible="{Binding UnreadMessages, Converter={StaticResource ConverterCountMoreThanZero}}"
+                                                                Text="{Binding UnreadMessages}"
+                                                                TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                                            Light={StaticResource ColorTextOnColorLight}}"
+                                                                VerticalOptions="Center"
+                                                                VerticalTextAlignment="Center"
+                                                                WidthRequest="20" />
+
+                                                            <Label
+                                                                Grid.Column="1"
+                                                                FontFamily="{StaticResource StreamLineIcons}"
+                                                                FontSize="{StaticResource FontSizeSmall}"
+                                                                HeightRequest="20"
+                                                                HorizontalOptions="Center"
+                                                                HorizontalTextAlignment="Center"
+                                                                IsVisible="{Binding IsGroup, Converter={bcm:Sty ConverterBoolInverted}}"
+                                                                Text="{x:Static resources:Glyphs.Single_neutral}"
+                                                                VerticalOptions="Center"
+                                                                VerticalTextAlignment="Center"
+                                                                WidthRequest="20" />
+                                                            <Label
+                                                                Grid.Column="1"
+                                                                FontFamily="{StaticResource StreamLineIcons}"
+                                                                FontSize="{StaticResource FontSizeSmall}"
+                                                                HeightRequest="20"
+                                                                HorizontalOptions="Center"
+                                                                HorizontalTextAlignment="Center"
+                                                                IsVisible="{Binding IsGroup}"
+                                                                Text="{x:Static resources:Glyphs.Messaging_msn_messenger}"
+                                                                VerticalOptions="Center"
+                                                                VerticalTextAlignment="Center"
+                                                                WidthRequest="20" />
+
+                                                            <Label
+                                                                Grid.Column="2"
+                                                                Text="{Binding ChatName}"
+                                                                VerticalOptions="Center"
+                                                                VerticalTextAlignment="Center" />
+
+                                                            <bcc:BxGlyphButton
+                                                                Grid.Column="3"
+                                                                Command="{Binding ViewModel.CmdOpenChat, Source={x:Reference MyChatOverviewQ}}"
+                                                                CommandParameter="{Binding}"
+                                                                Glyph="{Binding ViewModel.CmdOpenChat.Glyph, Source={x:Reference MyChatOverviewQ}}" />
+
+                                                            <BoxView
+                                                                Grid.Column="0"
+                                                                Grid.ColumnSpan="4"
+                                                                HorizontalOptions="FillAndExpand"
+                                                                VerticalOptions="FillAndExpand">
+                                                                <BoxView.GestureRecognizers>
+                                                                    <TapGestureRecognizer
+                                                                        Command="{Binding ViewModel.CmdOpenChat, Source={x:Reference MyChatOverviewQ}}"
+                                                                        CommandParameter="{Binding}" />
+                                                                </BoxView.GestureRecognizers>
+                                                            </BoxView>
+                                                        </Grid>
+                                                    </Grid>
+                                                </Frame>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </StackLayout>
+                        </ScrollView>
+
+                        <Label
+                            Grid.Row="0"
+                            Margin="0,0,0,8"
+                            FontSize="{StaticResource FontSizeSmall}"
+                            Text="{Binding ChatInfoText}"
+                            TextColor="{AppThemeBinding Dark={StaticResource ColorTextDetail},
+                                                        Light={StaticResource ColorTextDetailLight}}" />
+                    </Grid>
+
+                    <Grid IsVisible="{Binding ChatsAvailable, Converter={bcm:Sty ConverterBoolInverted}}"
+                          VerticalOptions="CenterAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="8" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            Grid.Row="1"
+                            FontSize="48"
+                            HorizontalTextAlignment="Center"
+                            Style="{bcm:Sty LabelStyGlyph}"
+                            Text="{x:Static resources:Glyphs.Messages_bubble_warning_triangle}" />
+                        <Label
+                            Grid.Row="3"
+                            HorizontalTextAlignment="Center"
+                            MaxLines="2"
+                            Text="{bcm:Translate ResViewChatOverview.LblNoChats}" />
+                    </Grid>
+                </Grid>
+            </Frame>
+
+            <!--#endregion-->
+
+        </Grid>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

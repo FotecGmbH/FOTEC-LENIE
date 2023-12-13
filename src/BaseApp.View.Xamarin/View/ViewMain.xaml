@@ -1,0 +1,513 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewMain"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel;assembly=BaseApp"
+    d:DataContext="{x:Static viewmodels:VmMain.DesignInstance}"
+    x:TypeArguments="viewmodels:VmMain"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <!--  Negativer Margin wegen Template -> Sonst ist oben ein weisser freiraum  -->
+        <RefreshView
+            Margin="0,-16,0,0"
+            Command="{Binding GCmdHeaderCommon}"
+            IsRefreshing="{Binding IsRefreshing}">
+
+            <Grid Margin="4,4,4,4">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <ScrollView Grid.Row="1" Grid.Column="0">
+                    <ScrollView.Padding>
+                        <OnPlatform x:TypeArguments="Thickness">
+                            <On Platform="iOS, Android, macOS" Value="0,0,0,0" />
+                            <On Platform="WPF" Value="0,0,24,0" />
+                        </OnPlatform>
+                    </ScrollView.Padding>
+                    <StackLayout>
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="70" />
+                                <RowDefinition Height="80" />
+                            </Grid.RowDefinitions>
+
+                            <StackLayout
+                                Grid.Row="0"
+                                Grid.RowSpan="2"
+                                Grid.Column="0"
+                                Grid.ColumnSpan="3"
+                                HorizontalOptions="Fill">
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="{Binding View.Height, Converter={StaticResource ConverterBackgroundImageHeight}}"
+                                    HorizontalOptions="Fill"
+                                    IsVisible="{Binding Dc.CoreConnectionInfos.UserOk, Converter={bcm:Sty ConverterBoolInverted}}"
+                                    Source="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.background_jpg}}"
+                                    VerticalOptions="Start"
+                                    WidthRequest="{Binding View.Width}" />
+                                <Image
+                                    Aspect="AspectFill"
+                                    HeightRequest="{Binding View.Height, Converter={StaticResource ConverterBackgroundImageHeight}}"
+                                    HorizontalOptions="Fill"
+                                    IsVisible="{Binding Dc.CoreConnectionInfos.UserOk}"
+                                    Source="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.backgroundInfo_jpg}}"
+                                    VerticalOptions="Start"
+                                    WidthRequest="{Binding View.Width}" />
+                            </StackLayout>
+
+                            <bcc:BxImage
+                                Grid.Row="1"
+                                Grid.RowSpan="2"
+                                Grid.Column="1"
+                                CornerRadius="0"
+                                HeightRequest="150"
+                                HorizontalOptions="Center"
+                                ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.Logo1_png}}"
+                                IsCircleMode="False"
+                                WidthRequest="150" />
+                        </Grid>
+
+                        <StackLayout
+                            IsVisible="{Binding Dc.CoreConnectionInfos.UserOk, Converter={bcm:Sty ConverterBoolInverted}}">
+                            <Label
+                                Padding="4"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelStyBig}"
+                                Text="Hallo bei LENIE!"
+                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                            Light={StaticResource ColorAccentLight}}"
+                                VerticalOptions="Center" />
+
+                            <BoxView Style="{StaticResource BoxViewStySmallSeperator}" />
+
+                            <Label
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="WordWrap">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="Mit LENIE kannst du dich in deiner Gemeinde besser" />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text=" informieren" />
+                                            <Span Text=", " />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text=" vernetzen" />
+                                            <Span Text=" und " />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text=" Ideen umsetzen" />
+                                            <Span Text="." />
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Grid Margin="0,12,0,4" HorizontalOptions="Center">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="300" />
+                                </Grid.ColumnDefinitions>
+
+                                <bcc:BxButton BissCommand="{Binding GCmdLogin}"
+                                              Text="{bcm:Translate ResViewMain.CmdLogin}" />
+                            </Grid>
+
+                            <Label
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="WordWrap">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="LENIE ist eine " />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text="Pilot-Plattform" />
+                                            <Span Text=". Die unterschiedlichen " />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text="Module " />
+                                            <Span Text="werden schrittweise zusammen mit " />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text="fünf Pilotgemeinden " />
+                                            <Span Text="entwickelt. Indem du die Module " />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text="ausprobierst " />
+                                            <Span Text="und uns " />
+                                            <Span FontFamily="{StaticResource VerdanaBold}" Text="Feedback " />
+                                            <Span
+                                                Text="gibst, hilfst du aktiv mit, LENIE für dich und deine Gemeinde zu verbessern" />
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+
+                        <StackLayout IsVisible="{Binding Dc.CoreConnectionInfos.UserOk}" Spacing="2">
+                            <Label
+                                Padding="4"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelStyBig}"
+                                Text="Info und Kontakt"
+                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                            Light={StaticResource ColorAccentLight}}"
+                                VerticalOptions="Center" />
+
+                            <BoxView Style="{StaticResource BoxViewStySmallSeperator}" />
+
+                            <Label
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Du hast eine Frage oder Anregungen?"
+                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                            Light={StaticResource ColorAccentLight}}" />
+
+                            <Label
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Hier kannst du uns erreichen:"
+                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                            Light={StaticResource ColorAccentLight}}" />
+
+                            <Label
+                                Margin="0,8,0,0"
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Land Niederösterreich" />
+                            <Label
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Abteilung Wirtschaft, " />
+                            <Label
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Tourismus und Technologie " />
+                            <Label
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Geschäftsstelle für" />
+                            <Label
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Technologie und " />
+                            <Label
+                                FontFamily="{StaticResource VerdanaBold}"
+                                HorizontalOptions="Center"
+                                Text="Digitalisierung" />
+
+                            <Label HorizontalOptions="Center" Text="A-3109 St. Pölten" />
+                            <Label HorizontalOptions="Center" Text="Landhausplatz 1, Haus 14" />
+                            <Label
+                                Margin="0,8,0,0"
+                                HorizontalOptions="Center"
+                                Text="Email: " />
+                            <Label HorizontalOptions="Center" Text="digitalisierung@noel.gv.at" />
+                            <Label HorizontalOptions="Center" Text="noe.gv.at/digitalisierung" />
+
+                            <Label
+                                Margin="0,12,0,0"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelStyBig}"
+                                Text="Version"
+                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                            Light={StaticResource ColorAccentLight}}" />
+
+                            <Label HorizontalOptions="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <FormattedString.Spans>
+                                            <Span Text="{Binding AppName}" />
+                                            <Span Text=" " />
+                                            <Span Text="{Binding AppVersion}" />
+                                        </FormattedString.Spans>
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+
+                            <Label
+                                Margin="0,12,0,0"
+                                HorizontalOptions="Center"
+                                Style="{StaticResource LabelStyBig}"
+                                Text="Changelog und Planung unter:"
+                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                            Light={StaticResource ColorAccentLight}}" />
+
+                            <Label
+                                HorizontalOptions="Center"
+                                HorizontalTextAlignment="Center"
+                                LineBreakMode="CharacterWrap"
+                                Text="https://github.com/DIH-OST/lenie/wiki/Changelog-und-Releaseplanung"
+                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                            Light={StaticResource ColorAccentLight}}"
+                                TextDecorations="Underline">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                          CommandParameter="https://github.com/DIH-OST/lenie/wiki/Changelog-und-Releaseplanung" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                        </StackLayout>
+
+                        <Label
+                            Margin="0,12,0,8"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            LineBreakMode="WordWrap"
+                            Style="{StaticResource LabelStyBig}"
+                            Text="Aus den folgenden Gemeinden befinden sich die Testbenutzer"
+                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                        Light={StaticResource ColorAccentLight}}" />
+
+                        <StackLayout BindableLayout.ItemsSource="{Binding UiOrganizations}" HorizontalOptions="Center">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid d:DataContext="{x:Static viewmodels:VmMain.DesignInstanceOrg}"
+                                          WidthRequest="450">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="60" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="40" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            Grid.Column="0"
+                                            Margin="0,0,8,0"
+                                            HorizontalOptions="End"
+                                            Text="{Binding Data.PostalCode}"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            Grid.Column="1"
+                                            Margin="0,0,4,0"
+                                            LineBreakMode="TailTruncation"
+                                            Text="{Binding Data.Name}"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            Grid.Column="2"
+                                            Margin="0,0,4,0"
+                                            HorizontalOptions="End"
+                                            Text="{Binding Data.IdeasCount}"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            Grid.Column="3"
+                                            Margin="0,0,4,0"
+                                            HorizontalOptions="End"
+                                            Text="Idee(n)"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            Grid.Column="4"
+                                            Margin="0,0,4,0"
+                                            HorizontalOptions="End"
+                                            Text="{Binding Data.UsersCount}"
+                                            VerticalOptions="Center" />
+
+                                        <Label
+                                            Grid.Column="5"
+                                            HorizontalOptions="End"
+                                            Text="User"
+                                            VerticalOptions="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+
+                        <Label
+                            Padding="12"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding Dc.CoreConnectionInfos.UserOk, Converter={bcm:Sty ConverterBoolInverted}}"
+                            Style="{StaticResource LabelStyBig}"
+                            Text="Weitere Infos unter LENIE.AT"
+                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                        Light={StaticResource ColorAccentLight}}">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                      CommandParameter="https://land-noe.at/lenie" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Label
+                            Padding="12"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding Dc.CoreConnectionInfos.UserOk}"
+                            Style="{StaticResource LabelStyBig}"
+                            Text="Das Team hinter LENIE:"
+                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                        Light={StaticResource ColorAccentLight}}" />
+
+                        <Label
+                            Margin="0,8,0,8"
+                            HorizontalOptions="Center"
+                            HorizontalTextAlignment="Center"
+                            IsVisible="{Binding Dc.CoreConnectionInfos.UserOk}"
+                            LineBreakMode="WordWrap">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="Die Umsetzung der Pilot-Plattform LENIE wird von der " />
+                                        <Span
+                                            Text="Geschäftsstelle für Technologie und Digitalisierung "
+                                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                        Light={StaticResource ColorAccentLight}}"
+                                            TextDecorations="Underline">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                                      CommandParameter="https://land-noe.at/noe/teamdigitalisierung.html" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span Text="koordiniert und gemeinsam mit der " />
+                                        <Span
+                                            Text="NÖ.Regional, "
+                                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                        Light={StaticResource ColorAccentLight}}"
+                                            TextDecorations="Underline">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                                      CommandParameter="https://www.noeregional.at/lenie-leben-in-niederoesterreich/" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span
+                                            Text="DIH-OST "
+                                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                        Light={StaticResource ColorAccentLight}}"
+                                            TextDecorations="Underline">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                                      CommandParameter="https://dih-ost.at/" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span Text="und der " />
+                                        <Span
+                                            Text="FOTEC Forschungs- und Technologietransfer GmbH, dem Forschungsunternehmen der FH Wiener Neustadt"
+                                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                        Light={StaticResource ColorAccentLight}}"
+                                            TextDecorations="Underline">
+                                            <Span.GestureRecognizers>
+                                                <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                                      CommandParameter="https://www.fotec.at/" />
+                                            </Span.GestureRecognizers>
+                                        </Span>
+                                        <Span Text=", realisiert." />
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                        <Grid
+                            BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackground}, Light={StaticResource ColorBackgroundLight}}"
+                            IsVisible="{Binding Dc.CoreConnectionInfos.UserOk}">
+
+                            <FlexLayout
+                                Margin="16"
+                                JustifyContent="SpaceBetween"
+                                Wrap="Wrap">
+                                <bcc:BxImage
+                                    CornerRadius="0"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Center"
+                                    ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.noe_png}}"
+                                    IsCircleMode="False"
+                                    WidthRequest="100">
+                                    <bcc:BxImage.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                              CommandParameter="https://land-noe.at/noe/teamdigitalisierung.html" />
+                                    </bcc:BxImage.GestureRecognizers>
+                                </bcc:BxImage>
+                                <bcc:BxImage
+                                    CornerRadius="0"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Center"
+                                    ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.HdDNetzwerk_png}}"
+                                    IsCircleMode="False"
+                                    WidthRequest="200">
+                                    <bcc:BxImage.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                              CommandParameter="https://www.virtuelleshaus.at/" />
+                                    </bcc:BxImage.GestureRecognizers>
+                                </bcc:BxImage>
+                                <bcc:BxImage
+                                    CornerRadius="0"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Center"
+                                    ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.NoeRegional_png}}"
+                                    IsCircleMode="False"
+                                    WidthRequest="280">
+                                    <bcc:BxImage.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                              CommandParameter="https://www.noeregional.at/lenie-leben-in-niederoesterreich/" />
+                                    </bcc:BxImage.GestureRecognizers>
+                                </bcc:BxImage>
+                                <bcc:BxImage
+                                    CornerRadius="0"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Center"
+                                    ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.EcoDigitalEU_png}}"
+                                    IsCircleMode="False"
+                                    WidthRequest="300">
+                                    <bcc:BxImage.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                              CommandParameter="https://www.virtuelleshaus.at" />
+                                    </bcc:BxImage.GestureRecognizers>
+                                </bcc:BxImage>
+                                <bcc:BxImage
+                                    CornerRadius="0"
+                                    HeightRequest="100"
+                                    HorizontalOptions="Center"
+                                    ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.Logo_png}}"
+                                    IsCircleMode="False"
+                                    WidthRequest="170">
+                                    <bcc:BxImage.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding GCmdOpenLink}"
+                                                              CommandParameter="https://www.fotec.at/" />
+                                    </bcc:BxImage.GestureRecognizers>
+                                </bcc:BxImage>
+                            </FlexLayout>
+                        </Grid>
+
+                        <bcc:BxButton Margin="12" BissCommand="{Binding CmdIntro}" />
+                    </StackLayout>
+                </ScrollView>
+
+                <Frame
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Padding="4"
+                    BackgroundColor="{AppThemeBinding Dark={StaticResource ColorTestInfoBackground},
+                                                      Light={StaticResource ColorTestInfoBackgroundLight}}"
+                    CornerRadius="0">
+                    <Label
+                        HorizontalTextAlignment="Center"
+                        LineBreakMode="WordWrap"
+                        Style="{bcm:Sty LabelStyDetail}"
+                        Text="Interne Testversion. Diese App ist noch in Entwicklung und stellt nicht die finale Version dar!"
+                        TextColor="{AppThemeBinding Dark={StaticResource ColorTestInfoText},
+                                                    Light={StaticResource ColorTestInfoTextLight}}" />
+                </Frame>
+
+            </Grid>
+        </RefreshView>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

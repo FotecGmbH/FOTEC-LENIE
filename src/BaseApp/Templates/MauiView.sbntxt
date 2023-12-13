@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<view:BissContentPage
+	x:Class="MauiAppBiss.Views.{{ViewName}}"
+    xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bc="clr-namespace:MauiAppBiss.Controls"
+    xmlns:bcc="clr-namespace:Biss.Apps.Maui.Controls;assembly=Biss.Apps.Maui"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.Maui"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel;assembly=BaseApp"
+    xmlns:windows="clr-namespace:Microsoft.Maui.Controls.PlatformConfiguration.WindowsSpecific;assembly=Microsoft.Maui.Controls"
+    x:Name="{{ViewName}}Page"
+	x:DataType="{x:Type viewmodels:{{ViewModelName}}}"
+    d:DataContext="{x:Static viewmodels:{{ViewModelName}}.DesignInstance}"
+    x:TypeArguments="viewmodels:{{ViewModelName}}"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+	<bc:PageControl>
+
+		<!--#region View Content-->
+
+		<StackLayout
+			HorizontalOptions="CenterAndExpand"
+			VerticalOptions="CenterAndExpand">
+			<Label Text="{{ViewName}}" />
+			<Label Text="{{ViewModelName}}" />
+		</StackLayout>
+
+		<!--#endregion-->
+
+	</bc:PageControl>
+</view:BissContentPage>

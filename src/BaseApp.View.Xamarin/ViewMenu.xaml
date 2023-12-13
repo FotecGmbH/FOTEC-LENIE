@@ -1,0 +1,146 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<base1:BaseMenu
+    x:Class="BaseApp.View.Xamarin.ViewMenu"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:Biss.Apps.ViewModel;assembly=Biss.Apps"
+    xmlns:base1="clr-namespace:Biss.Apps.XF.Navigation.Base;assembly=Biss.Apps.XF"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:constants="clr-namespace:Exchange;assembly=Exchange"
+    xmlns:converter="clr-namespace:Biss.Apps.XF.Converter;assembly=Biss.Apps.XF"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:iOsSpecific="clr-namespace:Xamarin.Forms.PlatformConfiguration.iOSSpecific;assembly=Xamarin.Forms.Core"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:viewModel="clr-namespace:BaseApp.ViewModel;assembly=BaseApp"
+    Title="{x:Static constants:Constants.MainTitle}"
+    d:DataContext="{x:Static viewModel:VmMenu.DesignInstance}"
+    iOsSpecific:Page.UseSafeArea="True"
+    BackgroundColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                      Light={StaticResource ColorAccentLight}}"
+    mc:Ignorable="d">
+
+    <base1:BaseMenu.Resources>
+        <converter:ConverterBooleanValueColor
+            x:Key="BackgroundColorConverter"
+            ColorFalse="Transparent"
+            ColorTrue="{StaticResource ColorIdeaFrameBackground}" />
+        <converter:ConverterBooleanValueColor
+            x:Key="LabelColorConverter"
+            ColorFalse="{StaticResource ColorTextDetail}"
+            ColorTrue="{StaticResource ColorAccent}" />
+    </base1:BaseMenu.Resources>
+
+    <Grid
+        BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackground}, Light={StaticResource ColorBackgroundLight}}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+
+        <BoxView
+            Grid.Row="0"
+            Grid.RowSpan="3"
+            Grid.Column="0"
+            BackgroundColor="Transparent"
+            Color="Transparent">
+            <BoxView.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GCmdMore}" />
+            </BoxView.GestureRecognizers>
+        </BoxView>
+
+
+        <!--  Titel  -->
+        <BoxView
+            Grid.Row="0"
+            Grid.Column="0"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource ColorHeaderBackground},
+                                              Light={StaticResource ColorHeaderBackgroundLight}}"
+            HeightRequest="50"
+            HorizontalOptions="FillAndExpand" />
+        <bcc:BxImage
+            Grid.Row="0"
+            Grid.Column="0"
+            Margin="16,16,0,8"
+            CornerRadius="0"
+            HeightRequest="50"
+            HorizontalOptions="Start"
+            ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.Logo3_png}}"
+            IsCircleMode="False"
+            VerticalOptions="Center"
+            WidthRequest="200">
+            <bcc:BxImage.GestureRecognizers>
+                <TapGestureRecognizer Command="{Binding GCmdHome}" />
+            </bcc:BxImage.GestureRecognizers>
+        </bcc:BxImage>
+
+        <bcc:BxCollectionView
+            x:Name="MenuCollectionView"
+            Grid.Row="1"
+            AutomationId="ListViewMenuItems"
+            Collection="{Binding CmdAllMenuCommands}"
+            SelectedItem="{Binding CmdAllMenuCommands.SelectedItem}"
+            SelectionMode="Single"
+            TouchMarginLeft="0"
+            TouchMarginRight="0">
+            <bcc:BxCollectionView.Margin>
+                <OnPlatform x:TypeArguments="Thickness">
+                    <On Platform="iOS, Android, macOS" Value="0,0,0,0" />
+                    <On Platform="WPF" Value="0,10,0,4" />
+                </OnPlatform>
+            </bcc:BxCollectionView.Margin>
+
+            <bcc:BxCollectionView.DataTemplate>
+                <DataTemplate>
+                    <Grid d:DataContext="{x:Static base:VmCommandSelectable.DesignInstance}"
+                          BackgroundColor="{Binding IsSelected, Converter={StaticResource BackgroundColorConverter}}">
+                        <Grid
+                            Padding="15,10"
+                            HorizontalOptions="FillAndExpand"
+                            IsEnabled="{Binding CanExecuteProperty}"
+                            IsVisible="{Binding CanExecuteProperty}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Label
+                                Grid.Column="0"
+                                Margin="0,0,12,0"
+                                Style="{bcm:Sty LabelStyGlyph}"
+                                Text="{Binding Glyph}"
+                                TextColor="{Binding IsSelected, Converter={StaticResource LabelColorConverter}}"
+                                VerticalOptions="FillAndExpand"
+                                VerticalTextAlignment="Center" />
+                            <Label
+                                Grid.Column="1"
+                                Text="{Binding DisplayName}"
+                                TextColor="{Binding IsSelected, Converter={StaticResource LabelColorConverter}}"
+                                VerticalOptions="FillAndExpand"
+                                VerticalTextAlignment="Center" />
+                        </Grid>
+                    </Grid>
+                </DataTemplate>
+            </bcc:BxCollectionView.DataTemplate>
+        </bcc:BxCollectionView>
+
+        <!--  Info unten  -->
+        <StackLayout Grid.Row="2" IsVisible="{Binding PreviewVersion}">
+            <Label
+                Margin="8,16"
+                FontSize="{StaticResource FontSizeDefault}"
+                HorizontalOptions="End"
+                IsVisible="{Binding TabletMode, Converter={bcm:Sty ConverterBoolInverted}}"
+                Text="Phone Mode" />
+            <Label
+                Margin="8,16"
+                FontSize="{StaticResource FontSizeDefault}"
+                HorizontalOptions="End"
+                IsVisible="{Binding TabletMode}"
+                Text="Tablet(Q) Mode" />
+        </StackLayout>
+    </Grid>
+</base1:BaseMenu>

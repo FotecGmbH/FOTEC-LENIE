@@ -1,0 +1,254 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView
+    x:Class="BaseApp.View.Xamarin.Controls.BxChatDayEntryControl"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bc="clr-namespace:BaseApp.View.Xamarin.Controls;assembly=BaseApp.View.Xamarin"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    x:Name="BxChatDayEntryControlBase"
+    HorizontalOptions="FillAndExpand"
+    VerticalOptions="FillAndExpand"
+    mc:Ignorable="d">
+    <ContentView.Content>
+        <Grid BindingContext="{x:Reference BxChatDayEntryControlBase}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="24" />
+                <RowDefinition Height="16" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="16" />
+            </Grid.RowDefinitions>
+
+            <BoxView
+                Grid.Row="0"
+                Margin="36,0"
+                Style="{bcm:Sty BoxViewStyLargeSeperator}"
+                VerticalOptions="Center" />
+            <Label
+                Grid.Row="0"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackground},
+                                                  Light={StaticResource ColorBackgroundLight}}"
+                FontSize="{StaticResource FontSizeSmallDetail}"
+                HorizontalOptions="Center"
+                HorizontalTextAlignment="Center"
+                Text="{Binding ChatDayEntry.Day, StringFormat='{0:dd.MM.yyyy}'}"
+                VerticalOptions="Center"
+                VerticalTextAlignment="Center"
+                WidthRequest="100" />
+
+            <StackLayout Grid.Row="2" BindableLayout.ItemsSource="{Binding ChatDayEntry.ChatEntries}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate>
+                        <Grid d:DataContext="{x:Static bc:BxChatDayEntryControl.DesignInstanceChatEntry}">
+
+                            <!--#region Lokaler Userchat-->
+                            <Frame
+                                Margin="64,0,0,0"
+                                Padding="0"
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorChatBackgroundLocal},
+                                                                  Light={StaticResource ColorChatBackgroundLocalLight}}"
+                                BorderColor="{AppThemeBinding Dark={StaticResource ColorChatBackgroundLocal},
+                                                              Light={StaticResource ColorChatBackgroundLocalLight}}"
+                                CornerRadius="12"
+                                HorizontalOptions="End"
+                                IsVisible="{Binding User.Id, Converter={StaticResource ConverterIsLocalChatUser}}">
+                                <Grid
+                                    Padding="0"
+                                    ColumnSpacing="0"
+                                    RowSpacing="0">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="8" />
+                                        <RowDefinition Height="24" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="8" />
+
+                                    </Grid.RowDefinitions>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="8" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="8" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <!--#region Uhrzeit-->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="1"
+                                        Margin="0"
+                                        FontSize="{StaticResource FontSizeSmallDetail}"
+                                        HorizontalOptions="Start"
+                                        HorizontalTextAlignment="Start"
+                                        LineBreakMode="NoWrap"
+                                        Text="{Binding Entry.TimeStamp, StringFormat='{0:HH:mm}'}"
+                                        TextColor="{AppThemeBinding Dark={StaticResource ColorTextDetail},
+                                                                    Light={StaticResource ColorTextDetailLight}}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center" />
+                                    <!--#endregion-->
+
+                                    <!--#region DevInfo Entry-->
+                                    <Label
+                                        Grid.Row="1"
+                                        Grid.Column="2"
+                                        FontSize="{StaticResource FontSizeSmallDetail}"
+                                        IsVisible="{Binding DevMode, Source={x:Reference BxChatDayEntryControlBase}}"
+                                        LineBreakMode="NoWrap"
+                                        Text="{Binding Entry.Id}" />
+                                    <!--#endregion-->
+
+                                    <!--#region ChatNachricht-->
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Grid.ColumnSpan="3"
+                                        HorizontalOptions="StartAndExpand"
+                                        HorizontalTextAlignment="Start"
+                                        MaxLines="100"
+                                        Text="{Binding Entry.Message}"
+                                        VerticalOptions="StartAndExpand"
+                                        VerticalTextAlignment="Start" />
+                                    <!--#endregion-->
+
+                                </Grid>
+                            </Frame>
+                            <!--#endregion-->
+
+                            <!--#region Remote user-->
+
+                            <!--
+                                Wichtig -> Padding, columnspacing und rowspacing auf 0 lassen
+                                https://github.com/xamarin/Xamarin.Forms/issues/8797#issuecomment-1013318416
+                            -->
+                            <Grid
+                                Margin="0,0,64,0"
+                                Padding="0"
+                                ColumnSpacing="0"
+                                HorizontalOptions="Start"
+                                IsVisible="{Binding User.Id, Converter={StaticResource ConverterIsRemoteChatUser}}"
+                                RowSpacing="0">
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="8" />
+                                    <RowDefinition Height="56" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="8" />
+                                </Grid.RowDefinitions>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="0" />
+                                    <ColumnDefinition Width="56" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="8" />
+                                </Grid.ColumnDefinitions>
+
+                                <!--#region Bild-->
+
+                                <bcc:BxImage
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    HeightRequest="48"
+                                    HorizontalOptions="Center"
+                                    ImageSource="{Binding User.ImageLink, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                                    IsCircleMode="true"
+                                    VerticalOptions="Center"
+                                    WidthRequest="48" />
+
+
+                                <!--#endregion-->
+
+                                <!--#region Name, Uhrzeit, Nachricht-->
+
+                                <Frame
+                                    Grid.Row="1"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    Padding="0"
+                                    BackgroundColor="{AppThemeBinding Dark={StaticResource ColorChatBackgroundRemote},
+                                                                      Light={StaticResource ColorChatBackgroundRemoteLight}}"
+                                    BorderColor="{AppThemeBinding Dark={StaticResource ColorChatBackgroundRemote},
+                                                                  Light={StaticResource ColorChatBackgroundRemoteLight}}"
+                                    CornerRadius="12"
+                                    HorizontalOptions="Start">
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="8" />
+                                            <RowDefinition Height="24" />
+                                            <RowDefinition Height="*" />
+                                            <RowDefinition Height="8" />
+                                        </Grid.RowDefinitions>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="8" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="12" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <!--#region Username-->
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="1"
+                                            FontSize="{StaticResource FontSizeSmall}"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            LineBreakMode="NoWrap"
+                                            Text="{Binding User.FullName}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource ColorTextDetail},
+                                                                        Light={StaticResource ColorTextDetailLight}}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <!--#endregion-->
+
+                                        <!--#region Uhrzeit-->
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="2"
+                                            FontSize="{StaticResource FontSizeSmall}"
+                                            HorizontalOptions="Start"
+                                            HorizontalTextAlignment="Start"
+                                            LineBreakMode="NoWrap"
+                                            Text="{Binding Entry.TimeStamp, StringFormat='{0: HH:mm}'}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource ColorTextDetail},
+                                                                        Light={StaticResource ColorTextDetailLight}}"
+                                            VerticalOptions="Center"
+                                            VerticalTextAlignment="Center" />
+                                        <!--#endregion-->
+
+                                        <!--#region Dev - Entry-->
+                                        <Label
+                                            Grid.Row="1"
+                                            Grid.Column="3"
+                                            FontSize="{StaticResource FontSizeSmallDetail}"
+                                            IsVisible="{Binding DevMode, Source={x:Reference BxChatDayEntryControlBase}}"
+                                            LineBreakMode="NoWrap"
+                                            Text="{Binding Entry.Id}" />
+                                        <!--#endregion-->
+
+                                        <!--#region ChatNachricht-->
+                                        <Label
+                                            Grid.Row="2"
+                                            Grid.Column="1"
+                                            Grid.ColumnSpan="3"
+                                            HorizontalOptions="StartAndExpand"
+                                            HorizontalTextAlignment="Start"
+                                            LineBreakMode="WordWrap"
+                                            MaxLines="100"
+                                            Text="{Binding Entry.Message}" />
+                                        <!--#endregion-->
+                                    </Grid>
+                                </Frame>
+                                <!--#endregion-->
+                            </Grid>
+
+                            <!--#endregion-->
+
+                        </Grid>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </StackLayout>
+        </Grid>
+    </ContentView.Content>
+</ContentView>

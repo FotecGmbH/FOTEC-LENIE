@@ -1,0 +1,252 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ResourceDictionary
+    x:Class="BaseApp.View.Xamarin.Styles.StyColors"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml">
+
+    <!--#region Backgrounds-->
+    <Color x:Key="ColorBackground">#000000</Color>
+    <Color x:Key="ColorBackgroundLight">White</Color>
+
+    <Color x:Key="ColorBackgroundTransparent">#CFFFFFFF</Color>
+    <Color x:Key="ColorBackgroundTransparentLight">#CFFFFFFF</Color>
+
+    <Color x:Key="ColorBackgroundFocus">#1D1D1D</Color>
+    <Color x:Key="ColorBackgroundFocusLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorBackgroundFocusTransparent">#CF1D1D1D</Color>
+    <Color x:Key="ColorBackgroundFocusTransparentLight">#CFFFFFFF</Color>
+
+    <Color x:Key="ColorChatBackgroundRemote">#EBF0F7</Color>
+    <Color x:Key="ColorChatBackgroundRemoteLight">#EBF0F7</Color>
+
+    <Color x:Key="ColorChatBackgroundLocal">#C3D1E7</Color>
+    <Color x:Key="ColorChatBackgroundLocalLight">#C3D1E7</Color>
+
+    <Color x:Key="ColorHeaderBackground">#005A9A</Color>
+    <Color x:Key="ColorHeaderBackgroundLight">#005A9A</Color>
+
+    <Color x:Key="ColorFooterBackground">#005A9A</Color>
+    <Color x:Key="ColorFooterBackgroundLight">#005A9A</Color>
+
+    <Color x:Key="ColorIdeaFrameBackground">#EBF0F7</Color>
+    <Color x:Key="ColorIdeaFrameBackgroundLight">#EBF0F7</Color>
+
+    <Color x:Key="ColorTestInfoBackground">#FFD500</Color>
+    <Color x:Key="ColorTestInfoBackgroundLight">#FFD500</Color>
+    <!--#endregion-->
+
+    <!--#region Grautöne-->
+    <Color x:Key="ColorGray100">#E1E1E1</Color>
+    <Color x:Key="ColorGray200">#C8C8C8</Color>
+    <Color x:Key="ColorGray300">#ACACAC</Color>
+    <Color x:Key="ColorGray400">#919191</Color>
+    <Color x:Key="ColorGray500">#6E6E6E</Color>
+    <Color x:Key="ColorGray600">#404040</Color>
+    <Color x:Key="ColorGray900">#212121</Color>
+    <Color x:Key="ColorGray950">#141414</Color>
+
+    <Color x:Key="ColorShadow">#ececec</Color>
+
+    <Color x:Key="ColorLightGray">LightGray</Color>
+    <Color x:Key="ColorLightGrayLight">LightGray</Color>
+    <!--#endregion-->
+
+
+    <!--#region Texte-->
+    <Color x:Key="ColorText">#494949</Color>
+    <Color x:Key="ColorTextLight">#494949</Color>
+
+    <Color x:Key="ColorSaveButton">#FFD500</Color>
+    <Color x:Key="ColorSaveButtonLight">#FFD500</Color>
+
+    <Color x:Key="ColorTextDetail">#676767</Color>
+    <Color x:Key="ColorTextDetailLight">#676767</Color>
+
+    <Color x:Key="ColorTextOnColor">#FFFFFF</Color>
+    <Color x:Key="ColorTextOnColorLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorHeaderTitle">#FFFFFF</Color>
+    <Color x:Key="ColorHeaderTitleLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorHeaderSubTitle">#FFFFFF</Color>
+    <Color x:Key="ColorHeaderSubTitleLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorTestInfoText">#494949</Color>
+    <Color x:Key="ColorTestInfoTextLight">#494949</Color>
+
+    <Color x:Key="ColorTextBlue">#005A9A</Color>
+    <Color x:Key="ColorTextBlueLight">#005A9A</Color>
+    <!--#endregion-->
+
+    <!--#region Accent-->
+    <Color x:Key="ColorAccent">#005A9A</Color>
+    <Color x:Key="ColorAccentLight">#005A9A</Color>
+
+    <Color x:Key="ColorAccent2">#FFD500</Color>
+    <Color x:Key="ColorAccent2Light">#FFD500</Color>
+    <!--#endregion-->
+
+    <!--#region Warnings-->
+    <Color x:Key="ColorWarningBackground">#ef6f0f</Color>
+    <Color x:Key="ColorWarningBackgroundLight">#ef6f0f</Color>
+    <!--#endregion-->
+
+    <!--#region Errors-->
+    <Color x:Key="ColorErrorBackground">DarkRed</Color>
+    <Color x:Key="ColorErrorBackgroundLight">Red</Color>
+
+    <Color x:Key="ColorErrorText">White</Color>
+    <Color x:Key="ColorErrorTextLight">White</Color>
+    <!--#endregion-->
+
+    <!--#region Header Info Zeile-->
+
+    <Color x:Key="ColorHeaderInfoBackgroundError">DarkRed</Color>
+    <Color x:Key="ColorHeaderInfoBackgroundErrorLight">Red</Color>
+
+    <Color x:Key="ColorHeaderInfoBackgroundInfo">#1D1D1D</Color>
+    <Color x:Key="ColorHeaderInfoBackgroundInfoLight">#cfdfe6</Color>
+
+    <Color x:Key="ColorHeaderInfoBackgroundWarning">#ef6f0f</Color>
+    <Color x:Key="ColorHeaderInfoBackgroundWarningLight">#ef6f0f</Color>
+
+    <Color x:Key="ColorHeaderInfoBackgroundNone">Transparent</Color>
+    <Color x:Key="ColorHeaderInfoBackgroundNoneLight">Transparent</Color>
+
+    <Color x:Key="ColorHeaderInfoForegroundError">White</Color>
+    <Color x:Key="ColorHeaderInfoForegroundErrorLight">White</Color>
+
+    <Color x:Key="ColorHeaderInfoForegroundInfo">#D1D1D1</Color>
+    <Color x:Key="ColorHeaderInfoForegroundInfoLight">#494949</Color>
+
+    <Color x:Key="ColorHeaderInfoForegroundWarning">White</Color>
+    <Color x:Key="ColorHeaderInfoForegroundWarningLight">White</Color>
+
+    <Color x:Key="ColorHeaderInfoForegroundNone">Transparent</Color>
+    <Color x:Key="ColorHeaderInfoForegroundWarningNone">Transparent</Color>
+
+    <!--#endregion-->
+
+    <!--#region Header Connectivity-->
+    <Color x:Key="ColorHeaderConnectivityBackgroundError">DarkRed</Color>
+    <Color x:Key="ColorHeaderConnectivityBackgroundErrorLight">Red</Color>
+
+    <Color x:Key="ColorHeaderConnectivityBackgroundConnectivity">#1D1D1D</Color>
+    <Color x:Key="ColorHeaderConnectivityBackgroundConnectivityLight">#cfdfe6</Color>
+
+    <Color x:Key="ColorHeaderConnectivityBackgroundWarning">DarkOrange</Color>
+    <Color x:Key="ColorHeaderConnectivityBackgroundWarningLight">Orange</Color>
+
+    <Color x:Key="ColorHeaderConnectivityBackgroundNone">Transparent</Color>
+    <Color x:Key="ColorHeaderConnectivityBackgroundNoneLight">Transparent</Color>
+
+    <Color x:Key="ColorHeaderConnectivityForegroundError">White</Color>
+    <Color x:Key="ColorHeaderConnectivityForegroundErrorLight">White</Color>
+
+    <Color x:Key="ColorHeaderConnectivityForegroundConnectivity">#D1D1D1</Color>
+    <Color x:Key="ColorHeaderConnectivityForegroundConnectivityLight">#494949</Color>
+
+    <Color x:Key="ColorHeaderConnectivityForegroundWarning">White</Color>
+    <Color x:Key="ColorHeaderConnectivityForegroundWarningLight">White</Color>
+
+    <Color x:Key="ColorHeaderConnectivityForegroundNone">Transparent</Color>
+    <Color x:Key="ColorHeaderConnectivityForegroundWarningNone">Transparent</Color>
+    <!--#endregion-->
+
+
+    <!--#region IsBusy-->
+    <Color x:Key="ColorBusy">#61A4D7</Color>
+    <Color x:Key="ColorBusyLight">#005A9A</Color>
+    <!--#endregion-->
+
+    <!--#region Switch-->
+    <Color x:Key="ColorOn">#005A9A</Color>
+    <Color x:Key="ColorOnLight">#005A9A</Color>
+    <Color x:Key="ColorThumb">#8A8A8A</Color>
+    <Color x:Key="ColorThumbLight">#ececec</Color>
+    <!--#endregion-->
+
+    <!--#region Button-->
+    <Color x:Key="ColorButtonBackground">#FFD500</Color>
+    <Color x:Key="ColorButtonBackgroundLight">#FFD500</Color>
+
+    <Color x:Key="ColorButtonBorder">#FFD500</Color>
+    <Color x:Key="ColorButtonBorderLight">#FFD500</Color>
+
+    <Color x:Key="ColorButtonLike">Red</Color>
+    <Color x:Key="ColorButtonLikeLight">Red</Color>
+
+    <Color x:Key="ColorButtonLock">Red</Color>
+    <Color x:Key="ColorButtonLockLight">Red</Color>
+
+    <Color x:Key="ColorButtonUnlock">Green</Color>
+    <Color x:Key="ColorButtonUnlockLight">Green</Color>
+
+    <Color x:Key="ColorButtonText">#005A9A</Color>
+    <Color x:Key="ColorButtonTextLight">#005A9A</Color>
+
+    <Color x:Key="ColorButtonTextDisabled">#005A9A</Color>
+    <Color x:Key="ColorButtonTextDisabledLight">#005A9A</Color>
+
+    <Color x:Key="ColorButtonBackgroundDisabled">#D1D1D1</Color>
+    <Color x:Key="ColorButtonBackgroundDisabledLight">#D1D1D1</Color>
+
+    <Color x:Key="ColorButtonHeaderBack">#FFFFFF</Color>
+    <Color x:Key="ColorButtonHeaderBackLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorButtonHeaderMenu">#FFFFFF</Color>
+    <Color x:Key="ColorButtonHeaderMenuLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorButtonHeaderCommon">#FFFFFF</Color>
+    <Color x:Key="ColorButtonHeaderCommonLight">#FFFFFF</Color>
+    <Color x:Key="ColorButtonHeaderCommonDisabled">#D1D1D1</Color>
+    <Color x:Key="ColorButtonHeaderCommonDisabledLight">#494949</Color>
+
+    <Color x:Key="ColorButtonHeaderSave">#FFFFFF</Color>
+    <Color x:Key="ColorButtonHeaderSaveLight">#FFFFFF</Color>
+    <Color x:Key="ColorButtonHeaderSaveDisabled">#D1D1D1</Color>
+    <Color x:Key="ColorButtonHeaderSaveDisabledLight">#494949</Color>
+
+    <Color x:Key="ColorFooterButtonBackground">#005A9A</Color>
+    <Color x:Key="ColorFooterButtonBackgroundLight">#005A9A</Color>
+    <Color x:Key="ColorFooterButtonBackgroundSelected">#FFFFFF</Color>
+    <Color x:Key="ColorFooterButtonBackgroundSelectedLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorFooterButtonBorder">#005A9A</Color>
+    <Color x:Key="ColorFooterButtonBorderLight">#005A9A</Color>
+    <Color x:Key="ColorFooterButtonBorderSelected">#FFFFFF</Color>
+    <Color x:Key="ColorFooterButtonBorderSelectedLight">#FFFFFF</Color>
+
+    <Color x:Key="ColorFooterButtonGlyph">#FFFFFF</Color>
+    <Color x:Key="ColorFooterButtonGlyphLight">#FFFFFF</Color>
+    <Color x:Key="ColorFooterButtonGlyphSelected">#005A9A</Color>
+    <Color x:Key="ColorFooterButtonGlyphSelectedLight">#005A9A</Color>
+
+    <Color x:Key="ColorFooterButtonText">#FFFFFF</Color>
+    <Color x:Key="ColorFooterButtonTextLight">#FFFFFF</Color>
+    <Color x:Key="ColorFooterButtonTextSelected">#FFFFFF</Color>
+    <Color x:Key="ColorFooterButtonTextSelectedLight">#FFFFFF</Color>
+    <!--#endregion-->
+
+    <!--#region Entry, Editor und Suchfeld-->
+    <Color x:Key="ColorEntryBackground">#8A8A8A</Color>
+    <Color x:Key="ColorEntryBackgroundLight">White</Color>
+
+    <Color x:Key="ColorEntryPlaceholder">#D1D1D1</Color>
+    <Color x:Key="ColorEntryPlaceholderLight">#D1D1D1</Color>
+
+    <Color x:Key="ColorEntryText">#000000</Color>
+    <Color x:Key="ColorEntryTextLight">#494949</Color>
+
+    <Color x:Key="ColorEntryErrorText">#ef6f0f</Color>
+    <Color x:Key="ColorEntryErrorTextLight">#ef6f0f</Color>
+    <!--#endregion-->
+
+    <!--#region Seperator-->
+    <Color x:Key="ColorSeperator">#8A8A8A</Color>
+    <Color x:Key="ColorSeperatorLight">#8A8A8A</Color>
+    <!--#endregion-->
+
+</ResourceDictionary>

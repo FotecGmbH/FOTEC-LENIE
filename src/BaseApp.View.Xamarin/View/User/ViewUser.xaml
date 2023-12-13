@@ -1,0 +1,327 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewUser"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.User;assembly=BaseApp"
+    x:Name="MyViewUser"
+    d:DataContext="{x:Static viewmodels:VmUser.DesignInstance}"
+    x:TypeArguments="viewmodels:VmUser"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+        <RefreshView
+            Margin="8,8,8,8"
+            Command="{Binding GCmdHeaderCommon}"
+            IsRefreshing="{Binding IsRefreshing}">
+
+            <Grid RowDefinitions="*, Auto">
+
+                <ScrollView Grid.Row="0">
+                    <StackLayout>
+
+                        <!--#region Stammdaten-->
+
+                        <bcc:BxImage
+                            HeightRequest="120"
+                            HorizontalOptions="Center"
+                            ImageSource="{Binding Dc.DcExUser.Data.UserImageLink, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                            IsCircleMode="true"
+                            WidthRequest="120" />
+
+                        <Label HorizontalOptions="Center" Text="{Binding Dc.DcExUser.Data.Fullname}" />
+                        <Label HorizontalOptions="Center" Text="{Binding Dc.DcExUser.Data.PhoneNumber}" />
+                        <Label HorizontalOptions="Center" Text="{Binding Dc.DcExUser.Data.LoginName}" />
+                        <Label
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding Dc.DcExUser.Data.IsAdmin}"
+                            Text="{bcm:Translate ResCommon.EnumUserRoleSysAdmin}" />
+
+                        <!--#endregion-->
+
+                        <BoxView Margin="0,8,0,4" Style="{bcm:Sty BoxViewStySeperator}" />
+
+                        <!--#region Sms Validierung-->
+
+                        <Grid
+                            IsVisible="{Binding Dc.DcExUser.Data.PhoneConfirmed, Converter={bcm:Sty ConverterBoolInverted}}">
+                            <Grid Margin="4,8" RowDefinitions="Auto, Auto, Auto, Auto">
+                                <Label
+                                    Grid.Row="0"
+                                    Margin="4"
+                                    Text="{bcm:Translate ResViewUser.LblConfirmation}" />
+
+                                <bcc:BxEntry Grid.Row="1" EntryData="{Binding EntrySmsCode}" />
+
+                                <bcc:BxButton
+                                    Grid.Row="2"
+                                    Margin="4"
+                                    BissCommand="{Binding CmdConfirmSms}" />
+
+                                <bcc:BxButton
+                                    Grid.Row="3"
+                                    Margin="4"
+                                    BissCommand="{Binding CmdResendSms}" />
+                            </Grid>
+                        </Grid>
+
+                        <BoxView
+                            Margin="0,8,0,4"
+                            IsVisible="{Binding Dc.DcExUser.Data.PhoneConfirmed, Converter={bcm:Sty ConverterBoolInverted}}"
+                            Style="{bcm:Sty BoxViewStySeperator}" />
+
+                        <!--#endregion-->
+
+                        <!--#region Rechte in Gemeinden-->
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Grid Grid.Row="0" Grid.Column="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="16" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="16" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Style="{StaticResource LabelStyBig}"
+                                    Text="{bcm:Translate ResViewUser.LblMainOrganization}"
+                                    VerticalOptions="Center" />
+                                <bcc:BxPicker
+                                    Grid.Row="1"
+                                    Grid.Column="1"
+                                    ObservableCollectionSelectable="{Binding PickerMainOrganization}" />
+                            </Grid>
+
+                            <Grid Grid.Row="1" Grid.Column="0">
+                                <Grid.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="0" />
+                                        <On Platform="Android" Value="0,16" />
+                                        <On Platform="WPF" Value="0,0,28,0" />
+                                    </OnPlatform>
+                                </Grid.Margin>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="16" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="16" />
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <Label
+                                    Grid.Row="0"
+                                    Grid.Column="1"
+                                    Style="{StaticResource LabelStyBig}"
+                                    Text="{bcm:Translate ResViewUser.LblOtherOrganizations}"
+                                    VerticalOptions="Center" />
+
+                                <bcc:BxGlyphButton
+                                    Grid.Row="0"
+                                    Grid.RowSpan="2"
+                                    Grid.Column="2"
+                                    BackgroundColor="Transparent"
+                                    Command="{Binding CmdEditRegion}"
+                                    CommandParameter="{Binding .}"
+                                    Glyph="{Binding CmdEditRegion.Glyph}" />
+                            </Grid>
+
+                            <StackLayout
+                                Grid.Row="2"
+                                Grid.Column="0"
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackgroundFocus},
+                                                                  Light={StaticResource ColorBackgroundFocusLight}}"
+                                BindableLayout.ItemsSource="{Binding UiPermissions}">
+                                <StackLayout.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="16,0" />
+                                        <On Platform="Android" Value="16,0" />
+                                        <On Platform="WPF" Value="0,0,28,0" />
+                                    </OnPlatform>
+                                </StackLayout.Margin>
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid
+                                            d:DataContext="{x:Static viewmodels:VmUser.DesignInstanceExUserPremission}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="16" />
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="16" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="5" />
+                                            </Grid.RowDefinitions>
+
+                                            <Label
+                                                Grid.Row="0"
+                                                Grid.Column="1"
+                                                Margin="0,4,0,0"
+                                                Text="{Binding Organization.NamePlzString}" />
+
+                                            <bcc:BxGlyphButton
+                                                Grid.Row="0"
+                                                Grid.RowSpan="2"
+                                                Grid.Column="3"
+                                                Command="{Binding ViewModel.CmdRemoveCompany, Source={x:Reference MyViewUser}}"
+                                                CommandParameter="{Binding}"
+                                                Glyph="{Binding ViewModel.CmdRemoveCompany.Glyph, Source={x:Reference MyViewUser}}" />
+
+                                            <BoxView
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="5"
+                                                Style="{bcm:Sty BoxViewStySeperator}" />
+
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </Grid>
+
+                        <!--#endregion-->
+
+                        <!--#region Geräte-->
+
+                        <bcc:BxCollapseView
+                            HeaderGlyph="{x:Static resources:Glyphs.Mobile_phone}"
+                            HeaderSubTitle="{bcm:Translate ResViewUser.LblDevicesSubTitle}"
+                            HeaderTitle="{bcm:Translate ResViewUser.LblDevicesTitle}"
+                            IsVisible="False">
+                            <StackLayout BindableLayout.ItemsSource="{Binding Dc.DcExUser.Data.UserDevices}">
+                                <StackLayout.Margin>
+                                    <OnPlatform x:TypeArguments="Thickness">
+                                        <On Platform="iOS" Value="0" />
+                                        <On Platform="Android" Value="0" />
+                                        <On Platform="WPF" Value="0,0,28,0" />
+                                    </OnPlatform>
+                                </StackLayout.Margin>
+                                <BindableLayout.ItemTemplate>
+                                    <DataTemplate>
+                                        <Grid d:DataContext="{x:Static viewmodels:VmUser.DesignInstanceExUserDevice}">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="Auto" />
+                                                <ColumnDefinition Width="*" />
+                                            </Grid.ColumnDefinitions>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                                <RowDefinition Height="Auto" />
+                                            </Grid.RowDefinitions>
+                                            <BoxView
+                                                Grid.Row="0"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                Style="{bcm:Sty BoxViewStySeperator}" />
+                                            <Label
+                                                Grid.Row="1"
+                                                Grid.Column="0"
+                                                Grid.ColumnSpan="2"
+                                                Style="{bcm:Sty LabelStyDetail}"
+                                                Text="{Binding DeviceName}" />
+                                            <Label
+                                                Grid.Row="2"
+                                                Grid.Column="0"
+                                                Style="{bcm:Sty LabelStyDetail}"
+                                                Text="{Binding Manufacturer}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                            Light={StaticResource ColorAccentLight}}" />
+                                            <Label
+                                                Grid.Row="2"
+                                                Grid.Column="1"
+                                                HorizontalOptions="End"
+                                                Style="{bcm:Sty LabelStyDetail}"
+                                                Text="{Binding Model}"
+                                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                            Light={StaticResource ColorAccentLight}}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </BindableLayout.ItemTemplate>
+                            </StackLayout>
+                        </bcc:BxCollapseView>
+
+                        <!--#endregion-->
+
+                    </StackLayout>
+                </ScrollView>
+
+                <Grid Grid.Row="1" BackgroundColor="{StaticResource ColorBackgroundTransparent}">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="1*" />
+                        <ColumnDefinition Width="1*" />
+                    </Grid.ColumnDefinitions>
+
+                    <bcc:BxButton
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="4"
+                        BissCommand="{Binding CmdEdit}" />
+                    <bcc:BxButton
+                        Grid.Row="0"
+                        Grid.Column="1"
+                        Margin="4"
+                        BissCommand="{Binding CmdChangePassword}" />
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="4"
+                        IsVisible="{Binding Dc.DcExUser.Data.PhoneConfirmed}">
+                        <bcc:BxButton BissCommand="{Binding CmdSettingsPush}" />
+                    </Grid>
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="1"
+                        Margin="4"
+                        IsVisible="{Binding Dc.DcExUser.Data.PhoneConfirmed}">
+                        <bcc:BxButton BissCommand="{Binding CmdMyIdeas}" />
+                    </Grid>
+                    <bcc:BxButton
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="2"
+                        Margin="4"
+                        BissCommand="{Binding CmdLogout}" />
+                </Grid>
+
+            </Grid>
+        </RefreshView>
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

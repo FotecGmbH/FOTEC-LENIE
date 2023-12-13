@@ -1,0 +1,156 @@
+﻿@model Exchange.Model.WeeklyReport.ExWeeklyReport
+
+@{
+    Layout = "/Views/EMail/_EMailBase.cshtml";
+}
+
+@section HeaderContent
+{
+    <title>Wöchentliche Auswertung</title>
+    <style>
+        table.tableWithBorder th, 
+        table.tableWithBorder td 
+        {
+            border: 1px solid;
+        }
+    </style>
+}
+
+<div class="container">
+    <div class="row">
+        <h3>Auswertung für @Model.StartReport.ToShortDateString() bis @Model.EndReport.ToShortDateString()</h3>
+    </div>
+    <div class="row m-2">
+        <h4>User Infos</h4>
+    </div>
+    <div class="row">
+        <table class="tableWithBorder">
+            <tr>
+                <th class="m-1">
+                    Gemeinde
+                </th>
+                <th class="m-1">
+                    User gesamt
+                </th>
+                <th class="m-1">
+                    neue User
+                </th>
+                <th class="m-1">
+                    User eingeloggt
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    Gesamt
+                </td>
+                <td>
+                    @Model.UsersTotal
+                </td>
+                <td>
+                    @Model.NewUsers
+                </td>
+                <td>
+                    @Model.LoggedInUsers
+                </td>
+            </tr>
+
+            @foreach (var town in Model.Towns)
+            {
+                <tr>
+                    <td>
+                        @town.TownName
+                    </td>
+                    <td>
+                        @town.UsersTotal
+                    </td>
+                    <td>
+                        @town.NewUsers
+                    </td>
+                    <td>
+                        @town.LoggedInUsers
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+    <div class="row m-2">
+        <h4>Ideen Infos</h4>
+    </div>
+    <div class="row">
+        <table class="tableWithBorder">
+            <tr>
+                <th class="m-1">
+                    Gemeinde
+                </th>
+                <th class="m-1">
+                    Ideen gesamt
+                </th>
+                <th class="m-1">
+                    neue Ideen
+                </th>
+                <th class="m-1">
+                    Likes (gesamt)
+                </th>
+                <th class="m-1">
+                    Likes (Zeitraum)
+                </th>
+                <th class="m-1">
+                    Unterstützungen (gesamt)
+                </th>
+                <th class="m-1">
+                    Unterstützungen (Zeitraum)
+                </th>
+            </tr>
+            <tr>
+                <td>
+                    Gesamt
+                </td>
+                <td>
+                    @Model.IdeasTotal
+                </td>
+                <td>
+                    @Model.IdeasNewTime
+                </td>
+                <td>
+                    @Model.IdeaLikesTotal
+                </td>
+                <td>
+                    @Model.IdeaLikesTime
+                </td>
+                <td>
+                    @Model.IdeaSupportsTotal
+                </td>
+                <td>
+                    @Model.IdeaSupportsTime
+                </td>
+            </tr>
+
+            @foreach (var town in Model.Towns)
+            {
+                <tr>
+                    <td>
+                        @town.TownName
+                    </td>
+                    <td>
+                        @town.IdeasTotal
+                    </td>
+                    <td>
+                        @town.IdeasNewTime
+                    </td>
+                    <td>
+                        @town.IdeaLikesTotal
+                    </td>
+                    <td>
+                        @town.IdeaLikesTime
+                    </td>
+                    <td>
+                        @town.IdeaSupportsTotal
+                    </td>
+                    <td>
+                        @town.IdeaSupportsTime
+                    </td>
+                </tr>
+            }
+        </table>
+    </div>
+</div>

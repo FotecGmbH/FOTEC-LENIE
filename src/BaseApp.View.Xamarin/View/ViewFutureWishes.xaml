@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewFutureWishes"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel;assembly=BaseApp"
+    x:Name="MyViewFutureWishes"
+    d:DataContext="{x:Static viewmodels:VmFutureWishes.DesignInstance}"
+    x:TypeArguments="viewmodels:VmFutureWishes"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <ScrollView Margin="4,16,4,0">
+            <StackLayout Padding="30,0,30,0">
+                <Label
+                    Margin="0,0,0,20"
+                    Padding="0,10,0,10"
+                    FontSize="Title"
+                    Text="{bcm:Translate ResViewFutureWishes.LblTitle}" />
+
+                <Label
+                    Margin="0,0,0,20"
+                    FontSize="16"
+                    LineBreakMode="WordWrap"
+                    Text="{bcm:Translate ResViewFutureWishes.LblMainText}" />
+
+                <Frame>
+                    <StackLayout
+                        Padding="10,0,10,0"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="CenterAndExpand">
+                        <StackLayout BindableLayout.ItemsSource="{Binding Dc.DcExFutureWishes}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <Grid
+                                            Margin="0,10,0,10"
+                                            d:DataContext="{x:Static viewmodels:VmFutureWishes.DesignInstanceWish}"
+                                            ColumnSpacing="2">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+
+                                            <Grid.GestureRecognizers>
+                                                <TapGestureRecognizer
+                                                    Command="{Binding Source={x:Reference MyViewFutureWishes}, Path=ViewModel.CmdOpenLink}"
+                                                    CommandParameter="{Binding}" />
+                                            </Grid.GestureRecognizers>
+
+                                            <bcc:BxFlexLayout Grid.Column="0" InputTransparent="True">
+                                                <bcc:BxFlexLayoutItem InputTransparent="True" WidthLikeToHave="300">
+                                                    <Label
+                                                        Margin="0,0,10,0"
+                                                        FontSize="{StaticResource FontSizeLarge}"
+                                                        InputTransparent="True"
+                                                        Text="{Binding Data.Title}" />
+                                                </bcc:BxFlexLayoutItem>
+
+                                                <bcc:BxFlexLayoutItem
+                                                    Margin="0,0,0,15"
+                                                    InputTransparent="True"
+                                                    WidthLikeToHave="400">
+                                                    <Label
+                                                        Margin="10,0,0,0"
+                                                        InputTransparent="True"
+                                                        Text="{Binding Data.Description}"
+                                                        VerticalTextAlignment="Center" />
+                                                </bcc:BxFlexLayoutItem>
+                                            </bcc:BxFlexLayout>
+
+                                            <bcc:BxLikeButton
+                                                Grid.Column="1"
+                                                FillColor="Transparent"
+                                                IsVisible="{Binding Data.Liked, Converter={bcm:Sty ConverterBoolInverted}}"
+                                                Size="24"
+                                                StrokeColor="{AppThemeBinding Dark={StaticResource ColorText},
+                                                                              Light={StaticResource ColorTextLight}}"
+                                                VerticalOptions="Center">
+                                                <bcc:BxLikeButton.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={x:Reference MyViewFutureWishes}, Path=ViewModel.CmdToggleLiked}"
+                                                        CommandParameter="{Binding}" />
+                                                </bcc:BxLikeButton.GestureRecognizers>
+                                            </bcc:BxLikeButton>
+
+                                            <bcc:BxLikeButton
+                                                Grid.Column="1"
+                                                FillColor="{AppThemeBinding Dark={StaticResource ColorButtonLike},
+                                                                            Light={StaticResource ColorButtonLikeLight}}"
+                                                IsVisible="{Binding Data.Liked}"
+                                                Size="24"
+                                                StrokeColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                              Light={StaticResource ColorTextOnColorLight}}"
+                                                VerticalOptions="Center">
+                                                <bcc:BxLikeButton.GestureRecognizers>
+                                                    <TapGestureRecognizer
+                                                        Command="{Binding Source={x:Reference MyViewFutureWishes}, Path=ViewModel.CmdToggleLiked}"
+                                                        CommandParameter="{Binding}" />
+                                                </bcc:BxLikeButton.GestureRecognizers>
+                                            </bcc:BxLikeButton>
+                                        </Grid>
+
+                                        <BoxView
+                                            HeightRequest="1"
+                                            InputTransparent="True"
+                                            Color="{AppThemeBinding Dark={StaticResource ColorLightGray},
+                                                                    Light={StaticResource ColorLightGrayLight}}" />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </StackLayout>
+                    </StackLayout>
+                </Frame>
+            </StackLayout>
+        </ScrollView>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

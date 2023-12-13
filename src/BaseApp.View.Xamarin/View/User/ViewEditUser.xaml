@@ -1,0 +1,182 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewEditUser"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.User;assembly=BaseApp"
+    d:DataContext="{x:Static viewmodels:VmEditUser.DesignInstance}"
+    x:TypeArguments="viewmodels:VmEditUser"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <Grid
+            Margin="4,4,4,0"
+            ColumnDefinitions="*"
+            RowDefinitions="*,Auto,Auto">
+
+            <ScrollView Grid.Row="0">
+                <!--  Padding für Scrollview, damit man die Eingabe hinter der Tastatur sieht  -->
+                <StackLayout Padding="0,0,0,250">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+
+                        <bcc:BxImage
+                            Grid.Column="1"
+                            HeightRequest="120"
+                            HorizontalOptions="Center"
+                            ImageSource="{Binding CurrentImage, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                            IsCircleMode="true"
+                            WidthRequest="120" />
+                        <StackLayout
+                            Grid.Column="2"
+                            HorizontalOptions="Center"
+                            IsVisible="{Binding CmdLoginUser.IsVisible, Converter={bcm:Sty ConverterBoolInverted}}"
+                            Orientation="Vertical"
+                            VerticalOptions="Center">
+                            <bcc:BxGlyphButton Command="{Binding CmdEditPicture}"
+                                               Glyph="{Binding CmdEditPicture.Glyph}" />
+                            <bcc:BxGlyphButton
+                                Command="{Binding CmdDeletePicture}"
+                                Glyph="{Binding CmdDeletePicture.Glyph}"
+                                IsVisible="{Binding UiUser.Data.HasImage}" />
+                        </StackLayout>
+
+                    </Grid>
+
+                    <Label Margin="12,0,0,0" Text="{bcm:Translate ResViewEditUser.LblLoginName}" />
+                    <Label Margin="24,0" Text="{Binding UiUser.Data.LoginName}" />
+
+                    <bcc:BxEntry EntryData="{Binding EntryFirstName}"
+                                 IsEnabled="{Binding CmdLoginUser.IsVisible, Converter={bcm:Sty ConverterBoolInverted}}" />
+
+                    <bcc:BxEntry EntryData="{Binding EntryLastName}"
+                                 IsEnabled="{Binding CmdLoginUser.IsVisible, Converter={bcm:Sty ConverterBoolInverted}}" />
+
+                    <bcc:BxEntry
+                        EntryData="{Binding EntryPhoneNumber}"
+                        IsEnabled="{Binding CmdLoginUser.IsVisible, Converter={bcm:Sty ConverterBoolInverted}}"
+                        Keyboard="Telephone" />
+
+                    <Grid
+                        Margin="12,8"
+                        ColumnSpacing="4"
+                        RowSpacing="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <bcc:BxEntry
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            EntryData="{Binding EntryTownSearch}"
+                            HasFrame="False"
+                            IsVisible="{Binding IsNewUser}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsVisible="{Binding IsNewUser}"
+                            Style="{bcm:Sty LabelStyGlyph}"
+                            Text="{x:Static resources:Glyphs.Search}" />
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            IsVisible="{Binding IsNewUser, Converter={bcm:Sty ConverterBoolInverted}}"
+                            Text="{bcm:Translate ResViewUser.LblMainOrganization}" />
+
+                        <Grid
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            IsVisible="{Binding IsNewUser}">
+
+                            <Label
+                                IsVisible="{Binding PickerTownsHasElements, Converter={bcm:Sty ConverterBoolInverted}}"
+                                Text="{bcm:Translate ResViewEditUser.LblNoTownsSearch}" />
+                            <bcc:BxPicker IsVisible="{Binding PickerTownsHasElements}"
+                                          ObservableCollectionSelectable="{Binding PickerTowns}" />
+                        </Grid>
+
+                        <Grid
+                            Grid.Row="1"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="2"
+                            IsVisible="{Binding IsNewUser, Converter={bcm:Sty ConverterBoolInverted}}">
+
+                            <Label
+                                IsVisible="{Binding PickerMainOrganization, Converter={bcm:Sty ConverterListNotAny}}"
+                                Text="{bcm:Translate ResViewEditUser.LblNoTownsSelected}" />
+                            <bcc:BxPicker
+                                IsVisible="{Binding PickerMainOrganization, Converter={bcm:Sty ConverterListAny}}"
+                                ObservableCollectionSelectable="{Binding PickerMainOrganization}" />
+                        </Grid>
+                    </Grid>
+
+                    <StackLayout IsVisible="{Binding IsNewUser}">
+                        <bcc:BxEntry
+                            EntryData="{Binding EntryNewPassword}"
+                            IsEnabled="{Binding CmdLoginUser.IsVisible, Converter={bcm:Sty ConverterBoolInverted}}"
+                            IsPassword="{Binding ShowEntriesAsPassword, Converter={bcm:Sty ConverterBoolInverted}}" />
+
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
+                            <Label
+                                Grid.Row="0"
+                                Grid.Column="0"
+                                Margin="0,0,8,0"
+                                HorizontalOptions="EndAndExpand"
+                                Text="{bcm:Translate ResViewEditUser.LblShowPassword}"
+                                VerticalOptions="Center">
+                                <Label.GestureRecognizers>
+                                    <TapGestureRecognizer Command="{Binding CmdTogglePassword}" />
+                                </Label.GestureRecognizers>
+                            </Label>
+                            <Switch
+                                Grid.Row="0"
+                                Grid.Column="1"
+                                HorizontalOptions="Center"
+                                IsToggled="{Binding ShowEntriesAsPassword}"
+                                VerticalOptions="Center" />
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+            </ScrollView>
+
+            <bcc:BxButton
+                Grid.Row="2"
+                Margin="0,0,0,8"
+                BissCommand="{Binding CmdLoginUser}"
+                IsVisible="{Binding CmdLoginUser.IsVisible}" />
+
+        </Grid>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

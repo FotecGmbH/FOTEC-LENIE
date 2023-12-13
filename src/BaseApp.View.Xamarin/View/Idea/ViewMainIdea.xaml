@@ -1,0 +1,593 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewMainIdea"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bccnv="http://biss.schemas.com/coreconverter"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:connectivity="clr-namespace:BaseApp.Connectivity;assembly=BaseApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:enum="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Idea;assembly=BaseApp"
+    x:Name="MyViewMainIdea"
+    d:DataContext="{x:Static viewmodels:VmMainIdea.DesignInstance}"
+    x:DataType="viewmodels:VmMainIdea"
+    x:TypeArguments="viewmodels:VmMainIdea"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+        <bcc:PageControl.Resources>
+            <bccnv:ConverterBooleanValueColor
+                x:Key="ConverterIsLikedFillColor"
+                ColorFalse="Transparent"
+                ColorTrue="{StaticResource ColorAccent}" />
+        </bcc:PageControl.Resources>
+
+
+        <!--#region View Content-->
+
+        <!--  Negativer Margin wegen Template -> Sonst ist oben ein weisser freiraum  -->
+        <Grid
+            x:Name="MainGrid"
+            Margin="0,-16,0,0"
+            BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackground},
+                                              Light={StaticResource ColorBackgroundLight}}">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--#region Header-->
+
+            <Grid
+                Grid.Row="0"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorHeaderBackground},
+                                                  Light={StaticResource ColorHeaderBackgroundLight}}">
+
+                <Grid.GestureRecognizers>
+                    <SwipeGestureRecognizer Command="{Binding CmdOpenFilter}" Direction="Down" />
+                    <SwipeGestureRecognizer Command="{Binding CmdCloseFilter}" Direction="Up" />
+                </Grid.GestureRecognizers>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="52" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    ColumnDefinitions="Auto, *, Auto"
+                    IsVisible="{Binding SearchFocus, Converter={bcm:Sty ConverterBoolInverted}}">
+                    <bcc:BxImage
+                        Grid.Column="0"
+                        Margin="4,4,8,4"
+                        HeightRequest="44"
+                        ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static enum:EnumEmbeddedImage.Logo3_png}}"
+                        IsCircleMode="False"
+                        VerticalOptions="Center"
+                        WidthRequest="150">
+                        <bcc:BxImage.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding GCmdShowMenu}" />
+                        </bcc:BxImage.GestureRecognizers>
+                    </bcc:BxImage>
+
+                    <Grid
+                        Grid.Column="2"
+                        Margin="0"
+                        HeightRequest="52"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center">
+                        <bcc:BxGlyphButton
+                            Margin="4,8,0,0"
+                            Command="{Binding CmdSearch}"
+                            Glyph="{Binding CmdSearch.Glyph}"
+                            GlyphColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                         Light={StaticResource ColorTextOnColorLight}}"
+                            VerticalOptions="Center" />
+                    </Grid>
+                </Grid>
+
+                <!--#region Suche und Filter-->
+
+                <!--#region Suche-->
+
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Margin="0"
+                    HeightRequest="52"
+                    IsVisible="{Binding SearchFocus}"
+                    VerticalOptions="Center">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <bcc:BxGlyphButton
+                        Grid.Column="0"
+                        Margin="4,8,0,0"
+                        Command="{Binding CmdSearch}"
+                        Glyph="{Binding CmdSearch.Glyph}"
+                        GlyphColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                     Light={StaticResource ColorTextOnColorLight}}"
+                        VerticalOptions="Center" />
+
+                    <bcc:BxEntry
+                        Grid.Column="1"
+                        Margin="4,8,4,8"
+                        EntryData="{Binding EntrySearchText}"
+                        HasFrame="False"
+                        HorizontalOptions="Fill" />
+                </Grid>
+
+                <!--#endregion-->
+
+                <!--#region Filter-->
+
+                <bcc:BxGlyphButton
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Margin="8,8,0,0"
+                    Command="{Binding Dc.DcExIdeas.CmdUpdateItems}"
+                    Glyph="{Binding Dc.DcExIdeas.CmdUpdateItems.Glyph}"
+                    GlyphColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                 Light={StaticResource ColorTextOnColorLight}}"
+                    IsVisible="{Binding TabletMode}"
+                    VerticalOptions="Center" />
+
+                <bcc:BxGlyphButton
+                    Grid.Row="0"
+                    Grid.Column="2"
+                    Margin="8,8,8,0"
+                    Command="{Binding CmdToggleGrid}"
+                    Glyph="{Binding CmdToggleGrid.Glyph}"
+                    GlyphColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                 Light={StaticResource ColorTextOnColorLight}}"
+                    VerticalOptions="Center" />
+
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="50,8,0,8"
+                    IsVisible="{Binding FilterDetailGridEnabled}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="8" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="4" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="4" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="4" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Label
+                        Grid.Row="0"
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        HorizontalOptions="End"
+                        LineBreakMode="NoWrap"
+                        Text="{bcm:Translate ResViewMainIdea.LblTownFilter}"
+                        TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                    Light={StaticResource ColorTextOnColorLight}}"
+                        VerticalOptions="Center" />
+
+                    <bcc:BxPicker
+                        Grid.Row="0"
+                        Grid.Column="2"
+                        ObservableCollectionSelectable="{Binding PickerOrganizationFilter}"
+                        TextColor="{bcm:OnPlatformColor Wpf={AppThemeBinding Dark={StaticResource ColorText},
+                                                                             Light={StaticResource ColorTextLight}},
+                                                        Android={AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                                 Light={StaticResource ColorTextOnColorLight}},
+                                                        IOs={AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                             Light={StaticResource ColorTextOnColorLight}}}"
+                        VerticalOptions="Center">
+                        <bcc:BxPicker.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0" />
+                                <On Platform="Android" Value="0" />
+                                <On Platform="WPF" Value="0,6,0,0" />
+                            </OnPlatform>
+                        </bcc:BxPicker.Margin>
+                    </bcc:BxPicker>
+
+                    <Label
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        HorizontalOptions="End"
+                        LineBreakMode="NoWrap"
+                        Text="{bcm:Translate ResViewMainIdea.LblFilter}"
+                        TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                    Light={StaticResource ColorTextOnColorLight}}"
+                        VerticalOptions="Center" />
+                    <bcc:BxPicker
+                        Grid.Row="2"
+                        Grid.Column="2"
+                        ObservableCollectionSelectable="{Binding PickerCommonFilter}"
+                        TextColor="{bcm:OnPlatformColor Wpf={AppThemeBinding Dark={StaticResource ColorText},
+                                                                             Light={StaticResource ColorTextLight}},
+                                                        Android={AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                                 Light={StaticResource ColorTextOnColorLight}},
+                                                        IOs={AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                             Light={StaticResource ColorTextOnColorLight}}}"
+                        VerticalOptions="Center">
+                        <bcc:BxPicker.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0" />
+                                <On Platform="Android" Value="0" />
+                                <On Platform="WPF" Value="0,6,0,0" />
+                            </OnPlatform>
+                        </bcc:BxPicker.Margin>
+                    </bcc:BxPicker>
+
+                    <Label
+                        Grid.Row="4"
+                        Grid.Column="0"
+                        Margin="0,0,8,0"
+                        HorizontalOptions="End"
+                        LineBreakMode="NoWrap"
+                        Text="{bcm:Translate ResViewMainIdea.LblArchivedFilter}"
+                        TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                    Light={StaticResource ColorTextOnColorLight}}"
+                        VerticalOptions="Center" />
+                    <bcc:BxPicker
+                        Grid.Row="4"
+                        Grid.Column="2"
+                        ObservableCollectionSelectable="{Binding PickerArchivedFilter}"
+                        TextColor="{bcm:OnPlatformColor Wpf={AppThemeBinding Dark={StaticResource ColorText},
+                                                                             Light={StaticResource ColorTextLight}},
+                                                        Android={AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                                 Light={StaticResource ColorTextOnColorLight}},
+                                                        IOs={AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                             Light={StaticResource ColorTextOnColorLight}}}"
+                        VerticalOptions="Center">
+                        <bcc:BxPicker.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="0" />
+                                <On Platform="Android" Value="0" />
+                                <On Platform="WPF" Value="0,6,0,0" />
+                            </OnPlatform>
+                        </bcc:BxPicker.Margin>
+                    </bcc:BxPicker>
+
+                    <bcc:BxButton
+                        Grid.Row="6"
+                        Grid.Column="0"
+                        Grid.ColumnSpan="3"
+                        Margin="0,8,0,0"
+                        BissCommand="{Binding CmdFilterClear}" />
+                </Grid>
+
+                <!--#endregion-->
+
+                <!--#endregion-->
+
+            </Grid>
+
+            <!--#endregion-->
+
+            <!--#region Scrollview-->
+
+            <RefreshView
+                Grid.Row="1"
+                Grid.RowSpan="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Command="{Binding Dc.DcExIdeas.CmdUpdateItems}"
+                IsRefreshing="{Binding IsRefreshing}">
+                <ScrollView Orientation="Neither">
+                    <Grid>
+                        <Grid.Margin>
+                            <OnPlatform x:TypeArguments="Thickness">
+                                <On Platform="iOS" Value="10, 0" />
+                                <On Platform="Android" Value="10, 0" />
+                                <On Platform="WPF" Value="10,0,26,0" />
+                            </OnPlatform>
+                        </Grid.Margin>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!--#region Ideenwerkstatt Header-->
+
+                        <Label
+                            Grid.Row="0"
+                            HorizontalTextAlignment="Center"
+                            Style="{StaticResource LabelStyBig}"
+                            Text="{bcm:Translate ResViewMainIdea.LblIdeaWorkshop}"
+                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                        Light={StaticResource ColorAccentLight}}" />
+
+                        <BoxView Grid.Row="1" Style="{StaticResource BoxViewStySmallSeperator}" />
+
+                        <!--#endregion-->
+
+                        <!--#region Scrollable List-->
+
+                        <Grid x:Name="OuterGrid" Grid.Row="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition x:Name="ColumnMid" Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid
+                                x:Name="InnerGrid"
+                                Grid.Column="1"
+                                HorizontalOptions="FillAndExpand"
+                                VerticalOptions="FillAndExpand">
+
+                                <!--#region No Items-->
+
+                                <StackLayout HorizontalOptions="FillAndExpand"
+                                             IsVisible="{Binding UiIdeasVisible, Converter={bcm:Sty ConverterBoolInverted}}">
+                                    <Frame Style="{StaticResource FrameStyIdeaMain}">
+                                        <StackLayout>
+                                            <Label HorizontalTextAlignment="Center" LineBreakMode="WordWrap">
+                                                <Label.FormattedText>
+                                                    <FormattedString>
+                                                        <FormattedString.Spans>
+                                                            <Span
+                                                                Text="{bcm:Translate ResViewMainIdea.LblNoIdeasText1}" />
+                                                            <Span
+                                                                Text="{bcm:Translate ResViewMainIdea.LblNoIdeasText2}"
+                                                                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent}, Light={StaticResource ColorAccentLight}}" />
+                                                            <Span
+                                                                Text="{bcm:Translate ResViewMainIdea.LblNoIdeasText3}" />
+                                                        </FormattedString.Spans>
+                                                    </FormattedString>
+                                                </Label.FormattedText>
+                                            </Label>
+
+                                            <Label
+                                                Margin="0,16,0,0"
+                                                HorizontalTextAlignment="Center"
+                                                LineBreakMode="WordWrap"
+                                                Text="{bcm:Translate ResViewMainIdea.LblNoIdeasText4}" />
+
+                                            <bcc:BxGlyphButton
+                                                Command="{Binding Dc.DcExIdeas.CmdUpdateItems}"
+                                                Glyph="{Binding Dc.DcExIdeas.CmdUpdateItems.Glyph}"
+                                                HorizontalOptions="Center" />
+
+                                        </StackLayout>
+                                    </Frame>
+                                </StackLayout>
+
+                                <!--#endregion-->
+
+                                <!--#region List of Items-->
+
+                                <ListView
+                                    HasUnevenRows="True"
+                                    ItemsSource="{Binding UiIdeas}"
+                                    SelectionMode="None"
+                                    SeparatorVisibility="None">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="connectivity:DcExIdeasType">
+                                            <ViewCell>
+                                                <Frame
+                                                    Margin="0,4"
+                                                    Padding="0"
+                                                    IsVisible="{Binding Converter={bcm:Sty ConverterObjectNull}}"
+                                                    Style="{StaticResource FrameStyIdeaMain}">
+                                                    <Grid ColumnDefinitions="150,8,*" RowDefinitions="4,*,4">
+                                                        <!--#region Bild und GestureRecognizer (ItemInfo)-->
+                                                        <bcc:BxImage
+                                                            Grid.Row="1"
+                                                            Grid.Column="0"
+                                                            Margin="4"
+                                                            HeightRequest="213"
+                                                            HorizontalOptions="Center"
+                                                            ImageSource="{Binding Data.IdeaImage, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static enum:EnumEmbeddedImage.Idea_png}}"
+                                                            IsCircleMode="False"
+                                                            VerticalOptions="Center"
+                                                            WidthRequest="142" />
+
+                                                        <BoxView
+                                                            Grid.Row="1"
+                                                            Grid.Column="0"
+                                                            BackgroundColor="Transparent">
+                                                            <BoxView.GestureRecognizers>
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.Dc.DcExIdeas.CmdItemInfo}"
+                                                                    CommandParameter="{Binding}" />
+                                                            </BoxView.GestureRecognizers>
+                                                        </BoxView>
+                                                        <!--#endregion-->
+
+                                                        <Grid
+                                                            Grid.Row="1"
+                                                            Grid.Column="2"
+                                                            ColumnDefinitions="*,8,Auto,8"
+                                                            RowDefinitions="Auto,50,Auto,Auto,Auto,Auto">
+
+                                                            <Label
+                                                                Grid.Row="0"
+                                                                Grid.Column="0"
+                                                                Grid.ColumnSpan="3"
+                                                                Margin="0,0,0,4"
+                                                                Style="{StaticResource LabelStyDescription}"
+                                                                Text="{Binding Data.Title}" />
+
+                                                            <bcc:BxImage
+                                                                Grid.Row="1"
+                                                                Grid.Column="0"
+                                                                HeightRequest="52"
+                                                                HorizontalOptions="Start"
+                                                                ImageSource="{Binding Data.CreatorUserImage, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static enum:EnumEmbeddedImage.DefaultUserImage_png}}"
+                                                                IsCircleMode="true"
+                                                                VerticalOptions="Center"
+                                                                WidthRequest="52" />
+                                                            <Label
+                                                                Grid.Row="2"
+                                                                Grid.Column="0"
+                                                                Grid.ColumnSpan="4"
+                                                                HorizontalOptions="Start"
+                                                                Text="{Binding Data.CreatorUserName}"
+                                                                VerticalOptions="Center" />
+
+                                                            <!--#region Like-->
+                                                            <Label
+                                                                Grid.Row="3"
+                                                                Grid.Column="0"
+                                                                HorizontalOptions="End"
+                                                                Text="{Binding Data.LikeCount}"
+                                                                VerticalOptions="Center" />
+                                                            <bcc:BxLikeButton
+                                                                Grid.Row="3"
+                                                                Grid.Column="2"
+                                                                FillColor="{Binding Data.IsLiked, Converter={StaticResource ConverterIsLikedFillColor}}"
+                                                                Size="24"
+                                                                StrokeColor="{StaticResource ColorTextLight}" />
+                                                            <!--#endregion-->
+
+                                                            <Label
+                                                                Grid.Row="4"
+                                                                Grid.Column="0"
+                                                                HorizontalOptions="End"
+                                                                Text="Details"
+                                                                VerticalOptions="Center" />
+                                                            <bcc:BxGlyphButton
+                                                                Grid.Row="4"
+                                                                Grid.Column="2"
+                                                                Command="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.Dc.DcExIdeas.CmdItemInfo}"
+                                                                CommandParameter="{Binding}"
+                                                                Glyph="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.Dc.DcExIdeas.CmdItemInfo.Glyph}" />
+
+                                                            <!--#region GestureRecognizer für ItemInfo-->
+                                                            <BoxView
+                                                                Grid.Row="0"
+                                                                Grid.RowSpan="6"
+                                                                Grid.Column="0"
+                                                                Grid.ColumnSpan="4"
+                                                                BackgroundColor="Transparent">
+                                                                <BoxView.GestureRecognizers>
+                                                                    <TapGestureRecognizer
+                                                                        Command="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.Dc.DcExIdeas.CmdItemInfo}"
+                                                                        CommandParameter="{Binding}" />
+                                                                </BoxView.GestureRecognizers>
+                                                            </BoxView>
+                                                            <!--#endregion-->
+
+                                                            <!--#region GestureRecognizer für Like-->
+                                                            <BoxView
+                                                                Grid.Row="3"
+                                                                Grid.Column="1"
+                                                                Grid.ColumnSpan="2"
+                                                                BackgroundColor="Transparent">
+                                                                <BoxView.GestureRecognizers>
+                                                                    <TapGestureRecognizer
+                                                                        Command="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdLike}"
+                                                                        CommandParameter="{Binding}" />
+                                                                </BoxView.GestureRecognizers>
+                                                            </BoxView>
+                                                            <!--#endregion-->
+
+                                                        </Grid>
+
+
+                                                    </Grid>
+                                                </Frame>
+
+                                                <!--<Frame Margin="0,4" Style="{StaticResource FrameStyIdeaMain}">
+                                                    <bc:BxIdea
+                                                        CmdAddReport="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdReportIdea}"
+                                                        CmdCalendar="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdCalendar}"
+                                                        CmdChatIdea="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdChatIdea}"
+                                                        CmdChatUser="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdChatUser}"
+                                                        CmdDelete="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.Dc.DcExIdeas.CmdRemoveItem}"
+                                                        CmdEdit="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.Dc.DcExIdeas.CmdEditItem}"
+                                                        CmdLike="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdLike}"
+                                                        CmdMap="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdShowMap}"
+                                                        CmdShow="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.Dc.DcExIdeas.CmdItemInfo}"
+                                                        CmdShowReports="{Binding Source={x:Reference MyViewMainIdea}, Path=ViewModel.CmdShowReports}"
+                                                        DcIdea="{Binding}"
+                                                        IsVisible="{Binding Converter={bcm:Sty ConverterObjectNull}}" />
+                                                </Frame>-->
+                                            </ViewCell>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                                <!--#endregion-->
+                            </Grid>
+                        </Grid>
+
+                        <!--#endregion-->
+                    </Grid>
+                </ScrollView>
+            </RefreshView>
+
+            <!--#endregion-->
+
+            <!--#region Add-->
+
+            <Grid
+                Grid.Row="2"
+                Grid.Column="1"
+                ColumnDefinitions="70"
+                RowDefinitions="70">
+                <Grid.Margin>
+                    <OnPlatform x:TypeArguments="Thickness">
+                        <On Platform="iOS" Value="0,0,12,12" />
+                        <On Platform="Android" Value="0,0,12,12" />
+                        <On Platform="WPF" Value="0,0,36,12" />
+                    </OnPlatform>
+                </Grid.Margin>
+
+                <bcc:BxGlyphButton
+                    Command="{Binding Dc.DcExIdeas.CmdAddItem}"
+                    FontSize="24"
+                    FrameCornerRadius="35"
+                    Glyph="{Binding Dc.DcExIdeas.CmdAddItem.Glyph}"
+                    HorizontalOptions="CenterAndExpand"
+                    Opacity="0.7"
+                    Style="{StaticResource StyGlyphButtonWithFrame}"
+                    VerticalOptions="CenterAndExpand" />
+            </Grid>
+
+            <BoxView
+                Grid.Row="3"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                BackgroundColor="Transparent"
+                HeightRequest="1"
+                SizeChanged="VisualElement_OnSizeChanged"
+                Color="Transparent" />
+            <!--#endregion-->
+
+        </Grid>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

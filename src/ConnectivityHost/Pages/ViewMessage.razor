@@ -1,0 +1,13 @@
+﻿@page "/ViewMessage"
+@page "/ViewMessage/{Id:int}"
+
+@attribute [Helper.Authorize]
+
+@inherits ProjectRazorPage<VmMessage>
+
+@if (ViewModel != null!)
+{
+    <BxEntry Entry="@ViewModel.TitleEntry"></BxEntry>
+    <BxEntry Entry="@ViewModel.MessageEntry"></BxEntry>
+    <BxButton BissCommand="ViewModel.CmdSend"/>
+}

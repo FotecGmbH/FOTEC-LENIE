@@ -1,0 +1,84 @@
+﻿@using Exchange.Resources
+@inherits BissMainLayout
+
+@if (ViewModel != null && ViewModel.View.ShowHeader)
+{
+    <header class="navbar navbar-dark sticky-top bg-dark p-0 shadow">
+        <div class="d-flex flex-row">
+            @if (ViewModel != null && ViewModel.View.ShowBack)
+            {
+                <div class="p-2">
+                    <button class="menu-icon p-2" @onclick="GoBack">
+                        <span class="oi sl-icon" aria-hidden="true">@Glyphs.Arrow_thick_left_2</span>
+                    </button>
+                </div>
+            }
+            @if (ViewModel != null && ViewModel.View.ShowMenu)
+            {
+                <div class="p-2">
+                    <button class="menu-icon p-2" @onclick="ToggleMenu">
+                        <span class="oi sl-icon" aria-hidden="true">@Glyphs.Navigation_menu_1</span>
+                    </button>
+                </div>
+            }
+
+            @if (ViewModel != null)
+            {
+                @if (ViewModel.View.ShowTitle)
+                {
+                    <div class="p-2">
+                        <span class="p-2 app-title app-title-big">@ViewModel.PageTitle</span>
+                    </div>
+                }
+
+                @if (ViewModel.View.ShowSubTitle)
+                {
+                    <div class="p-2">
+                        <span class="p-2 app-title">@ViewModel.PageSubTitle</span>
+                    </div>
+                }
+            }
+        </div>
+        <div>
+            <div class="p-2 align-content-end">
+                <a href="/login" class="menu-icon p-2">
+                    <span class="oi sl-icon" aria-hidden="true">@Glyphs.Logout_1</span>
+                </a>
+            </div>
+        </div>
+    </header>
+}
+
+
+<div class="container-fluid px-0">
+
+    <CascadingValue Value="this">
+        <main>
+
+            <BissNavControl></BissNavControl>
+            <MessageBoxControl Item="@MsgBox"></MessageBoxControl>
+            <FileUploadControl></FileUploadControl>
+
+            <BusyIndicatorControl IsBusy="@ViewModel?.View.IsBusy" BusyContent="@ViewModel?.View.BusyContent"></BusyIndicatorControl>
+
+            <div class="row g-0 @GetCssClassForFooter()">
+                @if (!MenuCollapsed && (ViewModel != null && ViewModel.View.ShowMenu))
+                {
+                    <NavMenu Item="@ViewModel"/>
+                }
+
+                <div class="@GetCssClassForBody() p-3">
+
+                    @Body
+                </div>
+            </div>
+
+        </main>
+        <ToastControl Item="@Toast"></ToastControl>
+        @* @if (ViewModel != null)
+        {
+            <FooterControl Visible="@ViewModel?.View.ShowFooter" VmCommands="VmProjectBase.GetVmBaseStatic.CmdAllMenuCommands"></FooterControl>
+        } *@
+    </CascadingValue>
+
+</div>

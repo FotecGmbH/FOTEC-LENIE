@@ -1,0 +1,59 @@
+﻿@model ConnectivityHost.Services.EMailModelUser
+
+@{
+    Layout = "/Views/EMail/_EMailBase.cshtml";
+}
+
+@section HeaderContent
+{
+    <title>Best&auml;tigung deines neuen Accounts!</title>
+}
+
+<!-- body -->
+<table class="body-wrap" bgcolor=#FFFFFF>
+    <tr>
+        <td></td>
+        <td class="container" bgcolor="#FFFFFF">
+            <h3> Best&auml;tige deinen Account! </h3>
+            <!-- content -->
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="text-align: left" font-family:Arial>
+                                        <p>
+                                            Hallo @Model!.Firstname @Model.Lastname,<br/>
+                                            bitte klicke auf folgenden Link um deine Anmeldung bei LENIE zu bestätigen:
+                                            <a href="@Model.Link">@Model.Link</a>
+                                        </p>
+                                        @if (!string.IsNullOrWhiteSpace(Model.Username) && !(string.IsNullOrWhiteSpace(Model.Password)))
+                                        {
+                                            <p>
+                                                Nach der Best&#228;tigung kannst du dich in der App mit folgenden Benutzerdaten anmelden:<br/>
+                                                Email: @Model!.Username <br/>
+                                                Passwort: @Model!.Password <br/>
+
+                                                Bitte &#228;ndere dein Passwort nach der Anmeldung<br/>
+                                            </p>
+                                        }
+                                        <p>
+                                            Danke und viele Gr&uuml;&szlig;e,<br/>
+                                            Dein LENIE Team!
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /content -->
+
+        </td>
+        <td></td>
+    </tr>
+
+</table>

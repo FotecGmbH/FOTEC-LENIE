@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewAddOrganizationUser"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Organization;assembly=BaseApp"
+    d:DataContext="{x:Static viewmodels:VmAddOrganizationUser.DesignInstance}"
+    x:TypeArguments="viewmodels:VmAddOrganizationUser"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <StackLayout>
+            <Label Style="{StaticResource LabelStyEditHeader}"
+                   Text="{bcm:Translate ResViewAddOrganizationUser.LblMainData}" />
+
+            <bcc:BxEntry
+                Margin="0,0,0,8"
+                EntryData="{Binding EntryLoginName}"
+                HasFrame="False"
+                IsEnabled="{Binding Data.CanEditLoginEMail}" />
+
+            <Label Text="{bcm:Translate ResViewAddOrganizationUser.LblUserRoles}" />
+
+            <bcc:BxPicker Margin="0,0,0,8" ObservableCollectionSelectable="{Binding PickerUserRole}" />
+        </StackLayout>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

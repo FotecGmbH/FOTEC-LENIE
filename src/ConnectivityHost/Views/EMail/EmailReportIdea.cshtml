@@ -1,0 +1,49 @@
+﻿@model ConnectivityHost.Services.EMailModelReportIdea
+
+@{
+    Layout = "/Views/EMail/_EMailBase.cshtml";
+}
+
+@section HeaderContent
+{
+    <title>Eine Idee wurde gemeldet!</title>
+}
+
+<!-- body -->
+<table class="body-wrap" bgcolor=#FFFFFF>
+    <tr>
+        <td></td>
+        <td class="container" bgcolor="#FFFFFF">
+            <h3> Eine Idee wurde gemeldet! </h3>
+            <!-- content -->
+            <div class="content">
+                <table>
+                    <tr>
+                        <td>
+                            <table>
+                                <tr>
+                                    <td style="text-align: left" font-family:Arial>
+                                        <p>
+                                            Der Benutzer @Model.ReportUserFirstName @Model.ReportUserLastName (@Model.ReportUserName - @Model.ReportUserPhone) hat eine Idee gemeldet:<br/>
+                                            Idee: @Model.IdeaTitle <br/>
+                                            Begründung: @Model.Reason <br/>
+                                        </p>
+                                        <p>
+                                            Details dazu findest du in der App<br/>
+                                            Dein LENIE Team!
+                                        </p>
+                                    </td>
+                                </tr>
+                            </table>
+                            <br/><br/>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            <!-- /content -->
+
+        </td>
+        <td></td>
+    </tr>
+
+</table>

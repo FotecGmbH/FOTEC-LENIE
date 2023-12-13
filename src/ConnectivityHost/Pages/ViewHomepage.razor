@@ -1,0 +1,155 @@
+﻿@page "/"
+@using Exchange
+@layout HomeLayout
+
+<!-- HEADER -->
+<div style="background:#36517E; color: white;">
+    <div class="container pt-5 pb-5">
+        <div class="row">
+            <div class="col-6">
+                <h1 style="color: #39CCCC;">@AppSettings.Current().AppName Backend</h1>
+                <h1>@AppSettings.Current().AppVersion</h1>
+            </div>
+            <div class="col-6" style="height: 150px;">
+                <img class="img-fluid mh-100 mx-auto d-block" src="/Content/Logo1.png"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Logos -->
+<div style="background-color:#fafafa; color: darkgray;">
+
+    <div class="row p-2">
+        <div class="col-md-2 col-sm-12 p-3 mh-100" style="height: 150px;">
+            <a href="https://land-noe.at/noe/teamdigitalisierung.html" target="_blank">
+                <img class="img-fluid mh-100 mx-auto d-block align-middle" src="/Content/noe.png"/>
+            </a>
+        </div>
+        <div class="col-md-2 col-sm-12 p-3 mh-100" style="height: 150px;">
+            <a href="https://land-noe.at/noe/teamdigitalisierung.html" target="_blank">
+                <img class="img-fluid mh-100 mx-auto d-block align-middle" src="/Content/Year100transp.png"/>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-12 p-3 mh-100 align-middle my-auto align-items-center" style="height: 150px;">
+            <a href="https://dih-ost.at/" target="_blank">
+                <img class="img-fluid mh-100 mx-auto d-block align-middle" src="/Content/dihost.png"/>
+            </a>
+        </div>
+        <div class="col-md-2 col-sm-12 p-3 mh-100" style="height: 150px;">
+            <a href="https://www.fotec.at/" target="_blank">
+                <img class="img-fluid mh-100 mx-auto d-block align-middle" src="/Content/Fotec.png"/>
+            </a>
+        </div>
+        <div class="col-md-3 col-sm-12 p-3 mh-100" style="height: 150px;">
+            <a href="https://www.noeregional.at/lenie-leben-in-niederoesterreich/" target="_blank">
+                <img class="img-fluid mh-100 mx-auto d-block align-middle" src="/Content/NoeRegional.png"/>
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Text -->
+<div style="background:white;">
+    <div class="container pt-5 pb-5">
+        <div class="row">
+            <h1 style="color: #39CCCC;">@AppSettings.Current().AppName Backend</h1>
+            <h4>Template</h4>
+            <br/>
+            <p>Text</p>
+            <p>TEMPLATE Version! Textbausteine ersetzen.</p>
+        </div>
+    </div>
+</div>
+
+<!-- Tabelle -->
+<div style="background-color: #fafafa; color: darkgray;">
+    <div class="container pt-5 pb-5">
+        <div class="row">
+            <div class="col-12">
+                <h2 class="text-center">Links</h2>
+            </div>
+        </div>
+        <div class="row p-2">
+            <div class="col-6">
+                <table class="table table-striped">
+                    @foreach (var link in _lstLinks)
+                    {
+                        <tr>
+                            <td align="center">
+                                @if (link.OpenAlert)
+                                {
+                                    <a class="link-info" href="" @onclick="(() => OpenAlert())" @onclick:preventDefault>@link.Info</a>
+                                }
+                                else
+                                {
+                                    <a class="link-info" target="_blank" href="@link.Url">@link.Info</a>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+            <div class="col-6">
+                <table class="table table-striped">
+                    @foreach (var link in _lstRechts)
+                    {
+                        <tr>
+                            <td align="center">
+                                @if (link.OpenAlert)
+                                {
+                                    <a class="link-info" href="" @onclick="(() => OpenAlert())" @onclick:preventDefault>@link.Info</a>
+                                }
+                                else
+                                {
+                                    <a class="link-info" target="_blank" href="@link.Url">@link.Info</a>
+                                }
+
+                            </td>
+                        </tr>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<div style="background:#36517E; color: white;">
+    <div class="container">
+        <div class="row p-2">
+            <div class="col-12">
+                Copyright @DateTime.Now.Year FOTEC Forschungs- und Technologietransfer GmbH
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ALERT -->
+@if (_showModal)
+{
+    <div class="modal fade show" id="myModal" style="display:block" aria-modal="true" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header">
+                    <h4 class="modal-title">Information</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <!-- Modal body -->
+                <div class="modal-body">
+                    <p>@_modalContent</p>
+                </div>
+
+                <!-- Modal footer -->
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" @onclick="@ModalCancel">Ok</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+}

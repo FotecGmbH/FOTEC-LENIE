@@ -1,0 +1,207 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewChatOverview"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Chat;assembly=BaseApp"
+    x:Name="MyChatOverview"
+    d:DataContext="{x:Static viewmodels:VmChatOverview.DesignInstance}"
+    x:TypeArguments="viewmodels:VmChatOverview"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <ScrollView Margin="8,4,8,0">
+            <StackLayout>
+                <Label Style="{StaticResource LabelStyDescription}" Text="Filter" />
+
+                <StackLayout Margin="8,0,0,0">
+
+                    <!--#region Picker Gemeinden-->
+
+                    <Label Text="{bcm:Translate ResViewChatOverview.LblTowns}" />
+                    <bcc:BxPicker ObservableCollectionSelectable="{Binding PickerOrganizations}"
+                                  SelectedItem="{Binding PickerOrganizations.SelectedItem}" />
+
+                    <!--#endregion-->
+
+                    <!--#region Picker Ideen-->
+
+                    <Label Text="{bcm:Translate ResViewChatOverview.LblIdeas}" />
+                    <bcc:BxPicker ObservableCollectionSelectable="{Binding PickerIdeas}"
+                                  SelectedItem="{Binding PickerIdeas.SelectedItem}" />
+
+                    <!--#endregion-->
+
+                </StackLayout>
+
+                <!--#region Liste Chats-->
+
+                <Grid>
+
+                    <!--#region Chats verfügbar-->
+
+                    <Grid
+                        Margin="0"
+                        Padding="0"
+                        IsVisible="{Binding ChatsAvailable}">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <Label
+                                Grid.Row="0"
+                                Style="{StaticResource LabelStyDescription}"
+                                Text="{Binding ChatInfoText}" />
+                            <StackLayout Grid.Row="1">
+                                <StackLayout BindableLayout.ItemsSource="{Binding ChatList}">
+                                    <BindableLayout.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid
+                                                BindingContext="{x:Static viewmodels:VmChatOverview.DesignInstanceChat}">
+                                                <Frame
+                                                    Margin="4"
+                                                    Padding="0"
+                                                    CornerRadius="12">
+                                                    <Grid Margin="8" HeightRequest="44">
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition Width="30" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+
+                                                        <BoxView
+                                                            Grid.Column="0"
+                                                            BackgroundColor="{AppThemeBinding Dark={StaticResource ColorEntryErrorText},
+                                                                                              Light={StaticResource ColorEntryErrorTextLight}}"
+                                                            CornerRadius="10"
+                                                            HeightRequest="20"
+                                                            HorizontalOptions="Center"
+                                                            IsVisible="{Binding UnreadMessages, Converter={StaticResource ConverterCountMoreThanZero}}"
+                                                            VerticalOptions="Center"
+                                                            WidthRequest="20" />
+                                                        <Label
+                                                            Grid.Column="0"
+                                                            FontSize="{StaticResource FontSizeSmall}"
+                                                            HeightRequest="20"
+                                                            HorizontalOptions="Center"
+                                                            HorizontalTextAlignment="Center"
+                                                            IsVisible="{Binding UnreadMessages, Converter={StaticResource ConverterCountMoreThanZero}}"
+                                                            Text="{Binding UnreadMessages}"
+                                                            TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                                                        Light={StaticResource ColorTextOnColorLight}}"
+                                                            VerticalOptions="Center"
+                                                            VerticalTextAlignment="Center"
+                                                            WidthRequest="20" />
+
+                                                        <Label
+                                                            Grid.Column="1"
+                                                            FontFamily="{StaticResource StreamLineIcons}"
+                                                            FontSize="{StaticResource FontSizeSmall}"
+                                                            HeightRequest="20"
+                                                            HorizontalOptions="Center"
+                                                            HorizontalTextAlignment="Center"
+                                                            IsVisible="{Binding IsGroup, Converter={bcm:Sty ConverterBoolInverted}}"
+                                                            Text="{x:Static resources:Glyphs.Single_neutral}"
+                                                            VerticalOptions="Center"
+                                                            VerticalTextAlignment="Center"
+                                                            WidthRequest="20" />
+                                                        <Label
+                                                            Grid.Column="1"
+                                                            FontFamily="{StaticResource StreamLineIcons}"
+                                                            FontSize="{StaticResource FontSizeSmall}"
+                                                            HeightRequest="20"
+                                                            HorizontalOptions="Center"
+                                                            HorizontalTextAlignment="Center"
+                                                            IsVisible="{Binding IsGroup}"
+                                                            Text="{x:Static resources:Glyphs.Messaging_msn_messenger}"
+                                                            VerticalOptions="Center"
+                                                            VerticalTextAlignment="Center"
+                                                            WidthRequest="20" />
+
+                                                        <Label
+                                                            Grid.Column="2"
+                                                            Text="{Binding ChatName}"
+                                                            VerticalOptions="Center"
+                                                            VerticalTextAlignment="Center" />
+
+                                                        <bcc:BxGlyphButton
+                                                            Grid.Column="3"
+                                                            Command="{Binding ViewModel.CmdOpenChat, Source={x:Reference MyChatOverview}}"
+                                                            CommandParameter="{Binding}"
+                                                            Glyph="{Binding ViewModel.CmdOpenChat.Glyph, Source={x:Reference MyChatOverview}}"
+                                                            VerticalOptions="Center" />
+
+                                                        <BoxView
+                                                            Grid.Column="0"
+                                                            Grid.ColumnSpan="4"
+                                                            HorizontalOptions="FillAndExpand"
+                                                            VerticalOptions="FillAndExpand">
+                                                            <BoxView.GestureRecognizers>
+                                                                <TapGestureRecognizer
+                                                                    Command="{Binding ViewModel.CmdOpenChat, Source={x:Reference MyChatOverview}}"
+                                                                    CommandParameter="{Binding}" />
+                                                            </BoxView.GestureRecognizers>
+                                                        </BoxView>
+                                                    </Grid>
+                                                </Frame>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </BindableLayout.ItemTemplate>
+                                </StackLayout>
+                            </StackLayout>
+                        </Grid>
+                    </Grid>
+
+                    <!--#endregion-->
+
+                    <!--#region Keine Chats-->
+
+                    <Grid IsVisible="{Binding ChatsAvailable, Converter={bcm:Sty ConverterBoolInverted}}"
+                          VerticalOptions="CenterAndExpand">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="*" />
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="8" />
+                        </Grid.RowDefinitions>
+
+                        <Label
+                            Grid.Row="1"
+                            FontSize="48"
+                            HorizontalTextAlignment="Center"
+                            Style="{bcm:Sty LabelStyGlyph}"
+                            Text="{x:Static resources:Glyphs.Messages_bubble_warning_triangle}" />
+                        <Label
+                            Grid.Row="3"
+                            HorizontalTextAlignment="Center"
+                            MaxLines="2"
+                            Text="{bcm:Translate ResViewChatOverview.LblNoChats}" />
+                    </Grid>
+
+                    <!--#endregion-->
+
+                </Grid>
+
+                <!--#endregion-->
+
+            </StackLayout>
+        </ScrollView>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

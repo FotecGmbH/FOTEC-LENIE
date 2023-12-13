@@ -1,0 +1,286 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewSysAdminQ"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:converter="clr-namespace:Biss.Apps.XF.Converter;assembly=Biss.Apps.XF"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel;assembly=BaseApp"
+    x:Name="MySysAdminQ"
+    d:DataContext="{x:Static viewmodels:VmSysAdmin.DesignInstance}"
+    x:TypeArguments="viewmodels:VmSysAdmin"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <view:BissContentPage.Resources>
+        <converter:ConverterBooleanValueColor
+            x:Key="ColorConverterUser"
+            ColorFalse="{StaticResource ColorButtonLock}"
+            ColorTrue="{StaticResource ColorButtonUnlock}" />
+    </view:BissContentPage.Resources>
+
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <Grid Margin="4,16,4,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="24" />
+                <ColumnDefinition Width="450" />
+            </Grid.ColumnDefinitions>
+
+            <!--#region Links User-->
+
+            <ScrollView Grid.Row="0" Grid.Column="0">
+
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Grid Grid.Row="0" Grid.Column="0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="16" />
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="16" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="8" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="8" />
+                        </Grid.RowDefinitions>
+
+                        <BoxView
+                            Grid.Row="0"
+                            Grid.RowSpan="3"
+                            Grid.Column="0"
+                            Grid.ColumnSpan="4"
+                            BackgroundColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                              Light={StaticResource ColorAccentLight}}"
+                            Opacity="0.7" />
+
+                        <Label
+                            Grid.Row="1"
+                            Grid.Column="1"
+                            Text="{bcm:Translate ResViewOrganization.LblUsers}"
+                            TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                        Light={StaticResource ColorTextOnColorLight}}" />
+                        <Label
+                            Grid.Row="2"
+                            Grid.Column="1"
+                            Style="{bcm:Sty LabelStyDetail}"
+                            TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                        Light={StaticResource ColorTextOnColorLight}}">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <FormattedString.Spans>
+                                        <Span Text="{Binding UiUsersCount}" />
+                                        <Span Text=" Benutzer" />
+                                    </FormattedString.Spans>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+
+                    </Grid>
+
+
+                    <Grid
+                        Grid.Row="1"
+                        Grid.Column="0"
+                        Margin="4">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <SearchBar
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            Placeholder="Name oder E-Mail enthält"
+                            SearchCommand="{Binding CmdSearch}"
+                            Text="{Binding Filter}" />
+                        <bcc:BxGlyphButton
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Margin="8,0,0,0"
+                            Command="{Binding CmdSearch}"
+                            Glyph="{Binding CmdSearch.Glyph}" />
+                    </Grid>
+
+                    <StackLayout
+                        Grid.Row="2"
+                        Grid.Column="0"
+                        BindableLayout.ItemsSource="{Binding UiUsers}">
+
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid BindingContext="{Binding}">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="2*" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="1*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+
+                                    <Grid
+                                        Grid.Row="0"
+                                        Grid.RowSpan="3"
+                                        Grid.Column="0"
+                                        Margin="5,5,15,5"
+                                        HorizontalOptions="CenterAndExpand"
+                                        IsVisible="{Binding Data.HasImage, Converter={bcm:Sty ConverterBoolInverted}}"
+                                        VerticalOptions="CenterAndExpand">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="25" />
+                                        </Grid.RowDefinitions>
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="25" />
+                                        </Grid.ColumnDefinitions>
+                                        <BoxView
+                                            BackgroundColor="{Binding Data.LoginConfirmed, Converter={StaticResource ColorConverterUser}}"
+                                            HeightRequest="30"
+                                            WidthRequest="30"
+                                            Color="{Binding Data.LoginConfirmed, Converter={StaticResource ColorConverterUser}}" />
+                                    </Grid>
+                                    <bcc:BxImage
+                                        Grid.Row="0"
+                                        Grid.RowSpan="3"
+                                        Grid.Column="0"
+                                        Margin="0,0,5,0"
+                                        HeightRequest="40"
+                                        HorizontalOptions="Center"
+                                        ImageSource="{Binding Data.UserImageLink, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                                        IsCircleMode="True"
+                                        IsVisible="{Binding Data.HasImage}"
+                                        VerticalOptions="Center"
+                                        WidthRequest="40" />
+
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="1"
+                                        Text="{Binding Data.Fullname}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="1"
+                                        Margin="0,-8,0,0"
+                                        HorizontalOptions="Start"
+                                        Style="{bcm:Sty LabelStyDetail}"
+                                        Text="{Binding Data.LoginName}"
+                                        VerticalOptions="Center" />
+
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.RowSpan="2"
+                                        Grid.Column="2"
+                                        Margin="0,0,4,0"
+                                        HorizontalOptions="End"
+                                        IsVisible="{Binding ViewModel.ShowDeveloperInfos, Source={x:Reference MySysAdminQ}}"
+                                        Style="{bcm:Sty LabelStyDetail}"
+                                        Text="{Binding Index}"
+                                        VerticalOptions="Center" />
+
+
+                                    <Switch
+                                        Grid.Row="0"
+                                        Grid.Column="3"
+                                        IsToggled="{Binding Data.IsSysAdmin}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="3"
+                                        Margin="0,-8,8,0"
+                                        HorizontalOptions="Start"
+                                        Style="{bcm:Sty LabelStyDetail}"
+                                        Text="Admin"
+                                        VerticalOptions="Center" />
+                                    <Switch
+                                        Grid.Row="0"
+                                        Grid.Column="4"
+                                        IsToggled="{Binding Data.Locked}"
+                                        VerticalOptions="Center" />
+                                    <Label
+                                        Grid.Row="2"
+                                        Grid.Column="4"
+                                        Margin="0,-8,8,0"
+                                        HorizontalOptions="Start"
+                                        Style="{bcm:Sty LabelStyDetail}"
+                                        Text="Gesperrt"
+                                        VerticalOptions="Center" />
+
+                                    <bcc:BxGlyphButton
+                                        Grid.Row="0"
+                                        Grid.RowSpan="3"
+                                        Grid.Column="5"
+                                        BackgroundColor="Transparent"
+                                        Command="{Binding ViewModel.CmdEditUser, Source={x:Reference MySysAdminQ}}"
+                                        CommandParameter="{Binding .}"
+                                        Glyph="{Binding ViewModel.CmdEditUser.Glyph, Source={x:Reference MySysAdminQ}}" />
+
+                                    <BoxView
+                                        Grid.Row="3"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="6"
+                                        Style="{bcm:Sty BoxViewStySeperator}">
+                                        <BoxView.IsVisible>
+                                            <OnPlatform x:TypeArguments="system:Boolean">
+                                                <On Platform="iOS, Android, macOS">false</On>
+                                                <On Platform="WPF">true</On>
+                                            </OnPlatform>
+                                        </BoxView.IsVisible>
+                                    </BoxView>
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+
+                </Grid>
+            </ScrollView>
+
+            <!--#endregion-->
+
+            <!--#region Rechts - Infos-->
+
+            <StackLayout Grid.Row="0" Grid.Column="2">
+                <bcc:BxEntry EntryData="{Binding EntryCommonMsg}" />
+                <bcc:BxButton BissCommand="{Binding CmdUpdateInfoText}" />
+            </StackLayout>
+
+            <!--#endregion-->
+
+        </Grid>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

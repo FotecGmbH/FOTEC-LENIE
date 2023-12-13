@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewChat"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bc="clr-namespace:BaseApp.View.Xamarin.Controls;assembly=BaseApp.View.Xamarin"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:chat="clr-namespace:BaseApp.ViewModel.Chat;assembly=BaseApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    x:Name="BissViewChat"
+    d:DataContext="{x:Static chat:VmChat.DesignInstance}"
+    x:TypeArguments="chat:VmChat"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <ScrollView
+            Margin="0"
+            Padding="0"
+            HorizontalOptions="FillAndExpand"
+            Orientation="Neither"
+            VerticalOptions="FillAndExpand">
+            <Grid Margin="8,4,8,8">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <!--#endregion-->
+
+                <!--#region Chatanzeige-->
+
+                <ScrollView
+                    x:Name="ChatScrollView"
+                    Grid.Row="0"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="FillAndExpand">
+                    <StackLayout
+                        BindableLayout.ItemsSource="{Binding Dc.Chat.SelectedUiChat.ChatEntries}"
+                        HorizontalOptions="FillAndExpand"
+                        VerticalOptions="FillAndExpand">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid d:DataContext="{x:Static chat:VmChat.DesignInstanceChatDayEntries}">
+                                    <bc:BxChatDayEntryControl
+                                        ChatDayEntry="{Binding}"
+                                        DevMode="{Binding ViewModel.ShowDeveloperInfos, Source={x:Reference BissViewChat}}"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="FillAndExpand" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+                </ScrollView>
+
+                <!--#endregion-->
+
+                <!--#region Chateingabe-->
+
+                <Frame Grid.Row="1">
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <bcc:BxEntry
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            EntryData="{Binding EntryChatMessage}"
+                            HasFrame="False" />
+                        <Frame
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            Padding="0"
+                            BackgroundColor="{AppThemeBinding Dark={StaticResource ColorButtonBackground},
+                                                              Light={StaticResource ColorButtonBackgroundLight}}"
+                            CornerRadius="24">
+                            <bcc:BxGlyphButton
+                                Command="{Binding CmdSendMessage}"
+                                Glyph="{Binding CmdSendMessage.Glyph}"
+                                VerticalOptions="Center" />
+                        </Frame>
+                    </Grid>
+                </Frame>
+
+                <!--#endregion-->
+
+            </Grid>
+
+            <!--#endregion-->
+
+        </ScrollView>
+    </bcc:PageControl>
+</view:BissContentPage>

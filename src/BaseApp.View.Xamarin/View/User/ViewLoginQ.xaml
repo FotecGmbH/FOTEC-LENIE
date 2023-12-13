@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewLoginQ"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.User;assembly=BaseApp"
+    d:DataContext="{x:Static viewmodels:VmLogin.DesignInstance}"
+    x:TypeArguments="viewmodels:VmLogin"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+        <Frame
+            Margin="50"
+            HorizontalOptions="CenterAndExpand"
+            WidthRequest="600">
+            <Grid Margin="4,4,4,0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Style="{StaticResource LabelStyBig}"
+                    Text="{bcm:Translate ResViewLogin.LblLogin}" />
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="0"
+                    Margin="8,24"
+                    Text="{Binding EntryLoginName.Title}" />
+                <bcc:BxEntry
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    Margin="8"
+                    EntryData="{Binding EntryLoginName}" />
+
+                <Label
+                    Grid.Row="2"
+                    Grid.Column="0"
+                    Margin="8,24"
+                    Text="{Binding EntryPassword.Title}" />
+                <bcc:BxEntry
+                    Grid.Row="2"
+                    Grid.Column="1"
+                    Margin="8"
+                    EntryData="{Binding EntryPassword}"
+                    IsPassword="True" />
+
+                <StackLayout
+                    Grid.Row="3"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,8"
+                    IsVisible="{Binding IsResendAccessLinkVisible}">
+                    <bcc:BxButton BissCommand="{Binding CmdResendAccessLink}" />
+                </StackLayout>
+
+                <bcc:BxButton
+                    Grid.Row="4"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,0,0,8"
+                    BissCommand="{Binding CmdLogin}" />
+
+                <Label
+                    Grid.Row="5"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="8"
+                    Text="{Binding CmdForgotPassword.DisplayName}"
+                    TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                Light={StaticResource ColorAccentLight}}"
+                    TextDecorations="Underline">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CmdForgotPassword}" />
+                    </Label.GestureRecognizers>
+                </Label>
+
+                <Label
+                    Grid.Row="7"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,8"
+                    Style="{StaticResource LabelStyBig}"
+                    Text="{bcm:Translate ResViewLogin.LblRegister}" />
+                <bcc:BxButton
+                    Grid.Row="8"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="0,8"
+                    BissCommand="{Binding CmdRegister}" />
+            </Grid>
+        </Frame>
+    </bcc:PageControl>
+</view:BissContentPage>

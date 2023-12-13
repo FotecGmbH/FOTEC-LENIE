@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewAdminSettings"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="clr-namespace:Biss.Apps.XF.Controls;assembly=Biss.Apps.XF"
+    xmlns:connectivity="clr-namespace:BaseApp.Connectivity;assembly=BaseApp"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:markupExtensions="http://biss.schemas.com/markupextensions"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel;assembly=BaseApp"
+    x:Name="MyViewAdminSettings"
+    d:DataContext="{x:Static viewmodels:VmAdminSettings.DesignInstance}"
+    x:TypeArguments="viewmodels:VmAdminSettings"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto, Auto, *">
+
+            <Label
+                Grid.Row="0"
+                Grid.Column="0"
+                Margin="8"
+                Style="{StaticResource LabelStyBig}"
+                Text="Intro Seiten"
+                VerticalOptions="Center" />
+
+            <bcc:BxGlyphButton
+                Grid.Row="0"
+                Grid.Column="1"
+                Margin="4"
+                Command="{Binding Dc.DcExIntros.CmdAddItem}"
+                FontSize="18"
+                Glyph="{Binding Dc.DcExIntros.CmdAddItem.Glyph}"
+                Style="{StaticResource StyGlyphButtonWithFrame}"
+                VerticalOptions="CenterAndExpand" />
+
+
+            <BoxView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="12,6"
+                Style="{markupExtensions:Sty BoxViewStySeperator}" />
+
+
+            <ListView
+                Grid.Row="2"
+                Grid.Column="0"
+                Grid.ColumnSpan="2"
+                Margin="4"
+                HasUnevenRows="True"
+                ItemsSource="{Binding Dc.DcExIntros}">
+                <ListView.ItemTemplate>
+                    <DataTemplate x:DataType="connectivity:DcIntroItem">
+                        <ViewCell>
+                            <Grid ColumnDefinitions="*, Auto">
+                                <Entry
+                                    Grid.Column="0"
+                                    Margin="4"
+                                    Text="{Binding Data.HtmlSource}"
+                                    VerticalOptions="Center" />
+
+                                <bcc:BxGlyphButton
+                                    Grid.Column="1"
+                                    Margin="4"
+                                    Command="{Binding ViewModel.Dc.DcExIntros.CmdRemoveItem, Source={x:Reference MyViewAdminSettings}}"
+                                    CommandParameter="{Binding}"
+                                    FontSize="18"
+                                    Glyph="{Binding ViewModel.Dc.DcExIntros.CmdRemoveItem.Glyph, Source={x:Reference MyViewAdminSettings}}"
+                                    Style="{StaticResource StyGlyphButtonWithFrame}"
+                                    VerticalOptions="CenterAndExpand" />
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Grid>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

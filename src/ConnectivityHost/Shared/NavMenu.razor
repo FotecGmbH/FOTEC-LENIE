@@ -1,0 +1,21 @@
+﻿@inherits BissNavMenu
+
+@if (Item != null)
+{
+    <div class="col-md-3 col-sm-4 col-6 col-lg-2 bg-light sidebar @GetCssClass()">
+        <div class="position-sticky">
+            <ul class="nav flex-column">
+                @foreach (var cmd in VmProjectBase.GetVmBaseStatic.CmdAllMenuCommands)
+                {
+                    <li class="nav-item">
+                        <div class="nav-link @IsActive(cmd)" @onclick="@(async args => await Navigate(cmd, args))" disabled="@cmd.Disabled">
+                            <span class="oi sl-icon" aria-hidden="true">@cmd.Glyph</span>@cmd.DisplayName
+                        </div>
+                    </li>
+                }
+            </ul>
+        </div>
+        <div>
+        </div>
+    </div>
+}

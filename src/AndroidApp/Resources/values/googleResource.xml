@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+	<string name="gcm_defaultSenderId" translatable="false">774996690580</string>
+	<string name="google_app_id" translatable="false">1:774996690580:android:38361a2752891465fb9681</string>
+	<string name="default_web_client_id" translatable="false">774996690580-dqeasv5j0tskhi7o57u63auc2hb8arku.apps.googleusercontent.com</string>
+	<string name="google_api_key" translatable="false">AIzaSyAP0GTOLGUGguYHUxLn6i07GTkMNrqCmxg</string>
+	<string name="google_crash_reporting_api_key" translatable="false">AIzaSyAP0GTOLGUGguYHUxLn6i07GTkMNrqCmxg</string>
+	<string name="google_storage_bucket" translatable="false">dihost-lenie.appspot.com</string>
+	<string name="project_id" translatable="false">dihost-lenie</string>
+</resources>

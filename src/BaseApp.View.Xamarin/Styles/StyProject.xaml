@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ResourceDictionary
+    x:Class="BaseApp.View.Xamarin.Styles.StyProject"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF">
+
+    <!--  Projektspezifische Styles  -->
+
+    <!--#region Label-->
+
+    <Style x:Key="LabelStyDetail" TargetType="{x:Type Label}">
+        <Setter Property="TextColor"
+                Value="{AppThemeBinding Dark={StaticResource ColorTextDetail}, Light={StaticResource ColorTextDetailLight}}" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeSmall}" />
+        <Setter Property="LineBreakMode" Value="TailTruncation" />
+    </Style>
+
+    <Style x:Key="LabelStyBig" TargetType="{x:Type Label}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="FontFamily" Value="{StaticResource VerdanaBold}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+        <Setter Property="HorizontalOptions" Value="FillAndExpand" />
+        <Setter Property="HorizontalTextAlignment" Value="Center" />
+        <Setter Property="LineBreakMode" Value="WordWrap" />
+    </Style>
+
+    <Style x:Key="LabelStyDescription" TargetType="{x:Type Label}">
+        <Setter Property="FontSize" Value="{StaticResource FontSizeMedium}" />
+        <Setter Property="FontFamily" Value="{StaticResource VerdanaBold}" />
+        <Setter Property="FontAttributes" Value="Bold" />
+    </Style>
+
+    <Style x:Key="LabelStyEditDescription" TargetType="{x:Type Label}">
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="Margin">
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="Android" Value="0,8,0,0" />
+                <On Platform="iOS, macOS" Value="0,6,0,0" />
+                <On Platform="WPF" Value="0,4,0,0" />
+            </OnPlatform>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LabelStyEditDescriptionPicker" TargetType="{x:Type Label}">
+        <Setter Property="HorizontalOptions" Value="End" />
+        <Setter Property="Margin">
+            <OnPlatform x:TypeArguments="Thickness">
+                <On Platform="Android" Value="0,10,0,0" />
+                <On Platform="iOS, macOS" Value="0,6,0,0" />
+                <On Platform="WPF" Value="0,0,0,0" />
+            </OnPlatform>
+        </Setter>
+    </Style>
+
+    <Style x:Key="LabelStyEditHeader" TargetType="{x:Type Label}">
+        <Setter Property="HorizontalOptions" Value="CenterAndExpand" />
+        <Setter Property="FontSize" Value="{StaticResource FontSizeLarge}" />
+        <Setter Property="Margin" Value="0,0,0,16" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region BoxView-->
+
+    <Style x:Key="BoxViewStySmallSeperator" TargetType="{x:Type BoxView}">
+        <Setter Property="Margin" Value="8" />
+        <Setter Property="HeightRequest" Value="2" />
+        <Setter Property="HorizontalOptions" Value="Center" />
+        <Setter Property="WidthRequest" Value="50" />
+        <Setter Property="Color"
+                Value="{AppThemeBinding Dark={StaticResource ColorAccent2}, Light={StaticResource ColorAccent2Light}}" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region BxGlyphButton-->
+
+    <Style x:Key="StyGlyphButtonWithFrame" TargetType="bcc:BxGlyphButton">
+        <Setter Property="HasFrame" Value="True" />
+        <Setter Property="FrameCornerRadius" Value="{StaticResource CornerRadiusDefault}" />
+        <Setter Property="GlyphColor"
+                Value="{AppThemeBinding Dark={StaticResource ColorButtonText}, Light={StaticResource ColorButtonTextLight}}" />
+        <Setter Property="FrameBackgroundColor"
+                Value="{AppThemeBinding Dark={StaticResource ColorButtonBackground}, Light={StaticResource ColorButtonBackgroundLight}}" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region Frame-->
+
+    <Style
+        ApplyToDerivedTypes="True"
+        CanCascade="True"
+        TargetType="{x:Type Frame}">
+        <Setter Property="HasShadow" Value="False" />
+    </Style>
+
+    <Style x:Key="FrameStyIdeaMain" TargetType="{x:Type Frame}">
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Dark={StaticResource ColorIdeaFrameBackground}, Light={StaticResource ColorIdeaFrameBackgroundLight}}" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region ContentPage - Notchfarbe-->
+
+    <Style
+        ApplyToDerivedTypes="True"
+        CanCascade="True"
+        TargetType="view:BissContentPage">
+        <!--  Farbe für iOS für Notch- und Homegesten-bereich  -->
+        <Setter Property="Background"
+                Value="{AppThemeBinding Dark={StaticResource ColorAccent}, Light={StaticResource ColorAccentLight}}" />
+    </Style>
+
+    <!--#endregion-->
+
+    <!--#region NavigationPage-->
+
+    <Style
+        ApplyToDerivedTypes="True"
+        CanCascade="True"
+        TargetType="NavigationPage">
+        <Setter Property="BarBackgroundColor"
+                Value="{AppThemeBinding Dark={StaticResource ColorAccent}, Light={StaticResource ColorAccentLight}}" />
+        <Setter Property="BackgroundColor"
+                Value="{AppThemeBinding Dark={StaticResource ColorBackgroundFocus}, Light={StaticResource ColorBackgroundFocusLight}}" />
+        <Setter Property="BarTextColor"
+                Value="{AppThemeBinding Dark={StaticResource ColorTextOnColor}, Light={StaticResource ColorTextOnColorLight}}" />
+        <Setter Property="HasBackButton" Value="False" />
+        <Setter Property="HasNavigationBar" Value="False" />
+    </Style>
+
+    <!--#endregion-->
+
+
+    <!--<Style
+        ApplyToDerivedTypes="True"
+        CanCascade="True"
+        TargetType="Entry">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorAccent2Light}" />
+    </Style>
+
+    <Style
+        ApplyToDerivedTypes="True"
+        CanCascade="True"
+        TargetType="Editor">
+        <Setter Property="BackgroundColor" Value="{StaticResource ColorAccent2Light}" />
+    </Style>-->
+
+</ResourceDictionary>

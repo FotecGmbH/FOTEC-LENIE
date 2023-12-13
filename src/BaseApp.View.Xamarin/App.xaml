@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+
+<!--
+    (C) 2018 FOTEC Forschungs- und Technologietransfer GmbH
+    Das Forschungsunternehmen der Fachhochschule Wiener Neustadt
+    
+    Kontakt biss@fotec.at / www.fotec.at
+    
+    Erstversion vom 11.08.2017 07:43
+    Entwickler      Michael Kollegger
+    Projekt         Biss.MvvM
+-->
+<Application
+    x:Class="BaseApp.View.Xamarin.BissApp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:base="clr-namespace:Biss.Apps.XF.Styles;assembly=Biss.Apps.XF"
+    xmlns:styles="clr-namespace:BaseApp.View.Xamarin.Styles;assembly=BaseApp.View.Xamarin">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!--  Wird nur für IntelliSense verwendet  -->
+                <styles:StyColors />
+                <styles:StyCommon />
+                <styles:StyFonts />
+                <styles:StyConverterApp />
+                <base:StyBase />
+                <styles:StyProject />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

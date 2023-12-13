@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewSettingPush"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Settings;assembly=BaseApp"
+    x:Name="MyViewPush"
+    d:DataContext="{x:Static viewmodels:VmSettingsPush.DesignInstance}"
+    x:TypeArguments="viewmodels:VmSettingsPush"
+    IsBusy="{Binding IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+        <Grid
+            Margin="4,4,4,0"
+            ColumnSpacing="8"
+            RowSpacing="8">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <bcc:BxButton
+                Grid.Row="0"
+                Grid.Column="0"
+                BissCommand="{Binding CmdAllOn}" />
+
+            <bcc:BxButton
+                Grid.Row="0"
+                Grid.Column="1"
+                BissCommand="{Binding CmdAllOff}" />
+
+            <ScrollView
+                Grid.Row="1"
+                Grid.Column="0"
+                Grid.ColumnSpan="2">
+                <Grid>
+                    <Grid Margin="8,0" RowSpacing="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!--#region Push aktivieren/deaktivieren-->
+                        <Frame Grid.Row="0" Margin="0,2">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="70" />
+                                </Grid.ColumnDefinitions>
+
+                                <Label
+                                    Grid.Column="0"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushActive}"
+                                    VerticalTextAlignment="Center" />
+
+                                <Switch
+                                    x:Name="SwitchPushEnabled"
+                                    Grid.Column="1"
+                                    IsToggled="{Binding PushEnabled, Mode=OneWay}" />
+
+                                <BoxView
+                                    Grid.Column="1"
+                                    BackgroundColor="Transparent"
+                                    HorizontalOptions="FillAndExpand"
+                                    VerticalOptions="FillAndExpand">
+                                    <BoxView.GestureRecognizers>
+                                        <TapGestureRecognizer Command="{Binding CmdOpenSettings}" />
+                                    </BoxView.GestureRecognizers>
+                                </BoxView>
+
+                            </Grid>
+                        </Frame>
+                        <!--#endregion-->
+
+                        <!--#region Push Switches-->
+                        <Label
+                            Grid.Row="1"
+                            Margin="2,16,0,8"
+                            Text="{bcm:Translate ResViewSettingsPush.LblPushTasks}" />
+
+                        <Frame
+                            Grid.Row="2"
+                            Margin="0,2"
+                            IsVisible="False">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblTenMinPush}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding Setting10MinutePushEnabled, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame
+                            Grid.Row="3"
+                            Margin="0,2"
+                            IsVisible="False">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushMeeting}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingPushMeeting, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame Grid.Row="4" Margin="0,2">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushChat}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingPushChat, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame Grid.Row="5" Margin="0,2">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushIdea}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingPushIdea, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame
+                            Grid.Row="6"
+                            Margin="0,2"
+                            IsVisible="False">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushComment}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingPushComment, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame Grid.Row="7" Margin="0,2">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushLike}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingPushLike, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame Grid.Row="8" Margin="0,2">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushSupport}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingPushSupport, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame
+                            Grid.Row="9"
+                            Margin="0,2"
+                            IsVisible="{Binding Dc.DcExUser.Data.IsUserPlus}">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblPushReport}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingPushReport, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <!--#endregion-->
+
+                        <!--#region Push deaktiviert Meldung-->
+                        <Grid
+                            Grid.Row="1"
+                            Grid.RowSpan="9"
+                            IsVisible="{Binding PushEnabled, Converter={bcm:Sty ConverterBoolInverted}}">
+                            <BoxView
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackground}, Light={StaticResource ColorBackgroundLight}}"
+                                Opacity="0.7" />
+
+                            <Label
+                                HorizontalOptions="CenterAndExpand"
+                                HorizontalTextAlignment="Center"
+                                Text="{bcm:Translate ResViewSettingsPush.LblPushInactive}"
+                                VerticalOptions="CenterAndExpand"
+                                VerticalTextAlignment="Center" />
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="TapGestureRecognizer_OnTapped" />
+                            </Grid.GestureRecognizers>
+
+                        </Grid>
+                        <!--#endregion-->
+
+                        <!--#region Mail-->
+                        <Label
+                            Grid.Row="10"
+                            Margin="2,10,0,2"
+                            Text="{bcm:Translate ResViewSettingsPush.LblMailNotifications}"
+                            VerticalTextAlignment="Center" />
+
+                        <Frame
+                            Grid.Row="11"
+                            Margin="0,2"
+                            IsVisible="False">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblMailMeeting}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingMailMeeting, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame Grid.Row="12" Margin="0,2">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblMailChat}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingMailChat, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <Frame Grid.Row="13" Margin="0,2">
+                            <Grid Margin="8,8">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Label
+                                    Grid.Column="0"
+                                    HorizontalOptions="Start"
+                                    HorizontalTextAlignment="Start"
+                                    Text="{bcm:Translate ResViewSettingsPush.LblMailReport}"
+                                    VerticalOptions="Center" />
+                                <Switch Grid.Column="1" IsToggled="{Binding SettingMailReport, Mode=TwoWay}" />
+                            </Grid>
+                        </Frame>
+
+                        <!--#endregion-->
+
+                    </Grid>
+                </Grid>
+            </ScrollView>
+        </Grid>
+    </bcc:PageControl>
+</view:BissContentPage>

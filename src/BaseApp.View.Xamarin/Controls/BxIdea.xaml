@@ -1,0 +1,307 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView
+    x:Class="BaseApp.View.Xamarin.Controls.BxIdea"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bc="clr-namespace:BaseApp.View.Xamarin.Controls;assembly=BaseApp.View.Xamarin"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bccnv="http://biss.schemas.com/coreconverter"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:enum="clr-namespace:Exchange.Enum;assembly=Exchange"
+    xmlns:organization="clr-namespace:Exchange.Model.Organization;assembly=Exchange"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:system="clr-namespace:System;assembly=netstandard"
+    x:Name="BxIdeaBase"
+    x:DataType="bc:BxIdea">
+    <ContentView.Resources>
+        <bccnv:ConverterBooleanValueColor
+            x:Key="ConverterIsLikedFillColor"
+            ColorFalse="{StaticResource ColorButtonLike}"
+            ColorTrue="Transparent" />
+    </ContentView.Resources>
+    <ContentView.Content>
+        <Grid x:Name="ContentGrid">
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <Grid.HeightRequest>
+                <OnPlatform x:TypeArguments="system:Double">
+                    <On Platform="WPF" Value="400" />
+                    <On Platform="Android, iOS" Value="-1" />
+                </OnPlatform>
+            </Grid.HeightRequest>
+
+            <!--#region Title-->
+
+            <Label
+                Grid.Row="0"
+                HorizontalOptions="FillAndExpand"
+                HorizontalTextAlignment="Center"
+                LineBreakMode="WordWrap"
+                MaxLines="2"
+                Style="{StaticResource LabelStyBig}"
+                Text="{Binding DcIdea.Data.Title}"
+                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                            Light={StaticResource ColorAccentLight}}"
+                VerticalOptions="FillAndExpand"
+                VerticalTextAlignment="Center" />
+
+            <!--#endregion-->
+
+
+            <!--#region Userbild etc.-->
+            <Grid
+                x:Name="StatusGrid"
+                Grid.Row="1"
+                ColumnDefinitions="40,Auto,*,Auto,Auto"
+                RowDefinitions="45,45,Auto">
+
+
+                <bcc:BxImage
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="2"
+                    Margin="4"
+                    HeightRequest="60"
+                    HorizontalOptions="Center"
+                    ImageSource="{Binding DcIdea.Data.CreatorUserImage, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                    IsCircleMode="true"
+                    VerticalOptions="Center"
+                    WidthRequest="60">
+                    <bcc:BxImage.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CmdChatUser}" CommandParameter="{Binding DcIdea}" />
+                    </bcc:BxImage.GestureRecognizers>
+                </bcc:BxImage>
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="1"
+                    HeightRequest="30"
+                    HorizontalOptions="End"
+                    IsVisible="{Binding DcIdea.Data.IsMine, Converter={bcm:Sty ConverterBoolInverted}}"
+                    VerticalOptions="End"
+                    WidthRequest="30">
+                    <BoxView
+                        BackgroundColor="{AppThemeBinding Dark={StaticResource ColorAccent}, Light={StaticResource ColorAccentLight}}"
+                        CornerRadius="15" />
+                    <Label
+                        Margin="4,4,2,2"
+                        FontSize="18"
+                        HorizontalOptions="Center"
+                        HorizontalTextAlignment="Center"
+                        Style="{bcm:Sty LabelStyGlyph}"
+                        Text="{Binding CmdChatUser.Glyph}"
+                        TextColor="{AppThemeBinding Dark={StaticResource ColorTextOnColor},
+                                                    Light={StaticResource ColorTextOnColorLight}}"
+                        VerticalOptions="Center"
+                        VerticalTextAlignment="Center" />
+
+                    <Grid.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CmdChatUser}" CommandParameter="{Binding DcIdea}" />
+                    </Grid.GestureRecognizers>
+                </Grid>
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    Grid.ColumnSpan="5"
+                    Margin="4"
+                    HorizontalOptions="CenterAndExpand"
+                    Text="{Binding DcIdea.Data.CreatedAtUtc, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.TimeDiffToNow}}"
+                    VerticalOptions="Center" />
+
+                <Label
+                    Grid.Row="1"
+                    Grid.Column="2"
+                    Margin="4"
+                    HorizontalOptions="StartAndExpand"
+                    Text="{Binding DcIdea.Data.CreatorUserName}"
+                    TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                Light={StaticResource ColorAccentLight}}"
+                    VerticalOptions="End" />
+
+                <StackLayout
+                    Grid.Row="0"
+                    Grid.RowSpan="2"
+                    Grid.Column="3"
+                    Margin="4">
+
+                    <bcc:BxLikeButton
+                        FillColor="{Binding DcIdea.Data.IsLiked, Converter={StaticResource ConverterIsLikedFillColor}}"
+                        Size="24"
+                        StrokeColor="{AppThemeBinding Dark={StaticResource ColorText},
+                                                      Light={StaticResource ColorTextLight}}"
+                        VerticalOptions="Center">
+                        <bcc:BxLikeButton.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CmdLike}" CommandParameter="{Binding DcIdea}" />
+                        </bcc:BxLikeButton.GestureRecognizers>
+                    </bcc:BxLikeButton>
+
+                    <Label HorizontalTextAlignment="Center" Text="{Binding DcIdea.Data.LikeCount}" />
+                </StackLayout>
+
+                <BoxView
+                    Grid.Row="2"
+                    Grid.ColumnSpan="5"
+                    Style="{bcm:Sty BoxViewStySeperator}" />
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Description-->
+            <Label
+                Grid.Row="2"
+                LineBreakMode="WordWrap"
+                Text="{Binding DcIdea.Data.Description}"
+                TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                            Light={StaticResource ColorAccentLight}}">
+                <Label.HeightRequest>
+                    <OnPlatform x:TypeArguments="system:Double">
+                        <On Platform="WPF" Value="40" />
+                        <On Platform="Android, iOS" Value="-1" />
+                    </OnPlatform>
+                </Label.HeightRequest>
+                <!--<Label.MaxLines>
+                    <OnPlatform x:TypeArguments="system:Int32">
+                        <On Platform="WPF" Value="1"/>
+                    </OnPlatform>
+                </Label.MaxLines>-->
+            </Label>
+            <BoxView Grid.Row="3" Style="{bcm:Sty BoxViewStySeperator}" />
+
+            <!--#endregion-->
+
+            <!--#region Zeitraum-->
+            <Grid
+                Grid.Row="4"
+                ColumnDefinitions="*,Auto"
+                ColumnSpacing="8"
+                IsVisible="{Binding DcIdea.Data.HasTimespan}"
+                RowDefinitions="Auto,Auto">
+                <Grid
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    ColumnDefinitions="*,*"
+                    VerticalOptions="Center">
+                    <Label
+                        Grid.Column="0"
+                        MaxLines="2"
+                        Text="{Binding DcIdea.Data.DateUi}" />
+                    <Label
+                        Grid.Column="1"
+                        MaxLines="2"
+                        Text="{Binding DcIdea.Data.TimeUi}" />
+
+                </Grid>
+
+
+                <bcc:BxGlyphButton
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Command="{Binding CmdCalendar}"
+                    CommandParameter="{Binding DcIdea}"
+                    Glyph="{Binding CmdCalendar.Glyph}"
+                    VerticalOptions="Center" />
+
+                <BoxView
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Style="{bcm:Sty BoxViewStySeperator}" />
+
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Position-->
+            <Grid
+                Grid.Row="5"
+                ColumnDefinitions="*,Auto"
+                IsVisible="{Binding DcIdea.Data.HasPosition}"
+                RowDefinitions="Auto,Auto">
+
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    IsVisible="{Binding DcIdea.Data.LocationOnMap}"
+                    Text="Position auf Karte"
+                    VerticalOptions="Center" />
+                <Label
+                    Grid.Row="0"
+                    Grid.Column="0"
+                    IsVisible="{Binding DcIdea.Data.LocationAsText}"
+                    Text="{Binding DcIdea.Data.LocationAddress}"
+                    VerticalOptions="Center" />
+
+                <bcc:BxGlyphButton
+                    Grid.Row="0"
+                    Grid.Column="1"
+                    Command="{Binding CmdMap}"
+                    CommandParameter="{Binding DcIdea}"
+                    Glyph="{Binding CmdMap.Glyph}"
+                    VerticalOptions="Center" />
+                <BoxView
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Style="{bcm:Sty BoxViewStySeperator}" />
+            </Grid>
+            <!--#endregion-->
+
+            <!--#region Gemeinden-->
+            <Grid
+                Grid.Row="6"
+                ColumnDefinitions="Auto,*"
+                RowDefinitions="Auto,Auto">
+
+                <Label Grid.Column="0" Text="Gemeinden: " />
+
+                <StackLayout Grid.Column="1" BindableLayout.ItemsSource="{Binding DcIdea.Data.Companies}">
+                    <BindableLayout.ItemTemplate>
+                        <DataTemplate x:DataType="organization:ExOrganization">
+                            <Grid>
+                                <Label Text="{Binding NamePlzString, Mode=OneTime}"
+                                       TextColor="{AppThemeBinding Dark={StaticResource ColorAccent}, Light={StaticResource ColorAccentLight}}" />
+                            </Grid>
+                        </DataTemplate>
+                    </BindableLayout.ItemTemplate>
+                </StackLayout>
+                <BoxView
+                    Grid.Row="1"
+                    Grid.ColumnSpan="2"
+                    Style="{bcm:Sty BoxViewStySeperator}" />
+            </Grid>
+            <!--#endregion-->
+            <!--#region Buttons-->
+
+            <StackLayout
+                x:Name="ButtonStack"
+                Grid.Row="8"
+                Orientation="Horizontal">
+                <!--  Like  -->
+                <bcc:BxLikeButton
+                    FillColor="{Binding DcIdea.Data.IsLiked, Converter={StaticResource ConverterIsLikedFillColor}}"
+                    Size="24"
+                    StrokeColor="{AppThemeBinding Dark={StaticResource ColorText},
+                                                  Light={StaticResource ColorTextLight}}">
+                    <bcc:BxLikeButton.GestureRecognizers>
+                        <TapGestureRecognizer Command="{Binding CmdLike}" CommandParameter="{Binding DcIdea}" />
+                    </bcc:BxLikeButton.GestureRecognizers>
+                </bcc:BxLikeButton>
+                <bcc:BxGlyphButton
+                    Command="{Binding CmdShow}"
+                    CommandParameter="{Binding DcIdea}"
+                    Glyph="{Binding CmdShow.Glyph}" />
+            </StackLayout>
+
+            <!--#endregion-->
+        </Grid>
+
+    </ContentView.Content>
+</ContentView>

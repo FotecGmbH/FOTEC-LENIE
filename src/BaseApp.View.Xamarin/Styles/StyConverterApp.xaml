@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ResourceDictionary
+    x:Class="BaseApp.View.Xamarin.Styles.StyConverterApp"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bccconverter="clr-namespace:Biss.Apps.XF.Converter;assembly=Biss.Apps.XF"
+    xmlns:converter="clr-namespace:BaseApp.View.Xamarin.Converter;assembly=BaseApp.View.Xamarin">
+
+    <converter:ConverterImage x:Key="ConverterImage" />
+    <converter:ConverterIsNotMainCompany x:Key="ConverterNotMainCompany" />
+
+    <converter:ConverterIsNotDefaultTopic x:Key="ConverterIsNotDefaultTopic" />
+
+    <converter:ConverterDcListItemNew x:Key="ConverterDcListItemNew" />
+    <converter:ConverterDcListItemNew
+        x:Key="ConverterDcListItemNotNew"
+        FalseValue="True"
+        TrueValue="False" />
+
+    <converter:ConverterDateTimeForUi x:Key="ConverterDateTimeForUi" />
+    <bccconverter:ConverterBoolInverted x:Key="ConverterBoolInverted" />
+    <bccconverter:ConverterObjectNull x:Key="ConverterObjectNull" />
+    <converter:ConverterBackgroundImageHeight x:Key="ConverterBackgroundImageHeight" />
+
+    <converter:ConverterIsLocalChatUser x:Key="ConverterIsLocalChatUser" />
+    <converter:ConverterIsRemoteChatUser x:Key="ConverterIsRemoteChatUser" />
+    <converter:ConverterCountMoreThanZero x:Key="ConverterCountMoreThanZero" />
+
+</ResourceDictionary>

@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="SetCsSetting" nillable="true" type="SetCsSetting" />
+	<xs:complexType name="SetCsSetting">
+		<xs:attribute name="FileName" type="xs:string" />
+		<xs:attribute name="ForCsSettings" type="EnumCsSettings" use="required" />
+		<xs:attribute name="Usings">
+			<xs:simpleType>
+				<xs:list itemType="xs:string" />
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="Interfaces">
+			<xs:simpleType>
+				<xs:list itemType="xs:string" />
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:simpleType name="EnumCsSettings">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="Exchange" />
+			<xs:enumeration value="WebExchange" />
+			<xs:enumeration value="CommonAppSettings" />
+			<xs:enumeration value="File1" />
+			<xs:enumeration value="File2" />
+			<xs:enumeration value="File3" />
+			<xs:enumeration value="File4" />
+			<xs:enumeration value="File5" />
+			<xs:enumeration value="File6" />
+			<xs:enumeration value="File7" />
+			<xs:enumeration value="File8" />
+			<xs:enumeration value="File9" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SetProject" nillable="true" type="SetProject" />
+	<xs:complexType name="SetProject">
+		<xs:attribute name="RootFolder" type="xs:string" />
+		<xs:attribute default="None" name="CsSettings" type="EnumCsSettings" />
+		<xs:attribute default="None" name="CommonFile" type="EnumCommonFiles" />
+	</xs:complexType>
+	<xs:simpleType name="EnumCommonFiles">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="None" />
+			<xs:enumeration value="LaunchConnectivityHost" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SetProp" nillable="true" type="SetProp" />
+	<xs:complexType name="SetProp">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="Targets" type="ArrayOfSetTarget" />
+			<xs:element minOccurs="0" maxOccurs="1" name="BranchValues" type="ArrayOfSetBranchValue" />
+		</xs:sequence>
+		<xs:attribute default="Common" name="PropType" type="EnumPropType" />
+		<xs:attribute default="false" name="IsSecureProperty" type="xs:boolean" />
+		<xs:attribute default="false" name="IsRequiredValue" type="xs:boolean" />
+		<xs:attribute name="Description" type="xs:string" />
+		<xs:attribute name="DefaultValue" type="xs:string" />
+		<xs:attribute default="InvariantCulture" name="ValueComparison" type="StringComparison" />
+	</xs:complexType>
+	<xs:complexType name="ArrayOfSetTarget">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SetTarget" nillable="true" type="SetTarget" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SetTarget">
+		<xs:attribute name="TargetType" type="EnumSetTargetTypes" use="required" />
+		<xs:attribute name="Destinations">
+			<xs:simpleType>
+				<xs:list itemType="xs:string" />
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute default="" name="OnlyForProject" type="xs:string" />
+		<xs:attribute default="None" name="CsSettings" type="EnumCsSettings" />
+	</xs:complexType>
+	<xs:simpleType name="EnumSetTargetTypes">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CsProj" />
+			<xs:enumeration value="AssemblyInfo" />
+			<xs:enumeration value="Nuspec" />
+			<xs:enumeration value="AndroidManifest" />
+			<xs:enumeration value="InfoPlist" />
+			<xs:enumeration value="EntitlementsPlist" />
+			<xs:enumeration value="CsSetting" />
+			<xs:enumeration value="CommonFile" />
+			<xs:enumeration value="LaunchSettings" />
+			<xs:enumeration value="IndexHtml" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ArrayOfSetBranchValue">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SetBranchValue" nillable="true" type="SetBranchValue" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SetBranchValue">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="LocalOverrides" type="ArrayOfSetLocalOverride" />
+		</xs:sequence>
+		<xs:attribute name="BranchName" type="xs:string" />
+		<xs:attribute name="Value" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="ArrayOfSetLocalOverride">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SetLocalOverride" nillable="true" type="SetLocalOverride" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SetLocalOverride">
+		<xs:attribute name="HostName" type="xs:string" />
+		<xs:attribute default="" name="NetworkName" type="xs:string" />
+		<xs:attribute name="Value" type="xs:string" />
+	</xs:complexType>
+	<xs:simpleType name="EnumPropType">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="Common" />
+			<xs:enumeration value="Version" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StringComparison">
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="CurrentCulture" />
+			<xs:enumeration value="CurrentCultureIgnoreCase" />
+			<xs:enumeration value="InvariantCulture" />
+			<xs:enumeration value="InvariantCultureIgnoreCase" />
+			<xs:enumeration value="Ordinal" />
+			<xs:enumeration value="OrdinalIgnoreCase" />
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="SetBranchValue" nillable="true" type="SetBranchValue" />
+	<xs:element name="SetLocalOverride" nillable="true" type="SetLocalOverride" />
+	<xs:element name="SetTarget" nillable="true" type="SetTarget" />
+	<xs:element name="SetRoot" nillable="true" type="SetRoot" />
+	<xs:complexType name="SetRoot">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="1" name="TargetDirectories" type="ArrayOfSetProject" />
+			<xs:element minOccurs="0" maxOccurs="1" name="CsSettings" type="ArrayOfSetCsSetting" />
+			<xs:element minOccurs="0" maxOccurs="1" name="Properties" type="ArrayOfSetProp" />
+		</xs:sequence>
+		<xs:attribute default="Kunde.Projekt" name="ProjectId" type="xs:string" />
+		<xs:attribute name="KeyVault" type="xs:string" />
+	</xs:complexType>
+	<xs:complexType name="ArrayOfSetProject">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SetProject" nillable="true" type="SetProject" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfSetCsSetting">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SetCsSetting" nillable="true" type="SetCsSetting" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArrayOfSetProp">
+		<xs:sequence>
+			<xs:element minOccurs="0" maxOccurs="unbounded" name="SetProp" nillable="true" type="SetProp" />
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EnumCommonFiles" type="EnumCommonFiles" />
+	<xs:element name="EnumCsSettings" type="EnumCsSettings" />
+	<xs:element name="EnumPropType" type="EnumPropType" />
+	<xs:element name="EnumSetTargetTypes" type="EnumSetTargetTypes" />
+</xs:schema>

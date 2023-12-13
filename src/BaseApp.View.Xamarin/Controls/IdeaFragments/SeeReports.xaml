@@ -1,0 +1,51 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView
+    x:Class="BaseApp.View.Xamarin.Controls.SeeReports"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:bccnv="http://biss.schemas.com/coreconverter"
+    x:Name="SeeReportsBase">
+    <ContentView.Resources>
+        <bccnv:ConverterBooleanValueColor
+            x:Key="ConverterIsReportedColor"
+            ColorFalse="{StaticResource ColorBackground}"
+            ColorTrue="{StaticResource ColorButtonLike}" />
+    </ContentView.Resources>
+    <ContentView.Content>
+        <StackLayout
+
+            Margin="4">
+            <Grid
+                Margin="4"
+                HeightRequest="25"
+                WidthRequest="25">
+                <BoxView
+                    CornerRadius="12"
+                    HeightRequest="24"
+                    VerticalOptions="Center"
+                    WidthRequest="24"
+                    Color="{Binding DcIdea.Data.IsReported, Source={x:Reference SeeReportsBase}, Converter={StaticResource ConverterIsReportedColor}}" />
+
+                <Label
+                    FontSize="18"
+                    HeightRequest="18"
+                    HorizontalTextAlignment="Center"
+                    Style="{bcm:Sty LabelStyGlyph}"
+                    Text="{Binding CmdShowReports.Glyph, Source={x:Reference SeeReportsBase}}"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center"
+                    WidthRequest="18" />
+
+                <Grid.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CmdShowReports, Source={x:Reference SeeReportsBase}}"
+                                          CommandParameter="{Binding DcIdea, Source={x:Reference SeeReportsBase}}" />
+                </Grid.GestureRecognizers>
+            </Grid>
+
+            <Label HorizontalTextAlignment="Center"
+                   Text="{Binding DcIdea.Data.ReportCount, Source={x:Reference SeeReportsBase}}" />
+        </StackLayout>
+    </ContentView.Content>
+</ContentView>

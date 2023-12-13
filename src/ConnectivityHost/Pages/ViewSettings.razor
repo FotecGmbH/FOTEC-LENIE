@@ -1,0 +1,33 @@
+﻿@page "/ViewSettings"
+@page "/ViewSettings/{Id:int}"
+
+@attribute [Helper.Authorize]
+
+@inherits ProjectRazorPage<VmSettings>
+
+@if (ViewModel != null!)
+{
+    <RadzenCard>
+        <RadzenRow>
+            <RadzenColumn>
+                <BxEntry ShowFrame="false" Entry="@ViewModel.EntryCommonMessage"/>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn>
+                <BxEntry ShowFrame="false" Entry="@ViewModel.EntryCurrentAppVersion"/>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn>
+                <BxEntry ShowFrame="false" Entry="@ViewModel.EntryMinAppVersion"/>
+            </RadzenColumn>
+        </RadzenRow>
+        <RadzenRow>
+            <RadzenColumn>
+                <BxEntry ShowFrame="false" Entry="@ViewModel.EntryAgb"/>
+            </RadzenColumn>
+        </RadzenRow>
+        <BxButton BissCommand="ViewModel.CmdSendPerDc"/>
+    </RadzenCard>
+}

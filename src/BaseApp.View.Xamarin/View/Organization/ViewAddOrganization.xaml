@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewAddOrganization"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Organization;assembly=BaseApp"
+    d:DataContext="{x:Static viewmodels:VmAddOrganization.DesignInstance}"
+    x:TypeArguments="viewmodels:VmAddOrganization"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <ScrollView>
+            <StackLayout>
+                <!--#region Stammdaten-->
+
+                <Label Style="{StaticResource LabelStyEditHeader}"
+                       Text="{bcm:Translate ResViewAddOrganization.LblMainData}" />
+
+                <Label
+                    Style="{StaticResource LabelStyEditDescriptionPicker}"
+                    Text="Gemeinde"
+                    VerticalOptions="Center" />
+
+                <bcc:BxEntry
+                    Margin="4"
+                    EntryData="{Binding EntryTownSearch}"
+                    HasFrame="False" />
+                <Label Style="{bcm:Sty LabelStyGlyph}" Text="{x:Static resources:Glyphs.Search}" />
+
+                <bcc:BxPicker ObservableCollectionSelectable="{Binding PickerTowns}" />
+
+                <!--#endregion-->
+
+            </StackLayout>
+        </ScrollView>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

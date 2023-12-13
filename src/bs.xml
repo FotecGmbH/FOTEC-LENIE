@@ -1,0 +1,441 @@
+<SetRoot ProjectId="DIHOST.Lenie" KeyVault="https://bissprodkeyvault.vault.azure.net/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+         xsi:noNamespaceSchemaLocation="bs.xsd">
+	<TargetDirectories>
+		<SetProject RootFolder="BaseApp" />
+		<SetProject RootFolder="BaseApp.View.Xamarin" />
+		<SetProject RootFolder="WpfApp" />
+		<SetProject RootFolder="AndroidApp" />
+		<SetProject RootFolder="IOsApp" />
+		<SetProject RootFolder="ConnectivityHost" CommonFile="LaunchConnectivityHost" />
+		<SetProject RootFolder="Database" />
+		<SetProject RootFolder="Exchange" CsSettings="Exchange" />
+		<SetProject RootFolder="WebExchange" CsSettings="WebExchange" />
+	</TargetDirectories>
+	<CsSettings>
+		<SetCsSetting FileName="AppSettings.cs" ForCsSettings="Exchange"
+		              Usings="Exchange.Interfaces Biss.Apps.Components Biss.Apps.Connectivity.Interfaces Biss.Apps.Connectivity.Sa Biss.Apps.Enum Biss.Apps.Interfaces Biss.Apps.Model Biss.Dc.Client Biss.Apps.Map.Interface Biss.Apps.Push.Interfaces"
+		              Interfaces="IAppSettings IAppSettingsNavigation IAppSettingsFiles IAppSettingConnectivity IAppSettingsPush IAppSettingsLinks IAppSettingsMap IAppSettingsAppCenter" />
+		<SetCsSetting FileName="WebSettings.cs" ForCsSettings="WebExchange"
+		              Usings="Biss.Apps.Service.Push WebExchange.Interfaces"
+		              Interfaces="IWebSettingsAzureFiles IAppServiceSettingPush IAppSettingsDataBase IAppSettingsEMail IWebSettingsSms" />
+	</CsSettings>
+	<Properties>
+		<SetProp Description="Produktversion" DefaultValue="1.4.1" PropType="Version" IsRequiredValue="true">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/Version" />
+				<SetTarget TargetType="AssemblyInfo" Destinations="AssemblyVersion AssemblyFileVersion" />
+				<SetTarget TargetType="AndroidManifest" Destinations="manifest#android:versionName" />
+				<SetTarget TargetType="InfoPlist" Destinations="CFBundleVersion CFBundleShortVersionString" />
+				<SetTarget TargetType="CsSetting" Destinations="AppVersion" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="DC Host - SignalR" DefaultValue="https://dihost-lenie-connectivityhost.azurewebsites.net">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DcSignalHost" CsSettings="Exchange" />
+				<SetTarget TargetType="CommonFile" Destinations="Host" />
+				<SetTarget TargetType="LaunchSettings"
+				           Destinations="iisSettings/iisExpress#applicationUrl profiles/ServerApp#applicationUrl"
+				           OnlyForProject="ConnectivityHost" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="https://dihost-lenie-connectivityhost-beta.azurewebsites.net">
+				</SetBranchValue>
+				<SetBranchValue BranchName="dev" Value="https://dihost-lenie-connectivityhost-dev.azurewebsites.net">
+					<LocalOverrides>
+					</LocalOverrides>
+				</SetBranchValue>
+			</BranchValues>
+		</SetProp>
+
+		<SetProp Description="SA Host - REST" DefaultValue="http://dihost-lenie-connectivityhost.azurewebsites.net/api/">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="SaApiHost" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="http://dihost-lenie-connectivityhost-beta.azurewebsites.net/api/">
+				</SetBranchValue>
+				<SetBranchValue BranchName="dev" Value="http://dihost-lenie-connectivityhost-dev.azurewebsites.net/api/">
+				</SetBranchValue>
+			</BranchValues>
+		</SetProp>
+
+		<SetProp Description="App Name" DefaultValue="LENIE">
+			<Targets>
+				<SetTarget TargetType="AndroidManifest" Destinations="manifest/application#android:label" />
+				<SetTarget TargetType="InfoPlist" Destinations="CFBundleDisplayName" />
+				<SetTarget TargetType="CsSetting" Destinations="AppName" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="LENIE Beta" />
+				<SetBranchValue BranchName="dev" Value="LENIE Dev" />
+			</BranchValues>
+		</SetProp>
+
+		<SetProp Description="App Identifier" DefaultValue="at.dihost.lenie">
+			<Targets>
+				<SetTarget TargetType="AndroidManifest" Destinations="manifest#package" />
+				<SetTarget TargetType="InfoPlist" Destinations="CFBundleIdentifier" />
+				<SetTarget TargetType="CsSetting" Destinations="PackageName" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="at.dihost.lenie.beta" />
+				<SetBranchValue BranchName="dev" Value="at.dihost.lenie.dev" />
+			</BranchValues>
+		</SetProp>
+
+		<SetProp Description="App Ordner auf Plattform" DefaultValue="Lenie">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="ProjectWorkUserFolder" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="LenieBeta" />
+				<SetBranchValue BranchName="dev" Value="LenieDev" />
+			</BranchValues>
+		</SetProp>
+
+		<SetProp Description="Id des Notification-Channels" DefaultValue="DefaultId">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="NotificationChannelId" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Name des Notification-Channels" DefaultValue="PushBenachrichtigungen">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="NotificationChannelName" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp
+			Description="Push - Firebase Project Id - &lt;inheritdoc cref=&quot;IAppServiceSettingPush.PushProjectId&quot;/&gt;"
+			DefaultValue="dihost-lenie">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="PushProjectId" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp
+			Description="Push - Firebase Service Account Id - &lt;inheritdoc cref=&quot;IAppServiceSettingPush.PushServiceAccountId&quot;/&gt;"
+			DefaultValue="DIHOST:LENIE:PushServiceAccountId" IsRequiredValue="true" IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="PushServiceAccountId" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp
+			Description="Push - Firebase Private Key Id - &lt;inheritdoc cref=&quot;IAppServiceSettingPush.PushPrivateKeyId&quot;/&gt;"
+			DefaultValue="DIHOST:LENIE:PushPrivateKeyId" IsRequiredValue="true" IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="PushPrivateKeyId " CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp
+			Description="Push - Firebase Private Key - &lt;inheritdoc cref=&quot;IAppServiceSettingPush.PushPrivateKey&quot;/&gt;"
+			DefaultValue="DIHOST:LENIE:PushPrivateKey" IsRequiredValue="true" IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="PushPrivateKey " CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Standard Topic" DefaultValue="DEFAULT">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DefaultTopic" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Bing Maps Key - WPF (VWT)" DefaultValue="FOTEC:BingMapsKey" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="BingMapsKey" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Google Maps Key Android und Blazor" DefaultValue="FOTEC:GoogleMapsKey" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="GoogleMapsKey" CsSettings="Exchange" />
+				<SetTarget TargetType="AndroidManifest"
+				           Destinations="manifest/application/meta-data#android:value##android:name=com.google.android.geo.API_KEY" />
+				<SetTarget TargetType="IndexHtml" Destinations="GOOGLEMAPKEY" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Datenbank" DefaultValue="lenie-db-release">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="ConnectionStringDb" CsSettings="WebExchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="lenie-db-beta" />
+				<SetBranchValue BranchName="dev" Value="lenie-db-dev" />
+			</BranchValues>
+		</SetProp>
+
+		<SetProp Description="Datenbank-Server" DefaultValue="DIHOST:LENIE:SqlServer" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="ConnectionStringDbServer" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Datenbank User" DefaultValue="DIHOST:LENIE:SqlServerUser" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="ConnectionStringUser" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Datenbank User Passwort" DefaultValue="DIHOST:LENIE:SqlServerPassword" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="ConnectionStringUserPwd" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Connection string für den Blob" DefaultValue="DIHOST:LENIE:BlobConString"
+		         IsRequiredValue="true" IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="BlobConnectionString" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Container Name im Blob" DefaultValue="lenierelease">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="BlobContainerName" CsSettings="WebExchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="leniebeta" />
+				<SetBranchValue BranchName="dev" Value="leniedev" />
+			</BranchValues>
+		</SetProp>
+
+		<SetProp Description="Cdn link oder public Bloblink für Filelink"
+		         DefaultValue="https://leniestorage.blob.core.windows.net/">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="CdnLink" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Sendgrid Email Mit welcher E-Mail Adresse wird gesendet" DefaultValue="biss@fotec.at">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="SendEMailAs" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Sendgrid Email Welcher Name des Senders wird angezeigt" DefaultValue="LENIE">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="SendEMailAsDisplayName" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Sendgrid Email Key" DefaultValue="DIHOST:SendGridApiKey" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="SendGridApiKey" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+
+		<SetProp Description="Twilio SMS Sender Account SID" DefaultValue="DIHOST:TwilioSid" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="AccountSid" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Twilio SMS Auth Token" DefaultValue="DIHOST:TwilioAuthToken" IsRequiredValue="true"
+		         IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="AuthToken" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Twilio SMS Telefonnummer" DefaultValue="+436703085225">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="SenderNumber" CsSettings="WebExchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="In welchen Assembly befinden sich die Xamarin.Forms Views" DefaultValue="BaseApp.View.Xamarin">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DefaultViewAssembly" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="In welchen Namespace befinden sich die Xamarin.Forms Views"
+		         DefaultValue="BaseApp.View.Xamarin.View.">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DefaultViewNamespace" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="App Orientation" DefaultValue="EnumAppOrientation.Auto">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="AppOrientationOverride" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Produktinformationen" DefaultValue="LENIE">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/Product" />
+				<SetTarget TargetType="AssemblyInfo" Destinations="AssemblyTitle AssemblyProduct" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Produktbeschreibung" DefaultValue="LENIE Leben in Niederösterreich">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/Description" />
+				<SetTarget TargetType="AssemblyInfo" Destinations="AssemblyDescription" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Firmeninformationen" DefaultValue="DIH-Ost">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/Company" />
+				<SetTarget TargetType="AssemblyInfo" Destinations="AssemblyCompany" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Copyright Infos" DefaultValue="(C) 2009-2023 FOTEC Forschungs- und Technologietransfer GmbH">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/Copyright" />
+				<SetTarget TargetType="AssemblyInfo" Destinations="AssemblyCopyright AssemblyTrademark" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Author(en)" DefaultValue="FOTEC BISS Developers">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/Authors" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="App mit User" DefaultValue="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DcUseUser" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Öffentlicher Link zum Projekt"
+		         DefaultValue="https://dih-ost.at/product/digitales-dorf-und-gemeindeleben/">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/PackageProjectUrl" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Typ des Repo" DefaultValue="git">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/RepositoryType" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Repository Url" DefaultValue="https://dev.azure.com/fotec/DIHOST-Lenie/_git/DIHOST-Lenie">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/RepositoryUrl" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Tags für das Repro/Projekt" DefaultValue="BISS">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/PackageTags" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Nuget Icon" DefaultValue="nugetImage.png">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/PackageIcon" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Changelog / Release Notes" DefaultValue="In Readme.md">
+			<Targets>
+				<SetTarget TargetType="CsProj" Destinations="Project/PropertyGroup/PackageReleaseNotes" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="App im Playstore"
+		         DefaultValue="https://install.appcenter.ms/orgs/dih-ost-lenie/apps/at.dihost.lenie.beta-android/distribution_groups/public">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DroidLink" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta"
+				                Value="https://install.appcenter.ms/orgs/dih-ost-lenie/apps/at.dihost.lenie.beta-android/distribution_groups/public" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="App im Appstore"
+		         DefaultValue="https://install.appcenter.ms/orgs/dih-ost-lenie/apps/at.dihost.lenie.beta-ios/distribution_groups/public">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="IosLink" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta"
+				                Value="https://install.appcenter.ms/orgs/dih-ost-lenie/apps/at.dihost.lenie.beta-ios/distribution_groups/public" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="App im Windows Store"
+		         DefaultValue="https://appcenter.ms/orgs/DIH-Ost-Lenie/apps/at.dihost.lenie.beta-Wpf/distribute/releases">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="WindowsLink" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta"
+				                Value="https://appcenter.ms/orgs/DIH-Ost-Lenie/apps/at.dihost.lenie.beta-Wpf/distribute/releases" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="Deployte BlazorApp" DefaultValue="http://dihost-lenie-blazorapp.azurewebsites.net/">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="BlazorLink" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="http://dihost-lenie-blazorapp-beta.azurewebsites.net/" />
+				<SetBranchValue BranchName="dev" Value="http://dihost-lenie-blazorapp-dev.azurewebsites.net/" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="Link zum Appcenter iOS"
+		         DefaultValue="https://appcenter.ms/orgs/DIH-Ost-Lenie/apps/at.dihost.lenie-iOS/crashes/errors">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="IosTelemetryLink" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta"
+				                Value="https://appcenter.ms/orgs/DIH-Ost-Lenie/apps/at.dihost.lenie.beta-iOS/crashes/errors" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="Link zum Appcenter Android"
+		         DefaultValue="https://appcenter.ms/orgs/DIH-Ost-Lenie/apps/at.dihost.lenie-Android/crashes/errors">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DroidTelemetryLink" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta"
+				                Value="https://appcenter.ms/orgs/DIH-Ost-Lenie/apps/at.dihost.lenie.beta-Android/crashes/errors" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="Link zu Application Insights"
+		         DefaultValue="https://portal.azure.com/#@michaelkolleggerfotec.onmicrosoft.com/resource/subscriptions/b1f5c88a-6c50-487b-8036-a5dfb4e9c1be/resourceGroups/RES_LENIE/providers/Microsoft.Web/sites/dihost-lenie-blazorapp/appServices">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="BlazorTelemetryLink" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Link zu Portal.azure"
+		         DefaultValue="https://portal.azure.com/#@michaelkolleggerfotec.onmicrosoft.com/resource/subscriptions/b1f5c88a-6c50-487b-8036-a5dfb4e9c1be/resourceGroups/RES_LENIE/overview">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="AzureResourceLink" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Link zu Fotec DevOps" DefaultValue="https://dev.azure.com/fotec/DIHOST-Lenie">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DevOpsLink" CsSettings="Exchange" />
+			</Targets>
+		</SetProp>
+		<SetProp Description="Appcenter Secret iOS" DefaultValue="DIHOST:LENIE:AppcenterIos" IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="IosAppcenter" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="DIHOST:LENIE:AppcenterIosBeta" />
+				<SetBranchValue BranchName="dev" Value="" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="Appcenter Secret Android" DefaultValue="DIHOST:LENIE:AppcenterAndroid" IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="DroidAppcenter" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="DIHOST:LENIE:AppcenterAndroidBeta" />
+				<SetBranchValue BranchName="dev" Value="" />
+			</BranchValues>
+		</SetProp>
+		<SetProp Description="Appcenter Secret Wpf" DefaultValue="DIHOST:LENIE:AppcenterWpf" IsSecureProperty="true">
+			<Targets>
+				<SetTarget TargetType="CsSetting" Destinations="WpfAppcenter" CsSettings="Exchange" />
+			</Targets>
+			<BranchValues>
+				<SetBranchValue BranchName="beta" Value="DIHOST:LENIE:AppcenterWpfBeta" />
+				<SetBranchValue BranchName="dev" Value="" />
+			</BranchValues>
+		</SetProp>
+	</Properties>
+</SetRoot>

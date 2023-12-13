@@ -1,0 +1,350 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<!-- Package Infos -->
+		<Product>LENIE</Product>
+		<Description>LENIE Leben in Niederösterreich</Description>
+		<Company>DIH-Ost</Company>
+		<Copyright>(C) 2009-2023 FOTEC Forschungs- und Technologietransfer GmbH</Copyright>
+		<Authors>FOTEC BISS Developers</Authors>
+		<PackageProjectUrl>https://dih-ost.at/product/digitales-dorf-und-gemeindeleben/</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>BISS</PackageTags>
+		<Version>1.4.1</Version>
+		<PackageIcon>nugetImage.png</PackageIcon>
+		<NeutralLanguage>de</NeutralLanguage>
+		<PackageReleaseNotes>In Readme.md</PackageReleaseNotes>
+		<!-- Projekt Einstellungen -->
+		<Nullable>Enable</Nullable>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+		<RunAnalyzers>true</RunAnalyzers>
+		<!-- Build Einstellungen -->
+		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+		<SignAssembly>false</SignAssembly>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<DebugType>embedded</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<NoWarn>NU1701;NU1702;NU5104</NoWarn>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<RepositoryUrl>https://dev.azure.com/fotec/DIHOST-Lenie/_git/DIHOST-Lenie</RepositoryUrl>
+	</PropertyGroup>
+	<ItemGroup>
+		<None Remove="Resources\gemliste_nam.csv" />
+		<None Remove="Resources\Images\background.jpg" />
+		<None Remove="Resources\Images\backgroundInfo.jpg" />
+		<None Remove="Resources\Images\DefaultUserImage.png" />
+		<None Remove="Resources\Images\DefaultUserImageRed.png" />
+		<None Remove="Resources\Images\DefaultUserImageYellow.png" />
+		<None Remove="Resources\Images\DefaultUserImage_red.png" />
+		<None Remove="Resources\Images\DefaultUserImage_yellow.png" />
+		<None Remove="Resources\Images\dihost.png" />
+		<None Remove="Resources\Images\EcoDigitalEU.png" />
+		<None Remove="Resources\Images\FOTEC horizontal weiss.png" />
+		<None Remove="Resources\Images\FOTECtransp.png" />
+		<None Remove="Resources\Images\HdDNetzwerk.png" />
+		<None Remove="Resources\Images\Idea.png" />
+		<None Remove="Resources\Images\LENIE.png" />
+		<None Remove="Resources\Images\LENIE2.png" />
+		<None Remove="Resources\Images\LENIEIcon.png" />
+		<None Remove="Resources\Images\Logo.png" />
+		<None Remove="Resources\Images\Logo1.png" />
+		<None Remove="Resources\Images\Logo2.png" />
+		<None Remove="Resources\Images\Logo3.png" />
+		<None Remove="Resources\Images\noe.png" />
+		<None Remove="Resources\Images\NoeRegional.png" />
+		<None Remove="Resources\Images\Pin.png" />
+		<None Remove="Resources\Images\Year100.jpg" />
+		<None Remove="Resources\Images\Year100transp.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\Images\backgroundInfo.jpg" />
+		<EmbeddedResource Include="Resources\Images\DefaultUserImageRed.png" />
+		<EmbeddedResource Include="Resources\Images\DefaultUserImageYellow.png" />
+		<EmbeddedResource Include="Resources\Images\EcoDigitalEU.png" />
+		<EmbeddedResource Include="Resources\Images\HdDNetzwerk.png" />
+		<EmbeddedResource Include="Resources\Images\Idea.png" />
+		<EmbeddedResource Include="Resources\Images\Logo1.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\gemliste_nam.csv" />
+		<EmbeddedResource Include="Resources\Images\background.jpg" />
+		<EmbeddedResource Include="Resources\Images\DefaultUserImage.png" />
+		<EmbeddedResource Include="Resources\Images\dihost.png" />
+		<EmbeddedResource Include="Resources\Images\FOTECtransp.png" />
+		<EmbeddedResource Include="Resources\Images\LENIE.png" />
+		<EmbeddedResource Include="Resources\Images\LENIE2.png" />
+		<EmbeddedResource Include="Resources\Images\LENIEIcon.png" />
+		<EmbeddedResource Include="Resources\Images\Logo.png" />
+		<EmbeddedResource Include="Resources\Images\Logo2.png" />
+		<EmbeddedResource Include="Resources\Images\Logo3.png" />
+		<EmbeddedResource Include="Resources\Images\noe.png" />
+		<EmbeddedResource Include="Resources\Images\NoeRegional.png" />
+		<EmbeddedResource Include="Resources\Images\Pin.png" />
+		<EmbeddedResource Include="Resources\Images\Year100.jpg" />
+		<EmbeddedResource Include="Resources\Images\Year100transp.png" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Biss" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps.Connectivity" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps.Map" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps.Push" Version="8.3.2" />
+		<PackageReference Include="Biss.DevOps.Settings" Version="4.0.1" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="PropertyChanged.Fody" Version="3.4.1" PrivateAssets="All" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Resources\ResCommon.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResCommon.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResSysAdmin.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResSysAdmin.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewAddHelper.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewAddHelper.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewAddIdea.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewAddIdea.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewAddNeed.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewAddNeed.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewAddOrganization.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewAddOrganization.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewAddOrganizationUser.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewAddOrganizationUser.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewAddReport.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewAddReport.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewChatOverview.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewChatOverview.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewEditUser.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewEditUser.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewEditUserPassword.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewEditUserPassword.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewFirstLaunch.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewFirstLaunch.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewFutureWishes.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewFutureWishes.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewIdeaDetails.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewIdeaDetails.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewInfo.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewInfo.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewLogin.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewLogin.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewMain.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewMain.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewMainIdea.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewMainIdea.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewOrganization.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewOrganization.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewReportsOverview.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewReportsOverview.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewSettings.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewSettings.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewSettingsPush.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewSettingsPush.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewShowReports.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewShowReports.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewUser.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewUser.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResViewEditUserRegion.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResViewEditUserRegion.resx</DependentUpon>
+		</Compile>
+		<Compile Update="Resources\ResWebCommon.Designer.cs">
+			<DesignTime>True</DesignTime>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>ResWebCommon.resx</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Resources\ResCommon.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResCommon.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResSysAdmin.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResSysAdmin.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewAddHelper.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewAddHelper.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewAddIdea.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewAddIdea.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewAddNeed.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewAddNeed.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewAddOrganization.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewAddOrganization.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewAddOrganizationUser.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewAddOrganizationUser.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewAddReport.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewAddReport.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewChatOverview.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewChatOverview.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewEditUser.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewEditUser.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewEditUserPassword.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewEditUserPassword.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewFirstLaunch.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewFirstLaunch.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewFutureWishes.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewFutureWishes.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewIdeaDetails.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewIdeaDetails.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewInfo.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewInfo.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewLogin.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewLogin.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewMain.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewMain.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewMainIdea.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewMainIdea.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewOrganization.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewOrganization.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewReportsOverview.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewReportsOverview.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewSettings.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewSettings.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewSettingsPush.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewSettingsPush.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewShowReports.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewShowReports.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewUser.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewUser.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResViewEditUserRegion.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResViewEditUserRegion.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Resources\ResWebCommon.resx">
+			<Generator>PublicResXFileCodeGenerator</Generator>
+			<LastGenOutput>ResWebCommon.Designer.cs</LastGenOutput>
+		</EmbeddedResource>
+	</ItemGroup>
+	<ItemGroup>
+		<Folder Include="Model\Chat\" />
+	</ItemGroup>
+	<PropertyGroup>
+		<SsdtUnitTestVersion>3.1</SsdtUnitTestVersion>
+	</PropertyGroup>
+</Project>

@@ -1,0 +1,80 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+	<PropertyGroup>
+		<TargetFramework>netstandard2.1</TargetFramework>
+		<!-- Package Infos -->
+		<Product>LENIE</Product>
+		<Description>LENIE Leben in Niederösterreich</Description>
+		<Company>DIH-Ost</Company>
+		<Copyright>(C) 2009-2023 FOTEC Forschungs- und Technologietransfer GmbH</Copyright>
+		<Authors>FOTEC BISS Developers</Authors>
+		<PackageProjectUrl>https://dih-ost.at/product/digitales-dorf-und-gemeindeleben/</PackageProjectUrl>
+		<RepositoryType>git</RepositoryType>
+		<PackageTags>BISS</PackageTags>
+		<Version>1.4.1</Version>
+		<PackageIcon>nugetImage.png</PackageIcon>
+		<NeutralLanguage>en</NeutralLanguage>
+		<PackageReleaseNotes>In Readme.md</PackageReleaseNotes>
+		<!-- Projekt Einstellungen -->
+		<Nullable>Enable</Nullable>
+		<EnableNETAnalyzers>true</EnableNETAnalyzers>
+		<AnalysisMode>AllEnabledByDefault</AnalysisMode>
+		<EnforceCodeStyleInBuild>false</EnforceCodeStyleInBuild>
+		<RunAnalyzersDuringLiveAnalysis>true</RunAnalyzersDuringLiveAnalysis>
+		<RunAnalyzers>true</RunAnalyzers>
+		<!-- Build Einstellungen -->
+		<RunAnalyzersDuringBuild>true</RunAnalyzersDuringBuild>
+		<SignAssembly>false</SignAssembly>
+		<GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<DebugType>full</DebugType>
+		<DebugSymbols>true</DebugSymbols>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<PackageCopyToOutput>true</PackageCopyToOutput>
+		<NoWarn>NU1701;NU1702;NU5104</NoWarn>
+		<PublishRepositoryUrl>true</PublishRepositoryUrl>
+		<EmbedUntrackedSources>true</EmbedUntrackedSources>
+		<RepositoryUrl>https://dev.azure.com/fotec/DIHOST-Lenie/_git/DIHOST-Lenie</RepositoryUrl>
+	</PropertyGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\verdana-bold.ttf" Link="Fonts\verdana-bold.ttf" />
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\verdana.ttf" Link="Fonts\verdana.ttf" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\GLYPHICONS.ttf" Link="Fonts\GLYPHICONS.ttf" />
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\Montserrat-Bold.ttf" Link="Fonts\Montserrat-Bold.ttf" />
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\Montserrat-Regular.ttf" Link="Fonts\Montserrat-Regular.ttf" />
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\Montserrat-SemiBold.ttf" Link="Fonts\Montserrat-SemiBold.ttf" />
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\StreamLineIconsLight.ttf" Link="Fonts\StreamLineIconsLight.ttf" />
+		<EmbeddedResource Include="..\Exchange\Resources\Fonts\tw-cen-mt.ttf" Link="Fonts\tw-cen-mt.ttf" />
+	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Biss" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps.Connectivity.XF" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps.Map" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps.Map.XF" Version="8.3.2" />
+		<PackageReference Include="Biss.Apps.XF" Version="8.3.2" />
+		<PackageReference Include="Microsoft.AppCenter.Analytics" Version="5.0.3" />
+		<PackageReference Include="Microsoft.AppCenter.Crashes" Version="5.0.3" />
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="8.0.0">
+		  <PrivateAssets>all</PrivateAssets>
+		  <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="PropertyChanged.Fody" Version="3.4.1" PrivateAssets="All" />
+		<PackageReference Include="Syncfusion.Xamarin.SfImageEditor" Version="20.4.0.38" />
+		<PackageReference Include="Xamarin.Forms" Version="5.0.0.2612" />
+	</ItemGroup>
+	<ItemGroup>
+		<ProjectReference Include="..\BaseApp\BaseApp.csproj" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Update="Controls\BxImgEditButton.xaml">
+			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Controls\BxTimeControl.xaml">
+			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+		<EmbeddedResource Update="Controls\IdeaFragments\SeeReports.xaml">
+			<Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+		</EmbeddedResource>
+	</ItemGroup>
+</Project>

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewShowReports"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Reports;assembly=BaseApp"
+    x:Name="MyViewShowReports"
+    d:DataContext="{x:Static viewmodels:VmShowReports.DesignInstance}"
+    x:TypeArguments="viewmodels:VmShowReports"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <ScrollView Margin="8,4,8,0">
+            <StackLayout>
+                <Label Style="{StaticResource LabelStyDescription}" Text="{bcm:Translate ResViewShowReports.LblTitle}" />
+
+                <StackLayout Margin="8,0">
+
+                    <Label
+                        HorizontalOptions="Center"
+                        IsVisible="{Binding UiReports, Converter={bcm:Sty ConverterListNotAny}}"
+                        Text="{bcm:Translate ResViewShowReports.LblNoReports}"
+                        VerticalOptions="Center" />
+                    <StackLayout BindableLayout.ItemsSource="{Binding UiReports}"
+                                 IsVisible="{Binding UiReports, Converter={bcm:Sty ConverterListAny}}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate>
+                                <Grid
+                                    d:DataContext="{x:Static viewmodels:VmShowReports.DesignInstanceReport}"
+                                    ColumnDefinitions="*,Auto"
+                                    ColumnSpacing="2"
+                                    RowDefinitions="Auto,Auto">
+
+                                    <Grid
+                                        Grid.Row="0"
+                                        Grid.Column="0"
+                                        HorizontalOptions="FillAndExpand"
+                                        VerticalOptions="CenterAndExpand">
+
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="250" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto" />
+                                            <RowDefinition Height="Auto" />
+                                        </Grid.RowDefinitions>
+
+                                        <Label
+                                            Grid.Row="0"
+                                            Grid.RowSpan="{Binding RowSpanUserLabel, Source={x:Reference MyViewShowReports}}"
+                                            Grid.Column="0"
+                                            Grid.ColumnSpan="{Binding ColSpanUserLabel, Source={x:Reference MyViewShowReports}}"
+                                            Margin="0,0,4,4"
+                                            LineBreakMode="CharacterWrap"
+                                            Text="{Binding Data.UserName}"
+                                            TextColor="{AppThemeBinding Dark={StaticResource ColorAccent},
+                                                                        Light={StaticResource ColorAccentLight}}"
+                                            VerticalTextAlignment="Center" />
+
+                                        <Label
+                                            Grid.Row="{Binding RowReasonLabel, Source={x:Reference MyViewShowReports}}"
+                                            Grid.RowSpan="{Binding RowSpanReasonLabel, Source={x:Reference MyViewShowReports}}"
+                                            Grid.Column="{Binding ColReasonLabel, Source={x:Reference MyViewShowReports}}"
+                                            Grid.ColumnSpan="{Binding ColSpanReasonLabel, Source={x:Reference MyViewShowReports}}"
+                                            Margin="4"
+                                            LineBreakMode="WordWrap"
+                                            Text="{Binding Data.Reason}"
+                                            VerticalTextAlignment="Center" />
+                                    </Grid>
+
+                                    <bcc:BxGlyphButton
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Command="{Binding Source={x:Reference MyViewShowReports}, Path=ViewModel.CmdDeleteReport}"
+                                        CommandParameter="{Binding}"
+                                        Glyph="{x:Static resources:Glyphs.Bin}" />
+
+                                    <Label
+                                        Grid.Row="0"
+                                        Grid.Column="1"
+                                        Margin="8"
+                                        IsVisible="False"
+                                        Style="{bcm:Sty LabelStyGlyph}"
+                                        Text="{x:Static resources:Glyphs.Bin}"
+                                        VerticalOptions="Center"
+                                        VerticalTextAlignment="Center">
+                                        <Label.GestureRecognizers>
+                                            <TapGestureRecognizer
+                                                Command="{Binding Source={x:Reference MyViewShowReports}, Path=ViewModel.CmdDeleteReport}"
+                                                CommandParameter="{Binding}" />
+                                        </Label.GestureRecognizers>
+                                    </Label>
+
+                                    <BoxView
+                                        Grid.Row="1"
+                                        Grid.Column="0"
+                                        Grid.ColumnSpan="2"
+                                        HeightRequest="1"
+                                        Style="{bcm:Sty BoxViewStySeperator}" />
+                                </Grid>
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </StackLayout>
+
+                    <bcc:BxButton
+                        Margin="0,16,0,4"
+                        Command="{Binding CmdDeleteIdea}"
+                        Text="{bcm:Translate ResViewShowReports.BtnDeleteIdea}" />
+                </StackLayout>
+            </StackLayout>
+        </ScrollView>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

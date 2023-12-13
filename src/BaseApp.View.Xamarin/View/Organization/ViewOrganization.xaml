@@ -1,0 +1,368 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewOrganization"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:resources="clr-namespace:Exchange.Resources;assembly=Exchange"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Organization;assembly=BaseApp"
+    x:Name="MyViewOrganization"
+    d:DataContext="{x:Static viewmodels:VmOrganization.DesignInstance}"
+    x:TypeArguments="viewmodels:VmOrganization"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+        <RefreshView
+            Margin="8,12,8,0"
+            Command="{Binding View.CmdHeaderCommon}"
+            IsRefreshing="{Binding IsRefreshing}">
+            <ScrollView>
+                <StackLayout>
+
+                    <!--#region Alle Gemeinden Switch-->
+
+                    <Grid ColumnDefinitions="*, Auto" RowDefinitions="Auto">
+                        <Label
+                            Grid.Row="0"
+                            Grid.Column="0"
+                            HorizontalOptions="End"
+                            Text="Alle Gemeinden"
+                            VerticalOptions="Center">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer Command="{Binding CmdToggleAllOrg}" />
+                            </Label.GestureRecognizers>
+                        </Label>
+
+                        <Switch
+                            Grid.Row="0"
+                            Grid.Column="1"
+                            IsToggled="{Binding IsSwitchAllOrg}" />
+                    </Grid>
+
+                    <!--#endregion-->
+
+                    <bcc:BxPicker
+                        Margin="0,0,0,16"
+                        IsVisible="{Binding IsSwitchAllOrg, Converter={bcm:Sty ConverterBoolInverted}}"
+                        ObservableCollectionSelectable="{Binding PickerOrganization}" />
+
+                    <!--#region Ideen in den Gemeinden-->
+
+                    <bcc:BxCollapseView
+                        HeaderGlyph="{x:Static resources:Glyphs.Information_circle}"
+                        HeaderSubTitle="{Binding Dc.DcExIdeas.ItemCount}"
+                        HeaderTitle="{Binding HeaderIdeas}">
+                        <StackLayout>
+                            <Label
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding Dc.DcExIdeas.HasVisibleItems, Converter={StaticResource ConverterBoolInverted}}"
+                                Text="Keine Ideen verfügbar!" />
+
+
+                            <ListView
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackgroundFocus},
+                                                                  Light={StaticResource ColorBackgroundFocusLight}}"
+                                HasUnevenRows="True"
+                                IsVisible="{Binding Dc.DcExIdeas.HasVisibleItems}"
+                                ItemsSource="{Binding Dc.DcExIdeas}">
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid
+                                                d:DataContext="{x:Static viewmodels:VmOrganization.DesignInstanceDpExIdea}">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="8" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="50" />
+                                                    <ColumnDefinition Width="8" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="4" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <bcc:BxGlyphButton
+                                                    Grid.Row="1"
+                                                    Grid.RowSpan="3"
+                                                    Grid.Column="1"
+                                                    Command="{Binding ViewModel.Dc.DcExIdeas.CmdItemInfo, Source={x:Reference MyViewOrganization}}"
+                                                    CommandParameter="{Binding}"
+                                                    Glyph="{Binding ViewModel.Dc.DcExIdeas.CmdItemInfo.Glyph, Source={x:Reference MyViewOrganization}}" />
+
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="2"
+                                                    LineBreakMode="CharacterWrap"
+                                                    Text="{Binding Data.Title}" />
+
+                                                <Label
+                                                    Grid.Row="1"
+                                                    Grid.Column="3"
+                                                    HorizontalOptions="End"
+                                                    LineBreakMode="CharacterWrap"
+                                                    Style="{bcm:Sty LabelStyDetail}"
+                                                    VerticalOptions="Center">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Likes: " />
+                                                            <Span Text="{Binding Data.LikeCount}" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="2"
+                                                    LineBreakMode="CharacterWrap"
+                                                    Style="{bcm:Sty LabelStyDetail}">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Von: " />
+                                                            <Span Text="{Binding Data.CreatorUserName}" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+                                                <Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="3"
+                                                    HorizontalOptions="Start"
+                                                    IsVisible="{Binding Data.ReportCount}"
+                                                    LineBreakMode="CharacterWrap"
+                                                    Style="{bcm:Sty LabelStyDetail}">
+                                                    <Label.FormattedText>
+                                                        <FormattedString>
+                                                            <Span Text="Gemeldet: " />
+                                                            <Span Text="{Binding Data.ReportCount}" />
+                                                        </FormattedString>
+                                                    </Label.FormattedText>
+                                                </Label>
+
+                                                <bcc:BxGlyphButton
+                                                    Grid.Row="1"
+                                                    Grid.RowSpan="3"
+                                                    Grid.Column="4"
+                                                    Command="{Binding ViewModel.CmdShowReports, Source={x:Reference MyViewOrganization}}"
+                                                    CommandParameter="{Binding}"
+                                                    Glyph="{Binding ViewModel.CmdShowReports.Glyph, Source={x:Reference MyViewOrganization}}"
+                                                    GlyphColor="{AppThemeBinding Dark={StaticResource ColorButtonLike},
+                                                                                 Light={StaticResource ColorButtonLikeLight}}"
+                                                    IsVisible="{Binding Data.ReportCount}"
+                                                    VerticalOptions="End" />
+
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+
+
+                        </StackLayout>
+                    </bcc:BxCollapseView>
+
+                    <!--#endregion-->
+
+                    <!--#region Benutzer in den Gemeinden-->
+
+                    <bcc:BxCollapseView
+                        HeaderGlyph="{x:Static resources:Glyphs.Information_circle}"
+                        HeaderSubTitle="{Binding Dc.DcExOrganizationUsers.ItemCount}"
+                        HeaderTitle="{Binding HeaderUser}">
+                        <StackLayout>
+                            <Label
+                                HorizontalOptions="Center"
+                                IsVisible="{Binding Dc.DcExOrganizationUsers.HasVisibleItems, Converter={StaticResource ConverterBoolInverted}}"
+                                Text="Keine User verfügbar!" />
+
+                            <ListView
+                                BackgroundColor="{AppThemeBinding Dark={StaticResource ColorBackgroundFocus},
+                                                                  Light={StaticResource ColorBackgroundFocusLight}}"
+                                HasUnevenRows="True"
+                                IsVisible="{Binding Dc.DcExOrganizationUsers.HasVisibleItems}"
+                                ItemsSource="{Binding Dc.DcExOrganizationUsers}">
+
+                                <ListView.ItemTemplate>
+                                    <DataTemplate>
+                                        <ViewCell>
+                                            <Grid
+                                                d:DataContext="{x:Static viewmodels:VmOrganization.DesignInstanceExOrganizationUser}">
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="2*" />
+                                                    <RowDefinition Height="Auto" />
+                                                    <RowDefinition Height="1*" />
+                                                    <RowDefinition Height="1*" />
+                                                    <RowDefinition Height="Auto" />
+                                                </Grid.RowDefinitions>
+
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="4"
+                                                    Grid.Column="0"
+                                                    Margin="0,0,5,0"
+                                                    IsVisible="{Binding Data.HasImage, Converter={bcm:Sty ConverterBoolInverted}}">
+
+                                                    <bcc:BxImage
+                                                        CornerRadius="0"
+                                                        HeightRequest="40"
+                                                        HorizontalOptions="Center"
+                                                        ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                                                        IsCircleMode="True"
+                                                        IsVisible="{Binding Data.LoginDoneByUser}"
+                                                        WidthRequest="40" />
+                                                    <bcc:BxImage
+                                                        CornerRadius="0"
+                                                        HeightRequest="40"
+                                                        HorizontalOptions="Center"
+                                                        ImageSource="{Binding Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImageRed_png}}"
+                                                        IsCircleMode="True"
+                                                        IsVisible="{Binding Data.LoginDoneByUser, Converter={bcm:Sty ConverterBoolInverted}}"
+                                                        WidthRequest="40" />
+                                                </StackLayout>
+
+                                                <bcc:BxImage
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="4"
+                                                    Grid.Column="0"
+                                                    Margin="0,0,5,0"
+                                                    HeightRequest="40"
+                                                    HorizontalOptions="Center"
+                                                    ImageSource="{Binding Data.UserImageLink, Converter={StaticResource ConverterImage}, ConverterParameter={x:Static resources:EnumEmbeddedImage.DefaultUserImage_png}}"
+                                                    IsCircleMode="True"
+                                                    IsVisible="{Binding Data.HasImage}"
+                                                    VerticalOptions="Center"
+                                                    WidthRequest="40" />
+
+                                                <Label
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="2"
+                                                    Grid.Column="1"
+                                                    Text="{Binding Data.FullNameUi}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="1"
+                                                    Margin="0,-8,0,0"
+                                                    HorizontalOptions="Start"
+                                                    Style="{bcm:Sty LabelStyDetail}"
+                                                    Text="{Binding Data.UserLoginEmail}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Grid.Row="3"
+                                                    Grid.Column="1"
+                                                    HorizontalOptions="Start"
+                                                    Style="{bcm:Sty LabelStyDetail}"
+                                                    Text="{Binding Data.UserPhoneNumber}"
+                                                    VerticalOptions="Center" />
+
+                                                <Label
+                                                    Grid.Row="2"
+                                                    Grid.Column="2"
+                                                    Margin="0,-8,4,0"
+                                                    HorizontalOptions="End"
+                                                    Style="{bcm:Sty LabelStyDetail}"
+                                                    Text="{Binding Data.OrganizationPostalCode}"
+                                                    VerticalOptions="Center" />
+                                                <Label
+                                                    Grid.Row="3"
+                                                    Grid.Column="2"
+                                                    Margin="0,0,4,0"
+                                                    HorizontalOptions="End"
+                                                    Style="{bcm:Sty LabelStyDetail}"
+                                                    Text="{Binding Data.UserRoleUi}"
+                                                    VerticalOptions="Center" />
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="4"
+                                                    Grid.Column="3"
+                                                    IsVisible="{Binding ViewModel.UserCompananyDetailsActive, Source={x:Reference MyViewOrganization}}">
+                                                    <StackLayout
+                                                        IsVisible="{Binding ViewModel.Dc.DcExOrganization.SelectedItem.Data.UserIsAdmin, Source={x:Reference MyViewOrganization}}">
+                                                        <bcc:BxGlyphButton
+                                                            BackgroundColor="Transparent"
+                                                            Command="{Binding ViewModel.Dc.DcExOrganizationUsers.CmdEditItem, Source={x:Reference MyViewOrganization}}"
+                                                            CommandParameter="{Binding .}"
+                                                            Glyph="{Binding ViewModel.Dc.DcExOrganizationUsers.CmdEditItem.Glyph, Source={x:Reference MyViewOrganization}}"
+                                                            IsVisible="{Binding Data.IsSuperadmin, Converter={bcm:Sty ConverterBoolInverted}}" />
+                                                    </StackLayout>
+                                                </StackLayout>
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="4"
+                                                    Grid.Column="4"
+                                                    IsVisible="{Binding ViewModel.UserCompananyDetailsActive, Source={x:Reference MyViewOrganization}}">
+                                                    <StackLayout
+                                                        IsVisible="{Binding ViewModel.Dc.DcExOrganization.SelectedItem.Data.UserIsUserPlus, Source={x:Reference MyViewOrganization}}">
+                                                        <bcc:BxGlyphButton
+                                                            BackgroundColor="Transparent"
+                                                            Command="{Binding ViewModel.CmdLockUser, Source={x:Reference MyViewOrganization}}"
+                                                            CommandParameter="{Binding .}"
+                                                            Glyph="{x:Static resources:Glyphs.Lock_1}"
+                                                            GlyphColor="{AppThemeBinding Dark={StaticResource ColorButtonLock},
+                                                                                         Light={StaticResource ColorButtonLockLight}}"
+                                                            IsVisible="{Binding Data.Locked, Converter={bcm:Sty ConverterBoolInverted}}" />
+                                                        <bcc:BxGlyphButton
+                                                            BackgroundColor="Transparent"
+                                                            Command="{Binding ViewModel.CmdLockUser, Source={x:Reference MyViewOrganization}}"
+                                                            CommandParameter="{Binding .}"
+                                                            Glyph="{x:Static resources:Glyphs.Lock_unlock}"
+                                                            GlyphColor="{AppThemeBinding Dark={StaticResource ColorButtonUnlock},
+                                                                                         Light={StaticResource ColorButtonUnlockLight}}"
+                                                            IsVisible="{Binding Data.Locked}" />
+                                                    </StackLayout>
+                                                </StackLayout>
+
+                                                <StackLayout
+                                                    Grid.Row="0"
+                                                    Grid.RowSpan="4"
+                                                    Grid.Column="5"
+                                                    IsVisible="{Binding ViewModel.UserCompananyDetailsActive, Source={x:Reference MyViewOrganization}}">
+                                                    <StackLayout
+                                                        IsVisible="{Binding ViewModel.Dc.DcExOrganization.SelectedItem.Data.UserIsUserPlus, Source={x:Reference MyViewOrganization}}">
+                                                        <bcc:BxGlyphButton
+                                                            BackgroundColor="Transparent"
+                                                            Command="{Binding ViewModel.Dc.DcExOrganizationUsers.CmdRemoveItem, Source={x:Reference MyViewOrganization}}"
+                                                            CommandParameter="{Binding .}"
+                                                            Glyph="{Binding ViewModel.Dc.DcExOrganizationUsers.CmdRemoveItem.Glyph, Source={x:Reference MyViewOrganization}}"
+                                                            GlyphColor="{AppThemeBinding Dark={StaticResource ColorButtonLock},
+                                                                                         Light={StaticResource ColorButtonLockLight}}"
+                                                            IsVisible="{Binding ViewModel.Dc.DcExUser.Data.IsSysAdmin, Source={x:Reference MyViewOrganization}}" />
+                                                    </StackLayout>
+                                                </StackLayout>
+                                            </Grid>
+                                        </ViewCell>
+                                    </DataTemplate>
+                                </ListView.ItemTemplate>
+
+                            </ListView>
+
+                        </StackLayout>
+                    </bcc:BxCollapseView>
+
+                    <!--#endregion-->
+
+                </StackLayout>
+            </ScrollView>
+        </RefreshView>
+    </bcc:PageControl>
+</view:BissContentPage>

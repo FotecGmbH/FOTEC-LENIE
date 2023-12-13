@@ -1,0 +1,181 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<ContentView
+    x:Class="BaseApp.View.Xamarin.Controls.BxTimeControl"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bc="clr-namespace:BaseApp.View.Xamarin.Controls;assembly=BaseApp.View.Xamarin"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:enum="clr-namespace:Exchange.Enum;assembly=Exchange"
+    x:DataType="bc:BxTimeControl">
+    <ContentView.Content>
+        <Grid x:Name="ContentGrid">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--#region AM-->
+
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="0"
+                IsVisible="{Binding ShowLabels}">
+                <Label
+                    Margin="4"
+                    IsVisible="{Binding IsSingleDay}"
+                    Text="Am"
+                    VerticalOptions="Center"
+                    VerticalTextAlignment="Center" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="0"
+                Grid.Column="1"
+                IsVisible="{Binding IsSingleDay}">
+                <bcc:BxFlexLayout VerticalOptions="Center">
+                    <bcc:BxFlexLayoutItem Margin="4" WidthLikeToHave="150">
+                        <StackLayout>
+                            <Label
+                                Text="{Binding From, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.DateOnly}}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+                        </StackLayout>
+                    </bcc:BxFlexLayoutItem>
+                    <bcc:BxFlexLayoutItem Margin="4" WidthLikeToHave="150">
+                        <StackLayout>
+                            <Label VerticalOptions="Center" VerticalTextAlignment="Center">
+                                <Label.FormattedText>
+                                    <FormattedString>
+                                        <Span
+                                            Text="{Binding From, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.TimeOnly}}" />
+                                        <Span Text=" - "
+                                              TextColor="{AppThemeBinding Dark={StaticResource ColorTextBlue}, Light={StaticResource ColorTextBlueLight}}" />
+                                        <Span
+                                            Text="{Binding To, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.TimeOnly}}" />
+                                    </FormattedString>
+                                </Label.FormattedText>
+                            </Label>
+                        </StackLayout>
+                    </bcc:BxFlexLayoutItem>
+                </bcc:BxFlexLayout>
+            </StackLayout>
+
+            <!--#endregion-->
+
+            <!--#region FROM-->
+
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="0"
+                IsVisible="{Binding ShowLabels}"
+                VerticalOptions="Center">
+                <Label
+                    Margin="0"
+                    IsVisible="{Binding IsSingleDay, Converter={bcm:Sty ConverterBoolInverted}}"
+                    Text="Von" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="1"
+                Grid.Column="1"
+                IsVisible="{Binding IsSingleDay, Converter={bcm:Sty ConverterBoolInverted}}">
+                <bcc:BxFlexLayout VerticalOptions="Center">
+                    <bcc:BxFlexLayoutItem Margin="4" WidthLikeToHave="150">
+                        <StackLayout>
+                            <Label
+                                IsVisible="{Binding CanEdit, Converter={bcm:Sty ConverterBoolInverted}}"
+                                Text="{Binding From, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.DateOnly}}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+
+                            <DatePicker
+                                Margin="4"
+                                Date="{Binding FromDate}"
+                                IsVisible="{Binding CanEdit}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </bcc:BxFlexLayoutItem>
+                    <bcc:BxFlexLayoutItem Margin="4" WidthLikeToHave="150">
+                        <StackLayout>
+                            <Label
+                                IsVisible="{Binding CanEdit, Converter={bcm:Sty ConverterBoolInverted}}"
+                                Text="{Binding From, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.TimeOnly}}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+
+                            <TimePicker
+                                Margin="4"
+                                IsVisible="{Binding CanEdit}"
+                                Time="{Binding FromTime}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </bcc:BxFlexLayoutItem>
+                </bcc:BxFlexLayout>
+            </StackLayout>
+
+            <!--#endregion-->
+
+            <!--#region TO-->
+
+            <StackLayout
+                Grid.Row="2"
+                Grid.Column="0"
+                IsVisible="{Binding ShowLabels}"
+                VerticalOptions="Center">
+                <Label
+                    IsVisible="{Binding IsSingleDay, Converter={bcm:Sty ConverterBoolInverted}}"
+                    Text="Bis" />
+            </StackLayout>
+
+            <StackLayout
+                Grid.Row="2"
+                Grid.Column="1"
+                IsVisible="{Binding IsSingleDay, Converter={bcm:Sty ConverterBoolInverted}}">
+                <bcc:BxFlexLayout VerticalOptions="Center">
+                    <bcc:BxFlexLayoutItem Margin="4" WidthLikeToHave="150">
+                        <StackLayout>
+                            <Label
+                                IsVisible="{Binding CanEdit, Converter={bcm:Sty ConverterBoolInverted}}"
+                                Text="{Binding To, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.DateOnly}}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+
+                            <DatePicker
+                                Margin="4"
+                                Date="{Binding ToDate}"
+                                IsVisible="{Binding CanEdit}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </bcc:BxFlexLayoutItem>
+                    <bcc:BxFlexLayoutItem Margin="4" WidthLikeToHave="150">
+                        <StackLayout>
+                            <Label
+                                IsVisible="{Binding CanEdit, Converter={bcm:Sty ConverterBoolInverted}}"
+                                Text="{Binding To, Converter={StaticResource ConverterDateTimeForUi}, ConverterParameter={x:Static enum:EnumDateTimeConverter.TimeOnly}}"
+                                VerticalOptions="Center"
+                                VerticalTextAlignment="Center" />
+
+                            <TimePicker
+                                Margin="4"
+                                IsVisible="{Binding CanEdit}"
+                                Time="{Binding ToTime}"
+                                VerticalOptions="Center" />
+                        </StackLayout>
+                    </bcc:BxFlexLayoutItem>
+                </bcc:BxFlexLayout>
+            </StackLayout>
+
+
+            <!--#endregion-->
+
+        </Grid>
+    </ContentView.Content>
+</ContentView>

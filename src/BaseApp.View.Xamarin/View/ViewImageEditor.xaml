@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewImageEditor"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="clr-namespace:Biss.Apps.XF.Controls;assembly=Biss.Apps.XF"
+    xmlns:bcm="http://biss.schemas.com/markupextensions"
+    xmlns:controls="clr-namespace:BaseApp.View.Xamarin.Controls;assembly=BaseApp.View.Xamarin"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel;assembly=BaseApp"
+    xmlns:xForms="clr-namespace:Syncfusion.SfImageEditor.XForms;assembly=Syncfusion.SfImageEditor.XForms"
+    d:DataContext="{x:Static viewmodels:VmImageEditor.DesignInstance}"
+    x:TypeArguments="viewmodels:VmImageEditor"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--#region Image-->
+
+            <xForms:SfImageEditor
+                x:Name="Editor"
+                Grid.Row="0"
+                ImageEdited="Editor_OnImageEdited"
+                ImageSaving="SfImageEditor_OnImageSaving"
+                IsVisible="{Binding HasCustomEditor}"
+                Source="{Binding ImageSource, Converter={StaticResource ConverterImage}}">
+                <xForms:SfImageEditor.ToolbarSettings>
+                    <xForms:ToolbarSettings IsVisible="False" />
+                </xForms:SfImageEditor.ToolbarSettings>
+            </xForms:SfImageEditor>
+            <bcc:BxImage
+                Grid.Row="0"
+                ImageSource="{Binding ImageSource, Converter={StaticResource ConverterImage}}"
+                IsCircleMode="False"
+                IsVisible="{Binding HasCustomEditor, Converter={bcm:Sty ConverterBoolInverted}}" />
+
+            <!--#endregion-->
+
+            <!--#region Commands-->
+
+            <Grid Grid.Row="1" ColumnDefinitions="*,*,*">
+                <controls:BxImgEditButton
+                    Grid.Column="0"
+                    Command="{Binding CmdTakePicture}"
+                    Glyph="{Binding CmdTakePicture.Glyph}"
+                    IsEnabled="{Binding CmdTakePicture.CanExecuteProperty}" />
+
+                <controls:BxImgEditButton
+                    Grid.Column="1"
+                    Command="{Binding CmdPickPicture}"
+                    Glyph="{Binding CmdPickPicture.Glyph}"
+                    IsEnabled="{Binding CmdPickPicture.CanExecuteProperty}" />
+
+                <controls:BxImgEditButton
+                    Grid.Column="2"
+                    Command="{Binding CmdReset}"
+                    Glyph="{Binding CmdReset.Glyph}"
+                    IsEnabled="{Binding CmdReset.CanExecuteProperty}" />
+            </Grid>
+
+            <Grid Grid.Row="2" ColumnDefinitions="*,*,*,*">
+                <controls:BxImgEditButton
+                    Grid.Column="0"
+                    Command="{Binding CmdRotateLeft}"
+                    Glyph="{Binding CmdRotateLeft.Glyph}"
+                    IsEnabled="{Binding CmdRotateLeft.CanExecuteProperty}" />
+
+                <controls:BxImgEditButton
+                    Grid.Column="1"
+                    Command="{Binding CmdToggleCrop}"
+                    Glyph="{Binding CmdToggleCrop.Glyph}"
+                    IsEnabled="{Binding CmdToggleCrop.CanExecuteProperty}" />
+
+                <controls:BxImgEditButton
+                    Grid.Column="2"
+                    Command="{Binding CmdExecuteCrop}"
+                    Glyph="{Binding CmdExecuteCrop.Glyph}"
+                    IsEnabled="{Binding CmdExecuteCrop.CanExecuteProperty}" />
+
+                <controls:BxImgEditButton
+                    Grid.Column="3"
+                    Command="{Binding CmdRotateRight}"
+                    Glyph="{Binding CmdRotateRight.Glyph}"
+                    IsEnabled="{Binding CmdRotateRight.CanExecuteProperty}" />
+            </Grid>
+
+            <!--#endregion-->
+        </Grid>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<view:BissContentPage
+    x:Class="BaseApp.View.Xamarin.View.ViewAddNeed"
+    xmlns="http://xamarin.com/schemas/2014/forms"
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+    xmlns:bcc="http://biss.schemas.com/corecontrols"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:view="clr-namespace:Biss.Apps.View;assembly=Biss.Apps.XF"
+    xmlns:viewmodels="clr-namespace:BaseApp.ViewModel.Idea;assembly=BaseApp"
+    d:DataContext="{x:Static viewmodels:VmAddNeed.DesignInstance}"
+    x:TypeArguments="viewmodels:VmAddNeed"
+    IsBusy="{Binding View.IsBusy}"
+    mc:Ignorable="d">
+    <bcc:PageControl>
+
+        <!--#region View Content-->
+
+        <ScrollView>
+            <StackLayout Margin="4">
+
+                <Label
+                    HorizontalTextAlignment="Center"
+                    LineBreakMode="WordWrap"
+                    Style="{StaticResource LabelStyBig}"
+                    Text="{Binding PageTitle}" />
+
+                <bcc:BxEntry EntryData="{Binding EntryTitle}" />
+
+                <bcc:BxEntry EntryData="{Binding EntryAmount}" Keyboard="Numeric" />
+
+                <bcc:BxEntry EntryData="{Binding EntryAmountLabel}" />
+
+                <StackLayout
+                    HorizontalOptions="End"
+                    Orientation="Horizontal"
+                    VerticalOptions="Center">
+                    <Label
+                        HorizontalOptions="Center"
+                        Text="{Binding EntryInfoText.Title}"
+                        VerticalOptions="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Command="{Binding CmdToggleInfo}" />
+                        </Label.GestureRecognizers>
+                    </Label>
+                    <Switch IsToggled="{Binding Data.HasInfo}" />
+                </StackLayout>
+
+                <bcc:BxEntry EntryData="{Binding EntryInfoText}" IsVisible="{Binding Data.HasInfo}" />
+
+            </StackLayout>
+        </ScrollView>
+
+        <!--#endregion-->
+
+    </bcc:PageControl>
+</view:BissContentPage>
