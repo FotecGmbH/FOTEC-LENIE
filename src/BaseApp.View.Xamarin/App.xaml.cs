@@ -70,7 +70,7 @@ namespace BaseApp.View.Xamarin
             Current.UserAppTheme = OSAppTheme.Light;
 
             // Syncfusion License für 20.4.0.38 
-            SyncfusionLicenseProvider.RegisterLicense("MTAxMDMxOEAzMjMwMmUzNDJlMzBWTFFBclBlQjVCTjAzZlpFWnJ4MGRVbmxUcHJIU1IxNHRyN0ZYTVk1SGhvPQ==;MTAxMDMxOUAzMjMwMmUzNDJlMzBKRzJwdnMxYVpNUFF3aXMxL1NWNDNBdDBMYnJrUjhpejJ3d0VTalBQSVgwPQ==");
+            SyncfusionLicenseProvider.RegisterLicense();
 
             if (this.UseBissXf(plattform, AppSettings.Current(), new Language(), typeof(ViewMenu)))
             {
